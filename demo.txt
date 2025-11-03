@@ -1,0 +1,19 @@
+<div class="card not-installed" data-search="Windows 8 64Bit OS Operating System archive.org v8.1 Windows iso">
+                <div class="app-header">
+                    <img src="dp/8.png" alt="Windows 8 Icon" class="app-icon">
+                    <div class="app-info">
+                        <h3>Brave Browser</h3>
+                        <div class="app-details">
+                            <span class="detail-item website">pesktop.com</span>
+                            <span class="detail-item version">v1.82.170</span>
+                            <span class="detail-item platform">Windows</span>
+                            <span class="detail-item extension">.zip</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="app-description">A popular and stable version of the Windows operating system.</p>
+                <div class="actions full-width">
+                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
+                    <a href="#" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
+                </div>
+            </div>
