@@ -526,38 +526,4 @@ body.dark-theme footer {
     display: none;
 }
 
-/* --- Responsive Media Queries for Header (New Addition) --- */
-@media (max-width: 480px) {
-    .top-bar {
-        padding: 10px 15px; /* Reduce padding on small screens */
-    }
-    
-    .top-bar .app-title {
-        font-size: 14px; /* Smaller font for title on small screens */
-        margin-right: 5px; /* Reduce margin */
-    }
-    
-    .search-container {
-        max-width: 200px; /* Shrink max-width for search on small screens */
-        padding: 3px 8px; /* Slightly reduce internal padding */
-    }
-    
-    #search-input {
-        font-size: 14px; /* Ensure input font scales down */
-    }
-    
-    #menu-btn {
-        margin-left: 5px; /* Reduce margin for menu button */
-        font-size: 18px; /* Slightly smaller icon */
-    }
-}
 
-@media (max-width: 360px) {
-    .top-bar .app-title {
-        font-size: 13px; /* Even smaller on very small screens */
-    }
-    
-    .search-container {
-        max-width: 150px; /* Further shrink search bar */
-    }
-}
