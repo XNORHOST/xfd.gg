@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X.N.O.R Bug Fix & Troubleshooting</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://kit.fontawesome.com/1eed6ecdfd.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../styles.css" />
+    <style>
+        /* Local overrides for this page */
+        .bug-fix-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px 10px;
+        }
+        .issue-card {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-left: 4px solid var(--accent-color-red);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        .issue-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .issue-title i {
+            margin-right: 8px;
+            color: var(--accent-color-red);
+        }
+        .solution {
+            background-color: var(--border-color);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: var(--secondary-text-color);
+        }
+        .contact-form {
+            background-color: var(--card-background);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid var(--border-color);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        .submit-btn {
+            background-color: var(--accent-color-blue);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            width: 100%;
+        }
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+        /* Ensure app-title link styles correctly */
+        .top-bar .app-title {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            color: var(--accent-color-blue);
+            font-weight: bold;
+        }
+        .top-bar .app-title i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header class="top-bar">
+        <a href="../index.html" class="app-title"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        
+        <div class="search-container">
+            <!-- Simplified, no search on this page -->
+        </div>
+        <button id="menu-btn" aria-label="Open Menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <div id="menu-overlay" class="menu-overlay">
+        <div class="menu-content">
+            <button id="close-menu" aria-label="Close Menu">&times;</button>
+            <h2>Settings</h2>
+            
+            <div class="theme-switch-container">
+                <span>Dark/Light Theme:</span>
+                <label class="switch">
+                    <input type="checkbox" id="theme-switch">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <main class="bug-fix-container">
+   
+        <h2 style="color: var(--text-color); margin: 30px 0 20px 0;">Bug Fix & Troubleshooting</h2>
+        <form class="contact-form" id="bug-report-form">
+            <div class="form-group">
+                <label for="email">Your Email (Optional):</label>
+                <input type="email" id="email" name="email" placeholder="your.email@example.com">
+            </div>
+            <div class="form-group">
+                <label for="issue-type">Issue Type:</label>
+                <select id="issue-type" name="issue-type" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--background-color); color: var(--text-color);">
+                    <option value="download">Download Problem</option>
+                    <option value="search">Search/Filter Issue</option>
+                    <option value="ui">UI/Theme Bug</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" placeholder="Describe the bug... Include device, browser, and steps to reproduce."></textarea>
+            </div>
+            <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Submit Report</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>Web Design By X.N.O.R 2025</p>
+        <p>Download the file from this website.</p>
+    </footer>
+    
+    <script src="../main.js"></script>
+    <script>
+        // Local JS for form submission (simulated)
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('bug-report-form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Thank you! Your bug report has been submitted. We\'ll review it soon.');
+                form.reset();
+            });
+
+            // Menu functionality handled by main.js
+        });
+    </script>
+</body>
+</html>

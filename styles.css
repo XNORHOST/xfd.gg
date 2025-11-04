@@ -80,6 +80,8 @@ body {
     color: var(--accent-color-blue);
     margin-right: 10px; /* Give space before search bar */
     font-weight: bold;
+    white-space: nowrap; /* Prevent internal text wrapping in title */
+    flex-shrink: 0; /* Prevent title from shrinking */
 }
 
 #menu-btn {
@@ -89,6 +91,7 @@ body {
     font-size: 20px;
     cursor: pointer;
     margin-left: 10px; /* Give space after search bar */
+    flex-shrink: 0; /* Prevent menu button from shrinking */
 }
 
 /* ------------------------------------- */
@@ -102,6 +105,8 @@ body {
     border-radius: 20px;
     padding: 5px 10px;
     max-width: 300px;
+    min-width: 0; /* Allow search bar to shrink below content size if needed */
+    flex-shrink: 1; /* Allow it to shrink on small screens */
 }
 
 #search-input {
@@ -111,6 +116,9 @@ body {
     padding: 5px;
     outline: none;
     width: 100%;
+    white-space: nowrap; /* Prevent input text from wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Ellipsis for long input on small screens */
 }
 
 #search-input::placeholder {
@@ -122,6 +130,7 @@ body {
     color: var(--search-icon);
     font-size: 1.1em;
     margin-right: 5px;
+    flex-shrink: 0; /* Prevent icon from shrinking */
 }
 /* ------------------------------------- */
 /* --- NEW SEARCH BAR CSS (END) --- */
@@ -515,4 +524,40 @@ body.dark-theme footer {
 /* Remove unused .versions class as it's replaced */
 .versions {
     display: none;
+}
+
+/* --- Responsive Media Queries for Header (New Addition) --- */
+@media (max-width: 480px) {
+    .top-bar {
+        padding: 10px 15px; /* Reduce padding on small screens */
+    }
+    
+    .top-bar .app-title {
+        font-size: 14px; /* Smaller font for title on small screens */
+        margin-right: 5px; /* Reduce margin */
+    }
+    
+    .search-container {
+        max-width: 200px; /* Shrink max-width for search on small screens */
+        padding: 3px 8px; /* Slightly reduce internal padding */
+    }
+    
+    #search-input {
+        font-size: 14px; /* Ensure input font scales down */
+    }
+    
+    #menu-btn {
+        margin-left: 5px; /* Reduce margin for menu button */
+        font-size: 18px; /* Slightly smaller icon */
+    }
+}
+
+@media (max-width: 360px) {
+    .top-bar .app-title {
+        font-size: 13px; /* Even smaller on very small screens */
+    }
+    
+    .search-container {
+        max-width: 150px; /* Further shrink search bar */
+    }
 }
