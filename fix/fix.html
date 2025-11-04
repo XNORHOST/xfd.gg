@@ -101,11 +101,7 @@
 </head>
 <body>
     <header class="top-bar">
-        <a href="../index.html" class="app-title"><i class="fas fa-arrow-left"></i> Back to Home</a>
-        
-        <div class="search-container">
-            <!-- Simplified, no search on this page -->
-        </div>
+        <a href="../index.html" class="app-title"><i class="fas fa-arrow-left"></i></a>
         <button id="menu-btn" aria-label="Open Menu">
             <i class="fas fa-bars"></i>
         </button>
@@ -113,17 +109,35 @@
 
     <div id="menu-overlay" class="menu-overlay">
         <div class="menu-content">
-            <button id="close-menu" aria-label="Close Menu">&times;</button>
-            <h2>Settings</h2>
-            
-            <div class="theme-switch-container">
-                <span>Dark/Light Theme:</span>
-                <label class="switch">
-                    <input type="checkbox" id="theme-switch">
-                    <span class="slider round"></span>
-                </label>
+                <button id="close-menu" aria-label="Close Menu">&times;</button>
+                <h2>Settings</h2>
+                
+                <div class="theme-switch-container">
+                    <span>Dark/Light Theme:</span>
+                    <label class="switch">
+                        <input type="checkbox" id="theme-switch">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                
+                <hr>
+               
+                <h3>Download for:</h3>
+                <div class="platform-buttons">
+                    <a href="obb.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
+                    <a href="obb.html" class="platform-btn"><i class="fab fa-apple"></i> Apple</a>
+                    <a href="obb.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
+                    <a href="obb.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
+                </div>
+                    <br>
+                <hr>
+
+                <h3>About</h3>
+                <div class="platform-buttons">
+                    <a href="about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
+                    <a href="fix/fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
+                </div>
             </div>
-        </div>
     </div>
 
     <main class="bug-fix-container">
