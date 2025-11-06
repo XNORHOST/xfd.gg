@@ -536,21 +536,7 @@ body.dark-theme footer {
 }
 
 /* --- Responsive Media Queries for Header (New Addition) --- */
-@media (max-width: 480px) {
-    .top-bar {
-        padding: 10px 15px; /* Reduce padding on small screens */
-    }
-    
-    .top-bar .app-title {
-        font-size: 14px; /* Smaller font for title on small screens */
-        margin-right: 5px; /* Reduce margin */
-    }
-    
-    .search-container {
-        max-width: 200px; /* Shrink max-width for search on small screens */
-        padding: 3px 8px; /* Slightly reduce internal padding */
-    }
-    
+@media (max-width: 480px) { 
     #search-input {
         font-size: 14px; /* Ensure input font scales down */
     }
@@ -563,19 +549,5 @@ body.dark-theme footer {
     footer {
         padding: 15px 10px; /* Adjust padding for mobile */
         font-size: 0.85em; /* Smaller on very small screens */
-    }
-}
-
-@media (max-width: 360px) {
-    .top-bar .app-title {
-        font-size: 13px; /* Even smaller on very small screens */
-    }
-    
-    .search-container {
-        max-width: 150px; /* Further shrink search bar */
-    }
-
-    footer p {
-        font-size: 0.8em; /* Ensure text fits */
     }
 }
