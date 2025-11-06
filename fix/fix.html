@@ -13,6 +13,7 @@
             max-width: 600px;
             margin: 0 auto;
             padding: 20px 10px;
+            flex: 1; /* Allow it to grow in flex layout */
         }
         .issue-card {
             background-color: var(--card-background);
@@ -59,7 +60,8 @@
             color: var(--text-color);
         }
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group input[list] {
             width: 100%;
             padding: 10px;
             border: 1px solid var(--border-color);
@@ -97,6 +99,20 @@
         .top-bar .app-title i {
             margin-right: 5px;
         }
+        /* Center the h2 title */
+        .contact-form h2 {
+            text-align: center;
+            color: var(--text-color);
+            margin: 30px 0 20px 0;
+        }
+        /* Style for datalist suggestions (basic enhancement) */
+        datalist {
+            /* Datalist styling is limited, but this helps visibility */
+        }
+        input[list] {
+            /* Ensure autocomplete input looks like the old select */
+            appearance: none;
+        }
     </style>
 </head>
 <body>
@@ -108,7 +124,7 @@
     </header>
 
     <div id="menu-overlay" class="menu-overlay">
-        <div class="menu-content">
+            <div class="menu-content">
                 <button id="close-menu" aria-label="Close Menu">&times;</button>
                 <h2>Settings</h2>
                 
@@ -129,7 +145,7 @@
                     <a href="obb.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
                     <a href="obb.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
                 </div>
-                    <br>
+<br>
                 <hr>
 
                 <h3>About</h3>
@@ -138,24 +154,29 @@
                     <a href="fix/fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
                 </div>
             </div>
-    </div>
+        </div>
 
     <main class="bug-fix-container">
-   
-        <h2 style="color: var(--text-color); margin: 30px 0 20px 0;">Bug Fix & Troubleshooting</h2>
+    	
         <form class="contact-form" id="bug-report-form">
+            <h2>Bug Fix & Troubleshooting</h2> 
             <div class="form-group">
-                <label for="email">Your Email (Optional):</label>
-                <input type="email" id="email" name="email" placeholder="your.email@example.com">
-            </div>
-            <div class="form-group">
-                <label for="issue-type">Issue Type:</label>
-                <select id="issue-type" name="issue-type" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--background-color); color: var(--text-color);">
-                    <option value="download">Download Problem</option>
-                    <option value="search">Search/Filter Issue</option>
-                    <option value="ui">UI/Theme Bug</option>
-                    <option value="other">Other</option>
-                </select>
+                <label for="file-item">File item:</label>
+                <input type="text" id="file-item" name="file-item" list="file-items" placeholder="Type to search and select an item (e.g., 'Windows')">
+                <datalist id="file-items">
+                    <option value="Windows 11">
+                    <option value="Windows 10">
+                    <option value="Windows 8.1 32Bit">
+                    <option value="Windows 8.1 64Bit">
+                    <option value="Windows 7 32Bit">
+                    <option value="Windows 7 64Bit">
+                    <option value="WhatsApp Messenger">
+                    <option value="Adobe Master Collection">
+                    <option value="Adobe Photoshop">
+                    <option value="Adobe Lightroom">
+                    <option value="Google Chrome">
+                    <option value="Tor Browser">
+                </datalist>
             </div>
             <div class="form-group">
                 <label for="description">Description:</label>
@@ -175,9 +196,14 @@
         // Local JS for form submission (simulated)
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('bug-report-form');
+            const whatsappNumber = '94703090240';
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                alert('Thank you! Your bug report has been submitted. We\'ll review it soon.');
+                const fileItem = document.getElementById('file-item').value;
+                const description = document.getElementById('description').value;
+                const message = `Bug Report from X.N.O.R User:\n\nFile Item: ${fileItem}\n\nDescription:\n${description}\n\nPlease fix this issue.`;
+                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
                 form.reset();
             });
 
