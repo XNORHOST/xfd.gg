@@ -59,7 +59,10 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     transition: background-color 0.3s, color 0.3s;
-    padding-bottom: 1px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0; /* Removed minimal padding; handled by flex now */
 }
 
 /* --- Top Bar (Header) --- */
@@ -67,7 +70,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 15px 20px;
     background-color: var(--top-bar-bg);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: sticky;
@@ -141,11 +144,12 @@ body {
     padding: 10px;
     max-width: 600px;
     margin: 0 auto;
+    flex: 1; /* Grow to fill available space */
 }
 
 /* NEW: Content Section Styles for Separation */
 .content-section {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .content-section:not(:last-of-type) {
@@ -496,19 +500,24 @@ footer {
     background-color: var(--top-bar-bg); /* Use top bar background for consistency */
     color: var(--secondary-text-color);
     text-align: center;
-    padding: 20px 0;
-    margin-top: 20px;
+    padding: 20px 10px; /* Added horizontal padding for better mobile fit */
+    margin-top: auto; /* Push to bottom in flex layout */
     border-top: 1px solid var(--border-color);
-    font-size: 0.8em;
+    font-size: 0.9em; /* Slightly larger for readability */
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    flex-shrink: 0; /* Prevent shrinking */
 }
 
 footer p {
     margin: 5px 0;
+    word-wrap: break-word; /* Allow long text to wrap if needed */
+    max-width: 100%; /* Ensure it doesn't overflow */
 }
 
 body.dark-theme footer {
     box-shadow: 0 -2px 4px rgba(255, 255, 255, 0.05);
+    --secondary-text-color: #cccccc; /* Slightly lighter for better contrast in dark mode */
 }
 /* ------------------------------------- */
 /* --- NEW FOOTER CSS (END) --- */
@@ -516,7 +525,7 @@ body.dark-theme footer {
 
 .section-title {
     color: var(--text-color);
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     border-left: 5px solid var(--primary-color);
     padding-left: 10px;
 }
@@ -526,4 +535,47 @@ body.dark-theme footer {
     display: none;
 }
 
+/* --- Responsive Media Queries for Header (New Addition) --- */
+@media (max-width: 480px) {
+    .top-bar {
+        padding: 10px 15px; /* Reduce padding on small screens */
+    }
+    
+    .top-bar .app-title {
+        font-size: 14px; /* Smaller font for title on small screens */
+        margin-right: 5px; /* Reduce margin */
+    }
+    
+    .search-container {
+        max-width: 200px; /* Shrink max-width for search on small screens */
+        padding: 3px 8px; /* Slightly reduce internal padding */
+    }
+    
+    #search-input {
+        font-size: 14px; /* Ensure input font scales down */
+    }
+    
+    #menu-btn {
+        margin-left: 5px; /* Reduce margin for menu button */
+        font-size: 18px; /* Slightly smaller icon */
+    }
 
+    footer {
+        padding: 15px 10px; /* Adjust padding for mobile */
+        font-size: 0.85em; /* Smaller on very small screens */
+    }
+}
+
+@media (max-width: 360px) {
+    .top-bar .app-title {
+        font-size: 13px; /* Even smaller on very small screens */
+    }
+    
+    .search-container {
+        max-width: 150px; /* Further shrink search bar */
+    }
+
+    footer p {
+        font-size: 0.8em; /* Ensure text fits */
+    }
+}
