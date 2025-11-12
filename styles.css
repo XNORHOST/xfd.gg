@@ -542,3 +542,19 @@ input:checked + .slider:before {
         min-height: 70px; /* Slightly taller for text */
     }
 }
+
+
+/* Add this to styles.css for fixed header height across all pages */
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    min-height: 60px; /* Fixed minimum height to ensure consistency */
+    background-color: var(--top-bar-bg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
