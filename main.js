@@ -5,22 +5,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuOverlay = document.getElementById('menu-overlay');
     const themeSwitch = document.getElementById('theme-switch');
     const body = document.body;
-
+    
     // Menu Open/Close Logic
     menuBtn.addEventListener('click', () => {
         menuOverlay.classList.add('open');
     });
-
+    
     closeMenuBtn.addEventListener('click', () => {
         menuOverlay.classList.remove('open');
     });
-
+    
     menuOverlay.addEventListener('click', (e) => {
         if (e.target === menuOverlay) {
             menuOverlay.classList.remove('open');
         }
     });
-
+    
     // Theme Switch Logic
     const setTheme = (isDark) => {
         if (isDark) {
@@ -33,14 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
             themeSwitch.checked = false;
         }
     };
-
+    
     const savedTheme = localStorage.getItem('theme');
     setTheme(savedTheme === 'dark');
-
+    
     themeSwitch.addEventListener('change', (e) => {
         setTheme(e.target.checked);
     });
-
+    
     // --- FINAL SEARCH FUNCTIONALITY (START) ---
     const searchInput = document.getElementById('search-input');
     
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'internet-utilities-section', titleId: 'internet-utilities-title' },
         { id: 'game-help-section', titleId: 'game-help-title' }
     ];
-
+    
     searchInput.addEventListener('input', () => {
         const searchTerm = searchInput.value.toLowerCase().trim();
         // Select all cards inside all content sections
@@ -86,38 +86,38 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // 1. Filter and show/hide individual cards
         itemCards.forEach(card => {
-            const searchData = card.getAttribute('data-search') ? 
-                               card.getAttribute('data-search').toLowerCase() :
-                               card.querySelector('h3') ? card.querySelector('h3').textContent.toLowerCase() : '';
-
+            const searchData = card.getAttribute('data-search') ?
+                card.getAttribute('data-search').toLowerCase() :
+                card.querySelector('h3') ? card.querySelector('h3').textContent.toLowerCase() : '';
+            
             if (searchData.includes(searchTerm)) {
                 card.classList.remove('hidden');
             } else {
                 card.classList.add('hidden');
             }
         });
-
+        
         // 2. Filter and show/hide section titles and containers
         sections.forEach(sectionInfo => {
             const sectionElement = document.getElementById(sectionInfo.id);
             const titleElement = document.getElementById(sectionInfo.titleId);
             
             if (!sectionElement || !titleElement) return;
-
+            
             // Check if *any* card within this section is currently visible
             // We only count '.card' elements, not the placeholder <p> text.
             const visibleCardsInSection = sectionElement.querySelectorAll('.card:not(.hidden)').length;
-
+            
             // Hide the section and title if searching AND no cards match
             if (searchTerm.length > 0 && visibleCardsInSection === 0) {
                 titleElement.classList.add('hidden');
-                sectionElement.classList.add('hidden'); 
+                sectionElement.classList.add('hidden');
             } else {
-                 // Show if search is empty OR if at least one card matches
+                // Show if search is empty OR if at least one card matches
                 titleElement.classList.remove('hidden');
                 sectionElement.classList.remove('hidden');
             }
         });
     });
-    // --- FINAL SEARCH FUNCTIONALITY (END) ---
+    
 });
