@@ -259,6 +259,11 @@ body.dark-theme .detail-item {
     /* Could add icon or color */
 }
 
+.size {
+    color: var(--accent-color-blue);
+    font-family: monospace;
+}
+
 .extension {
     color: var(--accent-color-blue);
     font-family: monospace;
