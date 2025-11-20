@@ -268,3 +268,36 @@ input:checked + .slider:before { transform:translateX(24px); }
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-4px); }
 }
+
+/* PERFECT VISIBLE BORDER – LIGHT & DARK MODE */
+.app-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    object-fit: cover;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+
+    /* MAIN FIX: 2px dark outer + 1px white inner = super visible & premium look */
+    border: 2px solid #d0d0d0;           /* Light theme: visible gray border */
+    outline: 1px solid #ffffff;          /* Clean white inner edge */
+    outline-offset: -3px;                /* Pulls white line inside the gray border */
+
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* DARK MODE – keeps it sharp but softer */
+[data-theme="dark"] .app-icon {
+    border: 2px solid #555;              /* Slightly lighter than background */
+    outline: 1px solid #333;             /* Dark inner edge */
+    outline-offset: -3px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+
+/* HOVER EFFECT – makes it pop */
+.thumb-link:hover .app-icon {
+    transform: scale(1.12);
+    border-color: #007bff;
+    outline-color: #ffffff;
+    box-shadow: 0 12px 32px rgba(0,123,255,0.3);
+}
