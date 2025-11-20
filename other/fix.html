@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X.N.O.R Bug Fix & Troubleshooting</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header class="top-bar">
+        <a href="../index.html" class="app-title"><i class="fas fa-arrow-left"></i>Fix</a>
+        <button id="menu-btn" aria-label="Open Menu"><i class="fas fa-bars"></i></button>
+    </header>
+
+    <div id="menu-overlay" class="menu-overlay">
+        <div class="menu-content">
+            <button id="close-menu" aria-label="Close Menu">×</button>
+            <h2>Settings</h2>
+            <div class="theme-switch-container">
+                <span>Dark/Light Theme:</span>
+                <label class="switch">
+                    <input type="checkbox" id="theme-switch">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <hr>
+            <h3>Download for:</h3>
+            <div class="platform-buttons">
+                <a href="../android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
+                <a href="../apple.html" class="platform-btn"><i class="fab fa-apple"></i> Apple</a>
+                <a href="../windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
+                <a href="../mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
+            </div>
+            <hr>
+            <h3>About</h3>
+            <div class="platform-buttons">
+                <a href="about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
+                <a href="fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="bug-fix-container">
+        <form class="contact-form" id="bug-report-form">
+            <h2>Bug Fix & Troubleshooting</h2>
+            <div class="form-group">
+                <label for="file-item">File item:</label>
+                <input type="text" id="file-item" list="file-items" placeholder="Type to search...">
+                <datalist id="file-items">
+                    <option value="Windows 11">
+                    <option value="Windows 10">
+                    <option value="WhatsApp Messenger">
+                    <option value="Adobe Photoshop">
+                </datalist>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" placeholder="Describe the bug..."></textarea>
+            </div>
+            <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Submit Report</button>
+        </form>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="../index.html" class="nav-btn active"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="../android.html" class="nav-btn"><i class="fab fa-android"></i><span>Android</span></a>
+        <a href="../windows.html" class="nav-btn"><i class="fab fa-windows"></i><span>Windows</span></a>
+        <a href="news.html" class="nav-btn"><i class="fas fa-newspaper"></i><span>News</span></a>
+    </nav>
+
+    <script src="../main.js"></script>
+    <script>
+        document.getElementById('bug-report-form').addEventListener('submit', e => {
+            e.preventDefault();
+            const fileItem = document.getElementById('file-item').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const message = `*Bug Report from X.N.O.R User:*\n\nFile Item: ${fileItem}\nDescription:\n${description}\n\n> *X.N.O.R Could™*`;
+            const url = `https://wa.me/94703090240?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+            e.target.reset();
+        });
+    </script>
+</body>
+
+</html>

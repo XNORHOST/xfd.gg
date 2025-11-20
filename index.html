@@ -5,30 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XNOR Cloud</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <script src="https://kit.fontawesome.com/1eed6ecdfd.js" crossorigin="anonymous"></script>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <header class="top-bar">
         <span class="app-title">XNOR Cloud</span>
-        
         <div class="search-container">
             <i class="fas fa-search search-icon"></i>
-            <input type="text" id="search-input" placeholder="Search item..." data-search-target="#item-list .card">
+            <input type="text" id="search-input" placeholder="Search item...">
         </div>
         <button id="menu-btn" aria-label="Open Menu">
             <i class="fas fa-bars"></i>
         </button>
     </header>
 
-    <main class="container" id="item-list">
+    <main id="item-list">
+
+        <!-- MENU OVERLAY -->
         <div id="menu-overlay" class="menu-overlay">
             <div class="menu-content">
-                <button id="close-menu" aria-label="Close Menu">&times;</button>
+                <button id="close-menu" aria-label="Close Menu">×</button>
                 <h2>Settings</h2>
-                
                 <div class="theme-switch-container">
                     <span>Dark/Light Theme:</span>
                     <label class="switch">
@@ -36,9 +34,7 @@
                         <span class="slider round"></span>
                     </label>
                 </div>
-                
-                <hr>
-               
+                <hr> <br>
                 <h3>Download for:</h3>
                 <div class="platform-buttons">
                     <a href="android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
@@ -46,1094 +42,193 @@
                     <a href="windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
                     <a href="mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
                 </div>
-<br>
-                <hr>
-
+                <hr> <br>
                 <h3>About</h3>
                 <div class="platform-buttons">
                     <a href="about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
-                    <a href="fix/fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
+                    <a href="other/fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
                 </div>
             </div>
         </div>
 
-        <div class="content-section" id="windows-os-section">
-            <h3 class="section-title platform-btn" id="windows-os-title"><i class="fab fa-windows"></i> Operating Systems - Windows</h3> 
-        
-            <div class="card installed" data-search="Windows 10 22H2 x64 OS microsoft v22h2 Windows iso archive.org">
+        <!-- ADOBE SOFTWARE SECTION -->
+        <div class="content-section">
+            <h3 class="section-title"><i class="fas fa-paint-brush"></i> Adobe Software</h3>
+            <div class="section-divider"></div>
+
+            <!-- 1. Adobe XD -->
+            <div class="card" data-search="adobe xd design prototyping ui ux 444.43 mb">
                 <div class="app-header">
-                    <img src="#" alt="Windows 10 Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Windows 10 22H2 x64</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">archive.org</span>
-                            <span class="detail-item version">v22h2</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">5.7 GB</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Original Windows 10 22H2 x64 ISO from Microsoft.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="https://archive.org/download/windows-10-22h2-englishus/Win10_22H2_English_x64.iso" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-            <div class="card installed" data-search="Windows 11 24H2 English x64 OS microsoft v24h2 Windows iso archive.org">
-                <div class="app-header">
-                    <img src="#" alt="Windows 11 Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Windows 11 24H2 x64</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">archive.org</span>
-                            <span class="detail-item version">v24h2</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">5.4 GB</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">The latest major release of the Windows operating system by Microsoft.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="https://archive.org/download/win11-24h2-english-x64-arm_202501/Win11_24H2_English_x64.iso" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-            <div class="card installed" data-search="Windows 8.1 Professional x86 OS microsoft v8.1 Windows iso archive.org">
-                <div class="app-header">
-                    <img src="#" alt="Windows 8.1 x86 Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Windows 8.1 Professional x86</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">archive.org</span>
-                            <span class="detail-item version">v8.1</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">3.0 GB</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Original Windows 8.1 Professional x86 ISO from Microsoft.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="https://archive.org/download/win-8.1-english-x-64-x-86/Win8.1_English_x32.iso" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-            <div class="card installed" data-search="Windows 8.1 Professional x64 OS microsoft v8.1 Windows iso archive.org">
-                <div class="app-header">
-                    <img src="#" alt="Windows 8.1 x64 Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Windows 8.1 Professional x64</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">archive.org</span>
-                            <span class="detail-item version">v8.1</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">4.0 GB</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Original Windows 8.1 Professional x64 ISO from Microsoft.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="https://archive.org/download/win-8.1-english-x-64-x-86/Win8.1_English_x64.iso" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-            <div class="card installed" data-search="Windows 7 x86 OS microsoft v7 Windows iso archive.org">
-                <div class="app-header">
-                    <img src="#" alt="Windows 7 x86 Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Windows 7 x86</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">archive.org</span>
-                            <span class="detail-item version">v7</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">2.4 GB</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Original Windows 7 x86 ISO from Microsoft.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="https://archive.org/download/Windows7-iso/Win7Pro32bit.iso" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-            <div class="card installed" data-search="Windows 7 x64 OS microsoft v7 Windows iso archive.org">
-                <div class="app-header">
-                    <img src="#" alt="Windows 7 x64 Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Windows 7 x64</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">archive.org</span>
-                            <span class="detail-item version">v7</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">3.1 GB</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Original Windows 7 x64 ISO from Microsoft.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="https://archive.org/download/Windows7-iso/win7_64_bit.iso" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="content-section" id="android-os-section">
-            <h3 class="section-title platform-btn" id="android-os-title"><i class="fab fa-android"></i> Android Apps</h3> 
-        
-            <div class="card installed" data-search="Android 15 OS Operating System google v15 android apk">
-                <div class="app-header">
-                    <img src="#" alt="Android Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Android 15</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">google.com</span>
-                            <span class="detail-item version">v15</span>
-                            <span class="detail-item platform">Android</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">The latest version of the Android operating system by Google.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-            <div class="card installed" data-search="ReVanced YouTube Music vanced v8.10.52 android apk">
-                <div class="app-header">
-                    <img src="#" alt="ReVanced YouTube Music Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>ReVanced YouTube Music</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">github.com</span>
-                            <span class="detail-item version">v8.10.52</span>
-                            <span class="detail-item platform">Android</span>
-                            <span class="detail-item size">60.98 MB</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Modified YouTube Music app with ad-blocking and additional features.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="https://release-assets.githubusercontent.com/github-production-release-asset/644454300/7fa052f8-a37d-4b7e-96e6-482e4586d2a5?sp=r&sv=2018-11-09&sr=b&spr=https&se=2025-11-06T08%3A31%3A24Z&rscd=attachment%3B+filename%3Dvanced.to_vanced_youtube_music_arm64_v8a_v8.10.52_cli5.0.2.2_p5.46.0.1.apk&rsct=application%2Fvnd.android.package-archive&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2025-11-06T07%3A30%3A29Z&ske=2025-11-06T08%3A31%3A24Z&sks=b&skv=2018-11-09&sig=RBRGu6qf0%2FkkotWOS0Tw%2FPN5gOrUFIl0BE2fiGEhIMY%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc2MjQxNjE0NCwibmJmIjoxNzYyNDE0MzQ0LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Sb1wWDCLbeRLQZxN95f_vLR3qj5zeLmdveUhhS0Ihzg&response-content-disposition=attachment%3B%20filename%3Dvanced.to_vanced_youtube_music_arm64_v8a_v8.10.52_cli5.0.2.2_p5.46.0.1.apk&response-content-type=application%2Fvnd.android.package-archive" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-            <div class="card installed" data-search="MicroG vanced v0.3.1.4.240913 android apk">
-                <div class="app-header">
-                    <img src="#" alt="MicroG Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>MicroG</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">github.com</span>
-                            <span class="detail-item version">v0.3.1.4.240913</span>
-                            <span class="detail-item platform">Android</span>
-                            <span class="detail-item size">37.9 MB</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Open-source implementation of Google Mobile Services for custom ROMs.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="https://release-assets.githubusercontent.com/github-production-release-asset/644454300/c2990a74-6d3d-41a0-9dea-c14c13e75518?sp=r&sv=2018-11-09&sr=b&spr=https&se=2025-11-06T08%3A15%3A11Z&rscd=attachment%3B+filename%3Dvanced.to_vanced_gms_microg_v0.3.1.4.240913.apk&rsct=application%2Fvnd.android.package-archive&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2025-11-06T07%3A14%3A38Z&ske=2025-11-06T08%3A15%3A11Z&sks=b&skv=2018-11-09&sig=WVlRWwh6GBc1LmtNoEL81jVTqt3dmg7k%2BKSyn8Cw%2Fis%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc2MjQxNjI1OCwibmJmIjoxNzYyNDE0NDU4LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Obkfn_zfRU4eOsEybsQjUqU2waU7bX75eXsjLYSIWsk&response-content-disposition=attachment%3B%20filename%3Dvanced.to_vanced_gms_microg_v0.3.1.4.240913.apk&response-content-type=application%2Fvnd.android.package-archive" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="content-section" id="latest-windows-section">
-            <h3 class="section-title platform-btn" id="latest-windows-title"><i class="fas fa-fire"></i> Latest Windows Softwares</h3> 
-        
-            <div class="card installed" data-search="Microsoft Edge browser microsoft v120 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="Edge Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Microsoft Edge</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">microsoft.com</span>
-                            <span class="detail-item version">v120</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">A fast and secure web browser built by Microsoft.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="content-section" id="macos-apps-section">
-            <h3 class="section-title platform-btn" id="macos-apps-title"><i class="fab fa-apple"></i> MacOs Apps</h3> 
-        
-            <div class="card installed" data-search="macOS Sequoia OS apple v15 mac dmg">
-                <div class="app-header">
-                    <img src="#" alt="macOS Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>macOS Sequoia</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">apple.com</span>
-                            <span class="detail-item version">v15</span>
-                            <span class="detail-item platform">Mac</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">The latest macOS release featuring advanced Apple Intelligence.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-        
-        <div class="content-section" id="bundles-section">
-            <h3 class="section-title platform-btn" id="bundles-title"><i class="fas fa-box-open"></i> After Format Software Bundles</h3> 
-        
-            <div class="card installed" data-search="Essential Software Bundle windows post-install kit v1 zip">
-                <div class="app-header">
-                    <img src="#" alt="Bundle Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Essential Software Bundle</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">xnorcloud.com</span>
-                            <span class="detail-item version">v1</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">A collection of essential apps for a fresh Windows install.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="content-section" id="adobe-section">
-            <h3 class="section-title platform-btn" id="adobe-title"><i class="fas fa-paint-roller"></i> Adobe Software</h3> 	
-            
-            <div class="card installed" data-search="Adobe Photoshop creative cloud v26 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="Photoshop Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Adobe Photoshop</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">adobe.com</span>
-                            <span class="detail-item version">v26</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Professional image editing software from Adobe Creative Cloud.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-            <div class="card installed" data-search="Adobe XD pesktop v59.0.12.2 Windows rar">
-                <div class="app-header">
-                    <img src="#" alt="Adobe XD Icon" class="app-icon">
+                    <img src="https://img.icons8.com/color/48/adobe-xd.png" alt="Adobe XD" class="app-icon">
                     <div class="app-info">
                         <h3>Adobe XD</h3>
                         <div class="app-details">
                             <span class="detail-item website">pesktop.com</span>
-                            <span class="detail-item version">v59.0.12.2</span>
-                            <span class="detail-item platform">Windows</span>
                             <span class="detail-item size">444.43 MB</span>
                         </div>
                     </div>
                 </div>
-                <p class="app-description">UI/UX design and prototyping tool from Adobe.</p>
+                <p class="app-description">Professional UI/UX design and prototyping tool for web and mobile apps.</p>
                 <div class="actions">
                     <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
                     <a href="https://s2.pesk.top/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NjcyMjU2MDAsInN1YiI6IkFkb2JlIFhEIHY1OS4wLjEyLjIgTXVsdGlsaW5ndWFsIFtQZXNrVG9wLmNvbV0ucmFyIiwic291cmNlIjoiaHR0cHM6XC9cL3Blc2t0b3AuY29tXC8ifQ.3l-EXgmt8oQBIukM0mXdkFNA65g_WNvJpzdaMmzvyPw" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
                 </div>
             </div>
 
-            <div class="card installed" data-search="Adobe Photoshop 2025 pesktop v26.11.0.18 Windows rar">
+            <!-- 2. Adobe Photoshop 2025 -->
+            <div class="card" data-search="adobe photoshop photo editing design ai 5.21 gb">
                 <div class="app-header">
-                    <img src="#" alt="Adobe Photoshop 2025 Icon" class="app-icon">
+                    <img src="https://img.icons8.com/color/48/adobe-photoshop.png" alt="Photoshop" class="app-icon">
                     <div class="app-info">
                         <h3>Adobe Photoshop 2025</h3>
                         <div class="app-details">
                             <span class="detail-item website">pesktop.com</span>
-                            <span class="detail-item version">v26.11.0.18</span>
-                            <span class="detail-item platform">Windows</span>
                             <span class="detail-item size">5.21 GB</span>
                         </div>
                     </div>
                 </div>
-                <p class="app-description">Latest version of professional image editing software from Adobe Creative Cloud.</p>
+                <p class="app-description">Industry-standard photo editing and graphic design software with powerful AI tools.</p>
                 <div class="actions">
                     <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
                     <a href="https://s2.pesk.top/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NjcyMjU2MDAsInN1YiI6IkFkb2JlIFBob3Rvc2hvcCAyMDI1ICh2MjYuMTEuMC4xOCkgTXVsdGlsaW5ndWFsIFtwZXNrdG9wLmNvbV0ucmFyIiwic291cmNlIjoiaHR0cHM6XC9cL3Blc2t0b3AuY29tXC8ifQ.nI40PYtFJfaA9QgMOZn7we5VGMFWZsjBWkPD_ZQ4tmw" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
                 </div>
             </div>
 
-            <div class="card installed" data-search="Adobe Lightroom Classic pesktop v14.5.1 Windows rar">
+            <!-- 3. Adobe Lightroom Classic -->
+            <div class="card" data-search="adobe lightroom classic photo editing photography 2.54 gb">
                 <div class="app-header">
-                    <img src="#" alt="Adobe Lightroom Classic Icon" class="app-icon">
+                    <img src="https://img.icons8.com/color/48/adobe-lightroom.png" alt="Lightroom" class="app-icon">
                     <div class="app-info">
                         <h3>Adobe Lightroom Classic</h3>
                         <div class="app-details">
                             <span class="detail-item website">pesktop.com</span>
-                            <span class="detail-item version">v14.5.1</span>
-                            <span class="detail-item platform">Windows</span>
                             <span class="detail-item size">2.54 GB</span>
                         </div>
                     </div>
                 </div>
-                <p class="app-description">Professional photo editing and management software from Adobe.</p>
+                <p class="app-description">Powerful photo editing and organization tool for professional photographers.</p>
                 <div class="actions">
                     <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
                     <a href="https://s2.pesk.top/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NjcyMjU2MDAsInN1YiI6IkFkb2JlIExpZ2h0cm9vbSBDbGFzc2ljIHYxNC41LjEgTXVsdGlsaW5ndWFsIFtwZXNrdG9wLmNvbV0ucmFyIiwic291cmNlIjoiaHR0cHM6XC9cL3Blc2t0b3AuY29tXC8ifQ.4VvR94cPqNXpgBKGcEIUwFQ3Al6Vuij28v0VjqCfkqw" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
                 </div>
             </div>
 
-            <div class="card installed" data-search="Adobe Premiere Pro 2025 pesktop v25.4.0.099 Windows rar">
+            <!-- 4. Adobe Premiere Pro 2025 -->
+            <div class="card" data-search="adobe premiere pro video editing color grading 2.70 gb">
                 <div class="app-header">
-                    <img src="#" alt="Adobe Premiere Pro 2025 Icon" class="app-icon">
+                    <img src="https://img.icons8.com/color/48/adobe-premiere-pro.png" alt="Premiere Pro" class="app-icon">
                     <div class="app-info">
                         <h3>Adobe Premiere Pro 2025</h3>
                         <div class="app-details">
                             <span class="detail-item website">pesktop.com</span>
-                            <span class="detail-item version">v25.4.0.099</span>
-                            <span class="detail-item platform">Windows</span>
                             <span class="detail-item size">2.70 GB</span>
                         </div>
                     </div>
                 </div>
-                <p class="app-description">Latest version of professional video editing software from Adobe.</p>
+                <p class="app-description">Professional video editing software with advanced color grading and effects.</p>
                 <div class="actions">
                     <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
                     <a href="https://s2.pesk.top/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NjcyMjU2MDAsInN1YiI6IkFkb2JlIFByZW1pZXJlIFBybyAyMDI1ICh2MjUuNC4wLjA5OSkgTXVsdGlsaW5ndWFsIFtQZXNrVG9wLmNvbV0ucmFyIiwic291cmNlIjoiaHR0cHM6XC9cL3Blc2t0b3AuY29tXC8ifQ.0k7OWNFYaNCJHwvBh2pdsclErsRlTdpNfflPY7SvRLw" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
                 </div>
             </div>
-            
-        </div>
-        
-        <div class="content-section" id="microsoft-section">
-            <h3 class="section-title platform-btn" id="microsoft-title"><i class="fab fa-microsoft"></i> Microsoft Software</h3> 
-        
-            <div class="card installed" data-search="Microsoft Office suite v2025 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="Office Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Microsoft Office</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">microsoft.com</span>
-                            <span class="detail-item version">v2025</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Productivity suite including Word, Excel, and PowerPoint.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
         </div>
 
-        <div class="content-section" id="programming-section">
-            <h3 class="section-title platform-btn" id="programming-title"><i class="fas fa-code"></i> Programming</h3> 
-            
-            <div class="card installed" data-search="Visual Studio Code editor microsoft v1.85 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="VS Code Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Visual Studio Code</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">code.visualstudio.com</span>
-                            <span class="detail-item version">v1.85</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">A powerful source code editor by Microsoft.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
+        <!-- PROGRAMMING SECTION -->
+        <div class="content-section">
+            <h3 class="section-title"><i class="fas fa-code"></i> Programming</h3>
+            <div class="section-divider"></div>
 
-            <div class="card installed" data-search="Node.js pesktop v25.1.0 Windows rar">
+            <!-- 5. Node.js -->
+            <div class="card" data-search="node.js javascript runtime server backend 29.64 mb">
                 <div class="app-header">
-                    <img src="#" alt="Node.js Icon" class="app-icon">
+                    <img src="https://img.icons8.com/color/48/nodejs.png" alt="Node.js" class="app-icon">
                     <div class="app-info">
                         <h3>Node.js</h3>
                         <div class="app-details">
                             <span class="detail-item website">pesktop.com</span>
-                            <span class="detail-item version">v25.1.0</span>
-                            <span class="detail-item platform">Windows</span>
                             <span class="detail-item size">29.64 MB</span>
                         </div>
                     </div>
                 </div>
-                <p class="app-description">JavaScript runtime environment for building server-side applications.</p>
+                <p class="app-description">JavaScript runtime built on Chrome's V8 engine for building fast network applications.</p>
                 <div class="actions">
                     <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
                     <a href="https://s2.pesk.top/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NjcyMjU2MDAsInN1YiI6Im5vZGUtdjI1LjEuMC14NjQgW3Blc2t0b3AuY29tXS5yYXIiLCJzb3VyY2UiOiJodHRwczpcL1wvcGVza3RvcC5jb21cLyJ9.uzLarXMGY6vpL5_3bVnv2ctQjKQgVPtHqsho4-Y9rSY" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
                 </div>
             </div>
 
-            <div class="card installed" data-search="GitHub Desktop pesktop v3.5.4 Windows rar">
+            <!-- 6. GitHub Desktop -->
+            <div class="card" data-search="github desktop git version control 173.10 mb">
                 <div class="app-header">
-                    <img src="#" alt="GitHub Desktop Icon" class="app-icon">
+                    <img src="https://img.icons8.com/color/48/github.png" alt="GitHub Desktop" class="app-icon">
                     <div class="app-info">
                         <h3>GitHub Desktop</h3>
                         <div class="app-details">
                             <span class="detail-item website">pesktop.com</span>
-                            <span class="detail-item version">v3.5.4</span>
-                            <span class="detail-item platform">Windows</span>
                             <span class="detail-item size">173.10 MB</span>
                         </div>
                     </div>
                 </div>
-                <p class="app-description">Desktop client for GitHub version control and collaboration.</p>
+                <p class="app-description">Simple collaboration from your desktop with GitHub version control.</p>
                 <div class="actions">
                     <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
                     <a href="https://s2.pesk.top/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NjcyMjU2MDAsInN1YiI6IkdpdEh1YkRlc2t0b3BTZXR1cC14NjQgW3Blc2t0b3AuY29tXS5yYXIiLCJzb3VyY2UiOiJodHRwczpcL1wvcGVza3RvcC5jb21cLyJ9.s6_0h2mRh-Hxhbdl7fqqhb9h7xulS1Wm1KKlFegnw9c" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
                 </div>
             </div>
-
         </div>
 
-        <div class="content-section" id="video-editors-section">
-            <h3 class="section-title platform-btn" id="video-editors-title"><i class="fas fa-video"></i> Video Editors</h3> 
-        
-            <div class="card installed" data-search="Adobe Premiere Pro video editor adobe v25 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="Premiere Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Adobe Premiere Pro</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">adobe.com</span>
-                            <span class="detail-item version">v25</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Professional video editing software from Adobe.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
+        <!-- ANDROID APPS SECTION -->
+        <div class="content-section">
+            <h3 class="section-title"><i class="fab fa-android"></i> Android Apps</h3>
+            <div class="section-divider"></div>
 
-        </div>
-
-        <div class="content-section" id="web-browsers-section">
-            <h3 class="section-title platform-btn" id="web-browsers-title"><i class="fas fa-globe"></i> Web Browsers</h3> 
-            
-            <div class="card installed" data-search="Google Chrome browser google v120 windows exe">
+            <!-- 7. ReVanced YouTube Music -->
+            <div class="card" data-search="revanced youtube music ad-free background play premium 60.98 mb">
                 <div class="app-header">
-                    <img src="#" alt="Chrome Icon" class="app-icon">
+                    <img src="https://img.icons8.com/fluency/48/youtube-music.png" alt="YouTube Music" class="app-icon">
                     <div class="app-info">
-                        <h3>Google Chrome</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">google.com</span>
-                            <span class="detail-item version">v120</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">The world's most popular web browser by Google.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="content-section" id="compression-section">
-            <h3 class="section-title platform-btn" id="compression-title"><i class="fas fa-file-archive"></i> File Compression</h3> 
-        
-            <div class="card installed" data-search="7-Zip archiver open source v24 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="7-Zip Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>7-Zip</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">7-zip.org</span>
-                            <span class="detail-item version">v24</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">A free and open-source file archiver.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="content-section" id="gaming-tools-section">
-            <h3 class="section-title platform-btn" id="gaming-tools-title"><i class="fas fa-gamepad"></i> Gaming Tools</h3> 
-        
-            <div class="card installed" data-search="Steam gaming platform valve v2025 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="Steam Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Steam</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">steampowered.com</span>
-                            <span class="detail-item version">v2025</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Digital distribution platform for video games by Valve.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-        
-        <div class="content-section" id="download-managers-section">
-            <h3 class="section-title platform-btn" id="download-managers-title"><i class="fas fa-cloud-download-alt"></i> Download Managers</h3> 
-        
-            <div class="card installed" data-search="Internet Download Manager idm v7 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="IDM Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Internet Download Manager</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">internetdownloadmanager.com</span>
-                            <span class="detail-item version">v7</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Accelerates downloads by up to 5 times with resume capability.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="content-section" id="tools-utilities-section">
-            <h3 class="section-title platform-btn" id="tools-utilities-title"><i class="fas fa-wrench"></i> Tools & Utilities</h3> 
-        
-            <div class="card installed" data-search="Notepad++ text editor open source v8 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="Notepad++ Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Notepad++</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">notepad-plus-plus.org</span>
-                            <span class="detail-item version">v8</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">A free source code editor and Notepad replacement.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-            <div class="card installed" data-search="Rufus bootable usb tool github v4.11 Windows exe">
-                <div class="app-header">
-                    <img src="#" alt="Rufus Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Rufus</h3>
+                        <h3>ReVanced YouTube Music</h3>
                         <div class="app-details">
                             <span class="detail-item website">github.com</span>
-                            <span class="detail-item version">v4.11</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">1.8 MB</span>
+                            <span class="detail-item size">60.98 MB</span>
                         </div>
                     </div>
                 </div>
-                <p class="app-description">Utility to create bootable USB drives from ISOs.</p>
+                <p class="app-description">Ad-free YouTube Music with background play, downloads, and all premium features unlocked.</p>
                 <div class="actions">
                     <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="https://github.com/pbatard/rufus/releases/download/v4.11/rufus-4.11.exe" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
+                    <a href="https://github.com/ReVanced/revanced-patches/releases/download/v8.10.52/vanced.to_vanced_youtube_music_arm64_v8a_v8.10.52_cli5.0.2.2_p5.46.0.1.apk" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
                 </div>
             </div>
 
-        </div>
-
-        <div class="content-section" id="audio-music-section">
-            <h3 class="section-title platform-btn" id="audio-music-title"><i class="fas fa-music"></i> Audio & Music</h3> 
-        
-            <div class="card installed" data-search="Audacity audio editor open source v3 windows exe">
+            <!-- 8. MicroG -->
+            <div class="card" data-search="microg gms google services play services revanced 37.9 mb">
                 <div class="app-header">
-                    <img src="#" alt="Audacity Icon" class="app-icon">
+                    <img src="https://img.icons8.com/color/48/google-play-services.png" alt="MicroG" class="app-icon">
                     <div class="app-info">
-                        <h3>Audacity</h3>
+                        <h3>MicroG</h3>
                         <div class="app-details">
-                            <span class="detail-item website">audacityteam.org</span>
-                            <span class="detail-item version">v3</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
+                            <span class="detail-item website">github.com</span>
+                            <span class="detail-item size">37.9 MB</span>
                         </div>
                     </div>
                 </div>
-                <p class="app-description">Free, open-source audio editor and recorder.</p>
+                <p class="app-description">Open-source reimplementation of Google Play Services required for ReVanced apps.</p>
                 <div class="actions">
                     <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
+                    <a href="https://github.com/ReVanced/revanced-patches/releases/download/v0.3.1.4.240913/vanced.to_vanced_gms_microg_v0.3.1.4.240913.apk" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
                 </div>
             </div>
-
         </div>
-
-        <div class="content-section" id="security-privacy-section">
-            <h3 class="section-title platform-btn" id="security-privacy-title"><i class="fas fa-shield-alt"></i> Security & Privacy</h3> 
-        
-            <div class="card installed" data-search="Malwarebytes anti-malware v5 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="Malwarebytes Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Malwarebytes</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">malwarebytes.com</span>
-                            <span class="detail-item version">v5</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Real-time protection against malware and threats.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="content-section" id="mobile-tools-section">
-            <h3 class="section-title platform-btn" id="mobile-tools-title"><i class="fas fa-mobile-alt"></i> Mobile Tools</h3> 
-        
-            <div class="card installed" data-search="ADB Tools android debug bridge google v1.0 windows zip">
-                <div class="app-header">
-                    <img src="#" alt="ADB Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>ADB Tools</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">developer.android.com</span>
-                            <span class="detail-item version">v1.0</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Android Debug Bridge for mobile device management.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="content-section" id="graphics-design-section">
-            <h3 class="section-title platform-btn" id="graphics-design-title"><i class="fas fa-palette"></i> Graphics & Design</h3> 
-        
-            <div class="card installed" data-search="GIMP image editor open source v3 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="GIMP Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>GIMP</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">gimp.org</span>
-                            <span class="detail-item version">v3</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Free and open-source raster graphics editor.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="content-section" id="engineering-section">
-            <h3 class="section-title platform-btn" id="engineering-title"><i class="fas fa-drafting-compass"></i> Engineering & Simulation</h3> 
-        
-            <div class="card installed" data-search="AutoCAD design autodesk v2026 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="AutoCAD Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>AutoCAD</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">autodesk.com</span>
-                            <span class="detail-item version">v2026</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">CAD software for 2D and 3D design by Autodesk.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="content-section" id="office-pdf-section">
-            <h3 class="section-title platform-btn" id="office-pdf-title"><i class="fas fa-file-pdf"></i> Office & PDF</h3> 
-        
-            <div class="card installed" data-search="LibreOffice suite open source v25 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="LibreOffice Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>LibreOffice</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">libreoffice.org</span>
-                            <span class="detail-item version">v25</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Free office suite compatible with Microsoft Office formats.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="content-section" id="multimedia-section">
-            <h3 class="section-title platform-btn" id="multimedia-title"><i class="fas fa-photo-video"></i> Multimedia</h3> 
-        
-            <div class="card installed" data-search="VLC Media Player videolan v3 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="VLC Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>VLC Media Player</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">videolan.org</span>
-                            <span class="detail-item version">v3</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Free and open-source media player supporting all formats.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="content-section" id="drivers-firmware-section">
-            <h3 class="section-title platform-btn" id="drivers-firmware-title"><i class="fas fa-microchip"></i> Drivers & Firmware</h3> 
-        
-            <div class="card installed" data-search="NVIDIA GeForce Drivers nvidia v560 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="NVIDIA Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>NVIDIA GeForce Drivers</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">nvidia.com</span>
-                            <span class="detail-item version">v560</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Latest graphics drivers for NVIDIA GPUs.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="content-section" id="database-server-section">
-            <h3 class="section-title platform-btn" id="database-server-title"><i class="fas fa-database"></i> Database & Server</h3> 
-        
-            <div class="card installed" data-search="MySQL database oracle v8 windows msi">
-                <div class="app-header">
-                    <img src="#" alt="MySQL Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>MySQL</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">mysql.com</span>
-                            <span class="detail-item version">v8</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Open-source relational database management system.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="content-section" id="hard-disk-tools-section">
-            <h3 class="section-title platform-btn" id="hard-disk-tools-title"><i class="fas fa-hdd"></i> Hard Disk Tools</h3> 
-        
-            <div class="card installed" data-search="CrystalDiskInfo hdd monitor free v9 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="CrystalDiskInfo Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>CrystalDiskInfo</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">crystalmark.info</span>
-                            <span class="detail-item version">v9</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">HDD/SSD health monitoring tool.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="content-section" id="backup-recovery-section">
-            <h3 class="section-title platform-btn" id="backup-recovery-title"><i class="fas fa-history"></i> Backup & Recovery</h3> 
-        
-            <div class="card installed" data-search="Acronis True Image backup acronis v2025 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="Acronis Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Acronis True Image</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">acronis.com</span>
-                            <span class="detail-item version">v2025</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Complete disk imaging and backup solution.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="content-section" id="desktop-enhancement-section">
-            <h3 class="section-title platform-btn" id="desktop-enhancement-title"><i class="fas fa-desktop"></i> Desktop Enhancement</h3> 
-        
-            <div class="card installed" data-search="Rainmeter desktop customization free v4 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="Rainmeter Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Rainmeter</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">rainmeter.net</span>
-                            <span class="detail-item version">v4</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Desktop customization tool for Windows.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="content-section" id="educational-business-section">
-            <h3 class="section-title platform-btn" id="educational-business-title"><i class="fas fa-graduation-cap"></i> Educational & Business</h3> 
-        
-            <div class="card installed" data-search="Zoom video conferencing v6 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="Zoom Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Zoom</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">zoom.us</span>
-                            <span class="detail-item version">v6</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Video communications platform for meetings and webinars.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="content-section" id="network-wifi-section">
-            <h3 class="section-title platform-btn" id="network-wifi-title"><i class="fas fa-wifi"></i> Network & WiFi</h3> 
-        
-            <div class="card installed" data-search="Wireshark network analyzer open source v4 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="Wireshark Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Wireshark</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">wireshark.org</span>
-                            <span class="detail-item version">v4</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Network protocol analyzer for troubleshooting.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="content-section" id="data-recovery-section">
-            <h3 class="section-title platform-btn" id="data-recovery-title"><i class="fas fa-undo-alt"></i> Data Recovery</h3> 
-        
-            <div class="card installed" data-search="Recuva file recovery piriform v1 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="Recuva Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>Recuva</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">ccleaner.com/recuva</span>
-                            <span class="detail-item version">v1</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Free data recovery tool for deleted files.</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-
-        </div>
-        
-        <div class="content-section" id="internet-utilities-section">
-            <h3 class="section-title platform-btn" id="internet-utilities-title"><i class="fas fa-link"></i> Internet Utilities</h3> 
-        
-            <div class="card installed" data-search="uTorrent torrent client bitTorrent v3 windows exe">
-                <div class="app-header">
-                    <img src="#" alt="uTorrent Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>uTorrent</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">utorrent.com</span>
-                            <span class="detail-item version">v3</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">Lightweight torrent client for downloading files. (E.g. VPN, Proxy)</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="content-section" id="game-help-section">
-            <h3 class="section-title platform-btn" id="game-help-title"><i class="fas fa-question-circle"></i> Help Running Games</h3> 
-        
-            <div class="card installed" data-search="DirectX 12 runtime microsoft v12 windows cab">
-                <div class="app-header">
-                    <img src="#" alt="DirectX Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>DirectX 12</h3>
-                        <div class="app-details">
-                            <span class="detail-item website">microsoft.com</span>
-                            <span class="detail-item version">v12</span>
-                            <span class="detail-item platform">Windows</span>
-                            <span class="detail-item size">N/A</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-description">API for handling tasks related to multimedia. (E.g. DirectX, Runtime)</p>
-                <div class="actions">
-                    <a href="obb.html" class="action-btn open-btn"><i class="fas fa-external-link-alt"></i> Open</a>
-                    <a href="obb.html" class="action-btn download-btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-            </div>
-            
-        </div>
-        
     </main>
 
     <nav class="bottom-nav">
-        <a href="index.html" class="nav-btn active" data-section="home">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="android.html" class="nav-btn" data-section="android">
-            <i class="fab fa-android"></i>
-            <span>Android</span>
-        </a>
-        <a href="windows.html" class="nav-btn" data-section="windows">
-            <i class="fab fa-windows"></i>
-            <span>Windows</span>
-        </a>
-        <a href="apple.html" class="nav-btn" data-section="apple">
-            <i class="fab fa-apple"></i>
-            <span>Apple</span>
-        </a>
+        <a href="index.html" class="nav-btn active"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="android.html" class="nav-btn"><i class="fab fa-android"></i><span>Android</span></a>
+        <a href="windows.html" class="nav-btn"><i class="fab fa-windows"></i><span>Windows</span></a>
+        <a href="other/news.html" class="nav-btn"><i class="fas fa-newspaper"></i><span>News</span></a>
     </nav>
-    
-    <script src="main.js"></script>
 
+    <script src="main.js"></script>
 </body>
 </html>

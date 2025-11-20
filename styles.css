@@ -1,560 +1,215 @@
-/* --- Global & Theme Variables --- */
+/* ============================================= */
+/*  XNOR CLOUD – MASTER STYLES.CSS (2025)       */
+/*  Supports: index.html | fix.html | news.html  */
+/*  No gaps, Dark Mode, Mobile Perfect          */
+/* ============================================= */
+
 :root {
-    /* Light Theme Defaults */
-    --background-color: #f7f7f7;
-    --card-background: #ffffff;
-    --text-color: #333333;
-    --secondary-text-color: #666666;
-    --primary-color: #03dac6;
-    --accent-color-green: #bb3f66; /* Installed checkmark/Open button */
-    --accent-color-blue: #3f51b5; /* Download button */
-    --accent-color-red: #f44336; /* Uninstall button */
-    --border-color: #eeeeee;
-    --top-bar-bg: #ffffff;
-    --bottom-nav-bg: #ffffff;
-    --bottom-nav-active: #3f51b5;
-    --menu-bg: rgba(255, 255, 255, 0.95);
-    --menu-text-color: #333333;
-    --platform-btn-bg: #cccccc;
-    --platform-btn-text: #333333;
-    
-    /* NEW: Search Bar Variables */
-    --search-bg: #f0f0f0;
-    --search-text: #333333;
-    --search-icon: var(--secondary-text-color);
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --secondary: #666;
+    --border: #e0e0e0;
+    --blue: #007bff;
+    --topbar: #fff;
+    --bottombar: #fff;
+    --active: #007bff;
+    --whatsapp: #25D366;
 }
 
-body.dark-theme {
-    --background-color: #121212;
-    --card-background: #1e1e1e;
-    --text-color: #ffffff;
-    --secondary-text-color: #bbbbbb;
-    --accent-color-green: #bb3f66;
-    --accent-color-blue: #7986cb;
-    --accent-color-red: #ff5252;
-    --border-color: #333333;
-    --top-bar-bg: #1e1e1e;
-    --bottom-nav-bg: #1e1e1e;
-    --bottom-nav-active: #7986cb;
-    --menu-bg: rgba(30, 30, 30, 0.95);
-    --menu-text-color: #ffffff;
-    --platform-btn-bg: #333333;
-    --platform-btn-text: #ffffff;
-    
-    /* NEW: Dark Theme Search Bar Variables */
-    --search-bg: #333333;
-    --search-text: #ffffff;
-    --search-icon: #bbbbbb;
+[data-theme="dark"] {
+    --bg: #1a1a1a;
+    --card: #2d2d2d;
+    --text: #e0e0e0;
+    --secondary: #aaa;
+    --border: #444;
+    --topbar: #2d2d2d;
+    --bottombar: #2d2d2d;
+    --active: #0d6efd;
 }
 
-/* --- Base Styles --- */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+/* Reset & Layout */
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); display:flex; flex-direction:column; }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    transition: background-color 0.3s, color 0.3s;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 0; /* Removed minimal padding; handled by flex now */
-}
-
-/* --- Top Bar (Header) --- */
+/* Top Bar */
 .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: var(--top-bar-bg);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    display:flex; align-items:center; justify-content:space-between; padding:0 20px; min-height:60px;
+    background:var(--topbar); box-shadow:0 2px 8px rgba(0,0,0,0.1); position:sticky; top:0; z-index:100;
 }
-
-.top-bar .app-title {
-    font-size: 16px;
-    color: var(--accent-color-blue);
-    margin-right: 10px; /* Give space before search bar */
-    font-weight: bold;
-    white-space: nowrap; /* Prevent internal text wrapping in title */
-    flex-shrink: 0; /* Prevent title from shrinking */
+.app-title, .back-btn {
+    font-size:18px; font-weight:bold; color:var(--blue); text-decoration:none; display:flex; align-items:center; gap:10px;
 }
+.back-btn { font-size:17px; }
 
-#menu-btn {
-    background: none;
-    border: none;
-    color: var(--text-color);
-    font-size: 20px;
-    cursor: pointer;
-    margin-left: 10px; /* Give space after search bar */
-    flex-shrink: 0; /* Prevent menu button from shrinking */
+/* Search */
+.search-container { position:relative; flex:1; max-width:280px; margin:0 12px; }
+.search-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--secondary); }
+#search-input { width:100%; padding:10px 10px 10px 38px; border:1px solid var(--border); border-radius:10px; background:var(--card); color:var(--text); font-size:15px; }
+#search-input:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(0,123,255,0.15); }
+
+/* Main Content */
+main { flex:1; padding:16px; overflow-y:auto; }
+
+/* Index.html – Content Sections (No Gaps) */
+.content-section { transition:all 0.25s ease; }
+.content-section.hidden-section { display:none !important; }
+.content-section:not(.hidden-section) { margin-bottom:24px; }
+.content-section:not(.hidden-section):first-of-type { margin-top:8px; }
+
+.section-title {
+    display:flex; align-items:center; gap:10px; padding:10px 16px; background:var(--border);
+    color:var(--text); font-size:15px; font-weight:600; border-radius:10px;
 }
+.section-divider { height:1px; background:var(--border); margin:16px 0; opacity:0.7; }
 
-/* ------------------------------------- */
-/* --- NEW SEARCH BAR CSS (START) --- */
-/* ------------------------------------- */
-.search-container {
-    flex-grow: 1; /* Allow the search bar to take up available space */
-    display: flex;
-    align-items: center;
-    background-color: var(--search-bg);
-    border-radius: 20px;
-    padding: 5px 10px;
-    max-width: 300px;
-    min-width: 0; /* Allow search bar to shrink below content size if needed */
-    flex-shrink: 1; /* Allow it to shrink on small screens */
-}
-
-#search-input {
-    border: none;
-    background: transparent;
-    color: var(--search-text);
-    padding: 5px;
-    outline: none;
-    width: 100%;
-    white-space: nowrap; /* Prevent input text from wrapping */
-    overflow: hidden;
-    text-overflow: ellipsis; /* Ellipsis for long input on small screens */
-}
-
-#search-input::placeholder {
-    color: var(--secondary-text-color);
-    opacity: 0.8;
-}
-
-.search-icon {
-    color: var(--search-icon);
-    font-size: 1.1em;
-    margin-right: 5px;
-    flex-shrink: 0; /* Prevent icon from shrinking */
-}
-/* ------------------------------------- */
-/* --- NEW SEARCH BAR CSS (END) --- */
-/* ------------------------------------- */
-
-/* --- Main Content --- */
-.container {
-    padding: 10px;
-    padding-bottom: 80px; /* Add padding to avoid overlap with fixed bottom nav */
-    max-width: 600px;
-    margin: 0 auto;
-    flex: 1; /* Grow to fill available space */
-}
-
-/* NEW: Content Section Styles for Separation */
-.content-section {
-    margin-bottom: 10px;
-}
-
-.content-section:not(:last-of-type) {
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 20px;
-}
-
-/* ------------------------------------- */
-/* --- NEW CARD FILTER CSS (START) --- */
-/* ------------------------------------- */
-/* The .hidden class is used by JS to hide elements */
-.card.hidden, .content-section.hidden {
-    display: none !important;
-}
-/* ------------------------------------- */
-/* --- NEW CARD FILTER CSS (END) --- */
-/* ------------------------------------- */
-
+/* Cards (index.html) */
 .card {
-    background-color: var(--card-background);
-    border-radius: 8px;
-    margin-bottom: 10px;
-    padding: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    border: 1px solid var(--border-color);
-    transition: opacity 0.3s; /* Add transition for a smoother filter effect */
-    overflow: hidden; /* Ensure content doesn't overflow the card */
+    background:var(--card); border-radius:12px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    border:1px solid var(--border); margin-bottom:16px;
 }
+.app-header { display:flex; padding:14px; gap:14px; align-items:center; }
+.app-icon { width:48px; height:48px; border-radius:10px; object-fit:cover; }
+.app-info h3 { font-size:16px; margin-bottom:6px; }
+.app-details { display:flex; flex-wrap:wrap; gap:8px; font-size:11px; color:var(--secondary); }
+.detail-item { background:var(--border); padding:4px 8px; border-radius:6px; }
+.app-description { padding:0 14px 12px; font-size:14px; color:var(--secondary); line-height:1.5; }
+.actions { display:flex; gap:12px; padding:0 14px 16px; }
+.action-btn { flex:1; padding:12px; text-align:center; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; }
+.open-btn { background:var(--border); color:var(--text); }
+.download-btn { background:var(--blue); color:white; }
 
-.app-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    overflow: hidden; /* Clip any overflow in header */
-}
-
-.app-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    object-fit: cover;
-    margin-right: 15px;
-    /* Placeholder styles for icons - replace with actual images */
-    border: 1px solid var(--border-color);
-    background-color: var(--border-color);
-    flex-shrink: 0; /* Prevent icon from shrinking */
-}
-
-.app-info {
-    flex-grow: 1;
-    overflow: hidden; /* Hide overflow in app-info */
-    min-width: 0; /* Allow flex child to shrink below content size */
-}
-
-.app-info h3 {
-    font-size: 16px;
-    font-weight: bold;
-    color: var(--text-color);
-    line-height: 1.2;
-    margin-bottom: 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* NEW: App Details Styles */
-.app-details {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 5px; /* Reduced gap */
-    font-size: 11px; /* Slightly smaller font */
-    color: var(--secondary-text-color);
-    overflow: hidden;
-    white-space: nowrap;
-    flex: 1;
-}
-
-.detail-item {
-    background-color: var(--border-color);
-    padding: 2px 4px; /* Reduced padding */
-    border-radius: 4px;
-    font-weight: bold;
-    flex-shrink: 0;
-    white-space: nowrap;
-    max-width: none; /* Allow full width */
-}
-
-body.dark-theme .detail-item {
-    background-color: var(--border-color);
-}
-
-.website {
-    /* Specific styling if needed, e.g., italic or different color */
-    font-style: italic;
-}
-
-.version {
-    /* Keep as is, or highlight */
-    /* For long versions, allow some ellipsis if needed */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 80px; /* Limit version width to prevent overflow */
-}
-
-.platform {
-    /* Could add icon or color */
-}
-
-.size {
-    color: var(--accent-color-blue);
-    font-family: monospace;
-}
-
-.extension {
-    color: var(--accent-color-blue);
-    font-family: monospace;
-}
-
-.installed-status {
-    color: var(--accent-color-green);
-    font-size: 20px;
-    margin-left: auto;
-}
-
-.app-description {
-    font-size: 14px;
-    color: var(--secondary-text-color);
-    margin-bottom: 15px;
-}
-
-/* --- Action Buttons --- */
-.actions {
-    display: flex;
-    gap: 10px;
-}
-
-.actions.full-width {
-    width: 100%;
-}
-
-.action-btn {
-    flex: 1;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-}
-
-.action-btn i {
-    margin-right: 8px;
-}
-
-.open-btn {
-    background-color: var(--accent-color-green);
-    color: white;
-}
-
-.df-btn {
-    background-color: var(--accent-color-blue);
-    color: white;
-    flex: 100%;
-}
-
-.download-btn {
-    background-color: var(--accent-color-blue);
-    color: white;
-}
-
-/* --- Bottom Navigation Bar --- */
+/* Bottom Navigation */
 .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    min-height: 60px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: var(--bottom-nav-bg);
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 100;
-    max-width: 600px;
-    margin: 0 auto; /* Center on large screens */
-    padding: 10px 0;
+    display:flex; padding:12px 0; background:var(--bottombar); border-top:1px solid var(--border);
+    position:sticky; bottom:0; z-index:100;
 }
-
 .nav-btn {
-    background: none;
-    border: none;
-    color: var(--secondary-text-color);
-    font-size: 20px;
-    cursor: pointer;
-    padding: 5px;
-    transition: color 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    text-decoration: none;
+    flex:1; text-align:center; color:var(--secondary); text-decoration:none; font-size:12px;
 }
+.nav-btn i { font-size:22px; display:block; margin-bottom:4px; }
+.nav-btn.active, .nav-btn:hover { color:var(--active); }
 
-.nav-btn span {
-    font-size: 10px;
-    font-weight: bold;
-    white-space: nowrap;
-}
-
-.nav-btn.active {
-    color: var(--bottom-nav-active);
-}
-
-/* --- Menu Overlay (Theme Switch & Platforms) --- */
-.menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--menu-bg);
-    backdrop-filter: blur(5px);
-    z-index: 200;
-    display: none; /* Hidden by default */
-    justify-content: flex-end; /* Align content to the right */
-}
-
-.menu-overlay.open {
-    display: flex;
-}
-
+/* Menu Overlay */
+.menu-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; z-index:1000; }
+.menu-overlay.active { display:flex; }
 .menu-content {
-    width: 80%; /* Takes up 80% of the screen width */
-    max-width: 300px;
-    background-color: var(--card-background);
-    padding: 20px;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-    height: 100%;
-    overflow-y: auto;
+    background:var(--card); padding:24px; border-radius:16px; width:90%; max-width:340px;
+    position:relative; box-shadow:0 10px 30px rgba(0,0,0,0.3);
 }
+#close-menu { position:absolute; top:12px; right:16px; background:none; border:none; font-size:28px; cursor:pointer; color:var(--text); }
 
-#close-menu {
-    float: right;
-    background: none;
-    border: none;
-    font-size: 30px;
-    cursor: pointer;
-    color: var(--text-color);
-    line-height: 0;
-}
+/* Theme Switch */
+.theme-switch-container { display:flex; justify-content:space-between; align-items:center; margin:20px 0; }
+.switch { position:relative; display:inline-block; width:52px; height:28px; }
+.switch input { opacity:0; width:0; height:0; }
+.slider { position:absolute; cursor:pointer; inset:0; background:#ccc; border-radius:34px; transition:.4s; }
+.slider:before { position:absolute; content:""; height:22px; width:22px; left:4px; bottom:3px; background:white; border-radius:50%; transition:.4s; }
+input:checked + .slider { background:var(--blue); }
+input:checked + .slider:before { transform:translateX(24px); }
 
-.menu-content h2, .menu-content h3 {
-    color: var(--text-color);
-    margin-top: 20px;
-    margin-bottom: 15px;
-}
-
-.theme-switch-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding: 10px 0;
-}
-
-.theme-switch-container span {
-    font-weight: bold;
-    color: var(--text-color);
-}
-
-.platform-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
+/* Platform Buttons (Menu) */
+.platform-buttons { display:flex; flex-direction:column; gap:10px; margin:16px 0; }
 .platform-btn {
-    background-color: var(--platform-btn-bg);
-    color: var(--platform-btn-text);
-    border: none;
-    padding: 12px;
-    border-radius: 4px;
-    font-size: 15px;
-    cursor: pointer;
-    text-align: left;
-    transition: background-color 0.2s, color 0.2s;
-    text-decoration: none;
+    display:flex; align-items:center; gap:12px; padding:12px 16px; background:var(--border);
+    color:var(--text); border-radius:10px; text-decoration:none; font-size:15px;
+}
+.platform-btn:hover, .platform-btn.active { background:var(--blue); color:white; }
+
+/* ============================================= */
+/*  FIX.HTML STYLES                              */
+/* ============================================= */
+.bug-fix-container { flex:1; padding:20px 16px; overflow-y:auto; }
+.form-wrapper {
+    max-width:500px; margin:0 auto; background:var(--card); padding:28px;
+    border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.12); border:1px solid var(--border);
+}
+.form-wrapper h2 { text-align:center; margin-bottom:8px; font-size:22px; }
+.form-subtitle { text-align:center; color:var(--secondary); margin-bottom:24px; font-size:14px; }
+.contact-form .form-group { margin-bottom:20px; }
+.contact-form label { display:block; margin-bottom:8px; font-weight:600; font-size:15px; }
+.contact-form input, .contact-form textarea {
+    width:100%; padding:14px; border:1px solid var(--border); border-radius:10px;
+    background:var(--bg); color:var(--text); font-size:15px; font-family:inherit;
+}
+.contact-form input:focus, .contact-form textarea:focus {
+    outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(0,123,255,0.2);
+}
+.submit-btn {
+    width:100%; padding:16px; background:var(--whatsapp); color:white; border:none;
+    border-radius:12px; font-size:16px; font-weight:bold; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:10px; margin-top:10px;
+}
+.submit-btn:hover { background:#128C7E; }
+.support-info { text-align:center; margin-top:28px; padding-top:20px; border-top:1px solid var(--border); color:var(--secondary); }
+.whatsapp-link { display:inline-flex; align-items:center; gap:8px; color:var(--whatsapp); text-decoration:none; font-weight:bold; font-size:16px; }
+.whatsapp-link:hover { text-decoration:underline; }
+
+/* ============================================= */
+/*  NEWS.HTML STYLES – BEAUTIFUL & MODERN        */
+/* ============================================= */
+.news-container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 8px 16px 20px;
+    flex: 1;
+}
+
+.news-card-photo {
+    background: var(--card);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    border: 1px solid var(--border);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-card-photo:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+}
+
+.news-thumb-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
     display: block;
 }
 
-.platform-btn i {
-    margin-right: 10px;
-}
-        
-/* --- The Actual Toggle Switch (CSS from W3Schools base) --- */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
+.news-thumb-overlay {
     position: absolute;
-    cursor: pointer;
-    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: white;
+    padding: 20px 16px 12px;
+    font-size: 13px;
+    font-weight: 500;
 }
 
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
+.news-card-content {
+    padding: 18px 16px;
 }
 
-input:checked + .slider {
-    background-color: var(--accent-color-blue);
-}
-
-input:focus + .slider {
-    box-shadow: 0 0 1px var(--accent-color-blue);
-}
-
-input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-    border-radius: 34px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
-}
-
-.section-title {
-    color: var(--text-color);
+.news-card-content h3 {
+    font-size: 17px;
     margin-bottom: 10px;
-    border-left: 5px solid var(--primary-color);
-    padding-left: 10px;
+    color: var(--text);
+    line-height: 1.4;
 }
 
-/* Remove unused .versions class as it's replaced */
-.versions {
-    display: none;
+.news-card-content p {
+    font-size: 14.5px;
+    color: var(--secondary);
+    line-height: 1.6;
 }
 
-/* --- Responsive Media Queries for Header (New Addition) --- */
-@media (max-width: 480px) { 
-    #search-input {
-        font-size: 14px; /* Ensure input font scales down */
-    }
-    
-    #menu-btn {
-        margin-left: 5px; /* Reduce margin for menu button */
-        font-size: 18px; /* Slightly smaller icon */
-    }
-
-    .nav-btn span {
-        font-size: 9px; /* Smaller text on very small screens */
-    }
-
-    .bottom-nav {
-        min-height: 70px; /* Slightly taller for text */
-    }
-}
-
-
-/* Add this to styles.css for fixed header height across all pages */
-
-.top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    min-height: 60px; /* Fixed minimum height to ensure consistency */
-    background-color: var(--top-bar-bg);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+/* Responsive */
+@media (max-width: 480px) {
+    .top-bar { padding:0 12px; }
+    .search-container { max-width:180px; }
+    .form-wrapper, .news-container { padding:16px; }
+    .news-thumb-img { height: 160px; }
 }

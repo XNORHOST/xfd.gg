@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X.N.O.R News & Updates</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* Local fallback if styles.css not loaded */
+        .news-container { max-width: 600px; margin: 0 auto; padding: 20px 10px; flex: 1; }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <header class="top-bar">
+        <a href="../index.html" class="app-title"><i class="fas fa-arrow-left"></i> News</a>
+        <button id="menu-btn" aria-label="Open Menu"><i class="fas fa-bars"></i></button>
+    </header>
+
+    <!-- MENU OVERLAY -->
+    <div id="menu-overlay" class="menu-overlay">
+        <div class="menu-content">
+            <button id="close-menu" aria-label="Close Menu">×</button>
+            <h2>Settings</h2>
+            <div class="theme-switch-container">
+                <span>Dark/Light Theme:</span>
+                <label class="switch">
+                    <input type="checkbox" id="theme-switch">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <hr>
+            <h3>Download for:</h3>
+            <div class="platform-buttons">
+                <a href="android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
+                <a href="apple.html" class="platform-btn"><i class="fab fa-apple"></i> Apple</a>
+                <a href="windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
+                <a href="mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
+            </div>
+            <hr>
+            <h3>About</h3>
+            <div class="platform-buttons">
+                <a href="about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
+                <a href="fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="news-container">
+
+        <!-- NEWS CARD 1 -->
+        <article class="news-card-photo">
+            <div style="position:relative;">
+                <img src="https://i.imgur.com/9k2qL5P.jpeg" alt="RealityScan" class="news-thumb-img">
+                <div class="news-thumb-overlay">
+                    15-04-2022, 11:47
+                </div>
+            </div>
+            <div class="news-card-content">
+                <h3>Epic Games announced a phone app for creating 3D models</h3>
+                <p>RealityScan lets users scan real-world objects using just their smartphone camera and generate high-quality 3D models in minutes.</p>
+            </div>
+        </article>
+
+        <!-- NEWS CARD 2 -->
+        <article class="news-card-photo">
+            <div style="position:relative;">
+                <img src="https://i.imgur.com/5vR8n9k.jpeg" alt="WWDC 2022" class="news-thumb-img">
+                <div class="news-thumb-overlay">
+                    15-04-2022, 11:46
+                </div>
+            </div>
+            <div class="news-card-content">
+                <h3>WWDC 2022 Online Developer Conference to be held June 6-10</h3>
+                <p>Apple will showcase the latest advancements in iOS, iPadOS, macOS, watchOS, and tvOS with live keynotes and sessions.</p>
+            </div>
+        </article>
+        
+         <!-- NEWS CARD 2 -->
+        <article class="news-card-photo">
+            <div style="position:relative;">
+                <img src="https://i.imgur.com/5vR8n9k.jpeg" alt="WWDC 2022" class="news-thumb-img">
+                <div class="news-thumb-overlay">
+                    15-04-2022, 11:46
+                </div>
+            </div>
+            <div class="news-card-content">
+                <h3>WWDC 2022 Online Developer Conference to be held June 6-10</h3>
+                <p>Apple will showcase the latest advancements in iOS, iPadOS, macOS, watchOS, and tvOS with live keynotes and sessions.</p>
+            </div>
+        </article>
+        
+         <!-- NEWS CARD 2 -->
+        <article class="news-card-photo">
+            <div style="position:relative;">
+                <img src="https://i.imgur.com/5vR8n9k.jpeg" alt="WWDC 2022" class="news-thumb-img">
+                <div class="news-thumb-overlay">
+                    15-04-2022, 11:46
+                </div>
+            </div>
+            <div class="news-card-content">
+                <h3>WWDC 2022 Online Developer Conference to be held June 6-10</h3>
+                <p>Apple will showcase the latest advancements in iOS, iPadOS, macOS, watchOS, and tvOS with live keynotes and sessions.</p>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+        <a href="../index.html" class="nav-btn"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="../android.html" class="nav-btn"><i class="fab fa-android"></i><span>Android</span></a>
+        <a href="../windows.html" class="nav-btn"><i class="fab fa-windows"></i><span>Windows</span></a>
+        <a href="news.html" class="nav-btn"><i class="fas fa-newspaper"></i><span>News</span></a>
+    </nav>
+
+    <script src="main.js"></script>
+</body>
+  </html>
