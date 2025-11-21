@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +8,19 @@
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+
     <header class="top-bar">
-        <a href="../index.html" class="app-title"><i class="fas fa-arrow-left"></i>Fix</a>
-        <button id="menu-btn" aria-label="Open Menu"><i class="fas fa-ellipsis-v"></i></i></button>
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Fix Issues</a>
+        <button id="menu-btn" aria-label="Open Menu">
+            <i class="fas fa-ellipsis-v"></i>
+        </button>
     </header>
 
-    <div id="menu-overlay" class="menu-overlay">
+        <div id="menu-overlay" class="menu-overlay">
         <div class="menu-content">
-            <button id="close-menu" aria-label="Close Menu">×</button>
+            <button id="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
             <h2>Settings</h2>
+            <!-- your theme switch and menu items -->
             <div class="theme-switch-container">
                 <span>Dark/Light Theme:</span>
                 <label class="switch">
@@ -24,7 +28,7 @@
                     <span class="slider round"></span>
                 </label>
             </div>
-            <hr> <br>
+            <hr><br>
             <h3>Download for:</h3>
             <div class="platform-buttons">
                 <a href="../android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
@@ -35,36 +39,51 @@
             <hr> <br>
             <h3>About</h3>
             <div class="platform-buttons">
-                <a href="about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
+                <a href="../about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
                 <a href="fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
             </div>
         </div>
     </div>
 
     <main class="bug-fix-container">
-        <form class="contact-form" id="bug-report-form">
-            <h2>Bug Fix & Troubleshooting</h2>
-            <br>
-            <div class="form-group">
-                <label for="file-item">File item:</label>
-                <input type="text" id="file-item" list="file-items" placeholder="Type to search...">
-                <datalist id="file-items">
-                    <option value="Windows 11">
-                    <option value="Windows 10">
-                    <option value="WhatsApp Messenger">
-                    <option value="Adobe Photoshop">
-                </datalist>
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea id="description" placeholder="Describe the bug..."></textarea>
-            </div>
-            <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Submit Report</button>
-        </form>
+        <div class="form-wrapper">
+            <h2><i class="fas fa-bug"></i> Bug Report</h2>
+            <p class="form-subtitle">Help us improve XNOR Cloud!</p>
+
+            <form id="bug-report-form" class="contact-form">
+                <div class="form-group">
+                    <label for="unit-title">Unit Title:</label>
+                    <select id="unit-title" required>
+                        <option value="" disabled selected>Select category...</option>
+                        <option value="Adobe Software">Adobe Software</option>
+                        <option value="Windows ISOs">Windows ISOs</option>
+                        <option value="Linux Distros">Linux Distros</option>
+                        <option value="Programming">Programming</option>
+                        <option value="Android Apps">Android Apps</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="file-item">File Item:</label>
+                    <select id="file-item" required>
+                        <option value="" disabled selected>First select Unit Title</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" rows="5" placeholder="Describe the issue..." required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fab fa-whatsapp"></i> Send via WhatsApp
+                </button>
+            </form>
+        </div>
     </main>
 
     <nav class="bottom-nav">
-        <a href="../index.html" class="nav-btn active"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="../index.html" class="nav-btn"><i class="fas fa-home"></i><span>Home</span></a>
         <a href="../android.html" class="nav-btn"><i class="fab fa-android"></i><span>Android</span></a>
         <a href="../windows.html" class="nav-btn"><i class="fab fa-windows"></i><span>Windows</span></a>
         <a href="news.html" class="nav-btn"><i class="fas fa-newspaper"></i><span>News</span></a>
@@ -72,16 +91,43 @@
 
     <script src="../main.js"></script>
     <script>
-        document.getElementById('bug-report-form').addEventListener('submit', e => {
+        const unitFiles = {
+            "Adobe Software": ["Adobe XD 59.0.12.2", "Adobe Photoshop 2025", "Adobe Lightroom Classic 14.5.1", "Adobe Premiere Pro 2025"],
+            "Windows ISOs": ["Windows 10 22H2 (x 64-bit)", "Windows 8.1 (x64)", "Windows 8.1 (x86)", "Windows 7 Pro (32-bit)", "Windows 7 Pro (64-bit)"],
+            "Linux Distros": ["Kali Linux 2025.3", "Ubuntu 24.04.3 LTS", "Anhdv Boot 2024 v24.1 Premium"],
+            "Programming": ["Node.js 25.1.0", "GitHub Desktop 3.5.4"],
+            "Android Apps": ["ReVanced YouTube Music v8.10.52", "MicroG 0.3.1.4.240913"]
+        };
+
+        const unitSelect = document.getElementById('unit-title');
+        const fileSelect = document.getElementById('file-item');
+
+        unitSelect.addEventListener('change', () => {
+            const selected = unitSelect.value;
+            fileSelect.innerHTML = '<option value="" disabled selected>Select file...</option>';
+            if (selected && unitFiles[selected]) {
+                unitFiles[selected].forEach(file => {
+                    const opt = document.createElement('option');
+                    opt.value = file;
+                    opt.textContent = file;
+                    fileSelect.appendChild(opt);
+                });
+            }
+        });
+
+        document.getElementById('bug-report-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const fileItem = document.getElementById('file-item').value.trim();
-            const description = document.getElementById('description').value.trim();
-            const message = `*Bug Report from X.N.O.R User:*\n\nFile Item: ${fileItem}\nDescription:\n${description}\n\n> *X.N.O.R Could™*`;
-            const url = `https://wa.me/94703090240?text=${encodeURIComponent(message)}`;
+            const unit = unitSelect.options[unitSelect.selectedIndex].text;
+            const file = fileSelect.options[fileSelect.selectedIndex].text;
+            const desc = document.getElementById('description').value.trim();
+
+            const message = `*Bug Report from X.N.O.R User:*\n\n*Unit Title:* ${unit}\n*File Item:* ${file}\n*Description:*\n${desc}\n\n> *X.N.O.R Cloud™*`;
+            const url = `https://wa.me/94741148480?text=${encodeURIComponent(message)}`;
             window.open(url, '_blank');
-            e.target.reset();
+            this.reset();
+            fileSelect.innerHTML = '<option value="" disabled selected>First select Unit Title</option>';
+            alert('Thank you! Report sent successfully 🎉');
         });
     </script>
 </body>
-
 </html>

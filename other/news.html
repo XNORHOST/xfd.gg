@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>X.N.O.R News & Updates</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="../styles.css">
-    <style>
-        /* Local fallback if styles.css not loaded */
-        .news-container { max-width: 600px; margin: 0 auto; padding: 20px 10px; flex: 1; }
-    </style>
 </head>
 <body>
 
-    <!-- TOP BAR -->
- <header class="top-bar">
+    <header class="top-bar">
         <span class="app-title">XNOR Cloud</span>
         <div class="search-container">
             <i class="fas fa-search search-icon"></i>
@@ -25,11 +20,12 @@
         </button>
     </header>
 
-    <!-- MENU OVERLAY -->
+    <!-- MENU OVERLAY (same as index) -->
     <div id="menu-overlay" class="menu-overlay">
         <div class="menu-content">
-            <button id="close-menu" aria-label="Close Menu">×</button>
+            <button id="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
             <h2>Settings</h2>
+            <!-- your theme switch and menu items -->
             <div class="theme-switch-container">
                 <span>Dark/Light Theme:</span>
                 <label class="switch">
@@ -40,30 +36,26 @@
             <hr> <br>
             <h3>Download for:</h3>
             <div class="platform-buttons">
-                <a href="android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
-                <a href="apple.html" class="platform-btn"><i class="fab fa-apple"></i> Apple</a>
-                <a href="windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
-                <a href="mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
+                <a href="../android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
+                <a href="../apple.html" class="platform-btn"><i class="fab fa-apple"></i> Apple</a>
+                <a href="../windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
+                <a href="../mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
             </div>
-            <hr> <br>
+            <hr><br>
             <h3>About</h3>
             <div class="platform-buttons">
-                <a href="about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
+                <a href="../about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
                 <a href="fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
             </div>
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
     <main class="news-container">
-
-        <!-- NEWS CARD 1 -->
-        <article class="news-card-photo">
+        <!-- ALL NEWS CARDS HAVE data-search -->
+        <article class="news-card-photo" data-search="epic games realityscan 3d model phone app scan object">
             <div style="position:relative;">
                 <img src="https://i.imgur.com/9k2qL5P.jpeg" alt="RealityScan" class="news-thumb-img">
-                <div class="news-thumb-overlay">
-                    15-04-2022, 11:47
-                </div>
+                <div class="news-thumb-overlay">15-04-2022, 11:47</div>
             </div>
             <div class="news-card-content">
                 <h3>Epic Games announced a phone app for creating 3D models</h3>
@@ -71,41 +63,10 @@
             </div>
         </article>
 
-        <!-- NEWS CARD 2 -->
-        <article class="news-card-photo">
+        <article class="news-card-photo" data-search="wwdc 2022 apple ios ipados macos watchos tvos keynote">
             <div style="position:relative;">
                 <img src="https://i.imgur.com/5vR8n9k.jpeg" alt="WWDC 2022" class="news-thumb-img">
-                <div class="news-thumb-overlay">
-                    15-04-2022, 11:46
-                </div>
-            </div>
-            <div class="news-card-content">
-                <h3>WWDC 2022 Online Developer Conference to be held June 6-10</h3>
-                <p>Apple will showcase the latest advancements in iOS, iPadOS, macOS, watchOS, and tvOS with live keynotes and sessions.</p>
-            </div>
-        </article>
-        
-         <!-- NEWS CARD 2 -->
-        <article class="news-card-photo">
-            <div style="position:relative;">
-                <img src="https://i.imgur.com/5vR8n9k.jpeg" alt="WWDC 2022" class="news-thumb-img">
-                <div class="news-thumb-overlay">
-                    15-04-2022, 11:46
-                </div>
-            </div>
-            <div class="news-card-content">
-                <h3>WWDC 2022 Online Developer Conference to be held June 6-10</h3>
-                <p>Apple will showcase the latest advancements in iOS, iPadOS, macOS, watchOS, and tvOS with live keynotes and sessions.</p>
-            </div>
-        </article>
-        
-         <!-- NEWS CARD 2 -->
-        <article class="news-card-photo">
-            <div style="position:relative;">
-                <img src="https://i.imgur.com/5vR8n9k.jpeg" alt="WWDC 2022" class="news-thumb-img">
-                <div class="news-thumb-overlay">
-                    15-04-2022, 11:46
-                </div>
+                <div class="news-thumb-overlay">15-04-2022, 11:46</div>
             </div>
             <div class="news-card-content">
                 <h3>WWDC 2022 Online Developer Conference to be held June 6-10</h3>
@@ -113,16 +74,16 @@
             </div>
         </article>
 
+        <!-- Add more news with data-search as needed -->
     </main>
 
-    <!-- BOTTOM NAV -->
     <nav class="bottom-nav">
         <a href="../index.html" class="nav-btn"><i class="fas fa-home"></i><span>Home</span></a>
         <a href="../android.html" class="nav-btn"><i class="fab fa-android"></i><span>Android</span></a>
         <a href="../windows.html" class="nav-btn"><i class="fab fa-windows"></i><span>Windows</span></a>
-        <a href="news.html" class="nav-btn"><i class="fas fa-newspaper"></i><span>News</span></a>
+        <a href="news.html" class="nav-btn active"><i class="fas fa-newspaper"></i><span>News</span></a>
     </nav>
 
     <script src="../main.js"></script>
 </body>
-  </html>
+</html>
