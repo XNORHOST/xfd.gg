@@ -6,6 +6,14 @@
     <title>X.N.O.R News & Updates</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        .loading {
+            text-align: center;
+            padding: 50px 20px;
+            font-size: 18px;
+            color: var(--text-secondary, #999);
+        }
+    </style>
 </head>
 <body>
 
@@ -20,12 +28,11 @@
         </button>
     </header>
 
-    <!-- MENU OVERLAY (same as index) -->
+    <!-- MENU OVERLAY (unchanged) -->
     <div id="menu-overlay" class="menu-overlay">
         <div class="menu-content">
             <button id="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
             <h2>Settings</h2>
-            <!-- your theme switch and menu items -->
             <div class="theme-switch-container">
                 <span>Dark/Light Theme:</span>
                 <label class="switch">
@@ -33,7 +40,7 @@
                     <span class="slider round"></span>
                 </label>
             </div>
-            <hr> <br>
+            <hr><br>
             <h3>Download for:</h3>
             <div class="platform-buttons">
                 <a href="../android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
@@ -51,30 +58,7 @@
     </div>
 
     <main class="news-container">
-        <!-- ALL NEWS CARDS HAVE data-search -->
-        <article class="news-card-photo" data-search="epic games realityscan 3d model phone app scan object">
-            <div style="position:relative;">
-                <img src="https://i.imgur.com/9k2qL5P.jpeg" alt="RealityScan" class="news-thumb-img">
-                <div class="news-thumb-overlay">15-04-2022, 11:47</div>
-            </div>
-            <div class="news-card-content">
-                <h3>Epic Games announced a phone app for creating 3D models</h3>
-                <p>RealityScan lets users scan real-world objects using just their smartphone camera and generate high-quality 3D models in minutes.</p>
-            </div>
-        </article>
-
-        <article class="news-card-photo" data-search="wwdc 2022 apple ios ipados macos watchos tvos keynote">
-            <div style="position:relative;">
-                <img src="https://i.imgur.com/5vR8n9k.jpeg" alt="WWDC 2022" class="news-thumb-img">
-                <div class="news-thumb-overlay">15-04-2022, 11:46</div>
-            </div>
-            <div class="news-card-content">
-                <h3>WWDC 2022 Online Developer Conference to be held June 6-10</h3>
-                <p>Apple will showcase the latest advancements in iOS, iPadOS, macOS, watchOS, and tvOS with live keynotes and sessions.</p>
-            </div>
-        </article>
-
-        <!-- Add more news with data-search as needed -->
+        <div class="loading">Loading latest news via GNews API...</div>
     </main>
 
     <nav class="bottom-nav">
@@ -85,5 +69,58 @@
     </nav>
 
     <script src="../main.js"></script>
+
+    <!-- GNEWS API INTEGRATION (Best quality in 2025) -->
+    <script>
+        // ←←← PUT YOUR FREE GNEWS.IO TOKEN HERE ←←←
+        const GNEWS_TOKEN = 'a6d838a1aa143927f27b0821cc5273f9';
+
+        const QUERY = 'android OR pixel OR "wear os" OR foldable OR winlator OR gemini OR "windows on android" OR "mobile ai" OR "google ai"';
+
+        fetch(`https://gnews.io/api/v4/search?q=${encodeURIComponent(QUERY)}&lang=en&country=any&max=30&apikey=${GNEWS_TOKEN}`)
+            .then(r => r.json())
+            .then(data => {
+                if (!data.articles || data.articles.length === 0) throw new Error('No articles found');
+
+                const container = document.querySelector('.news-container');
+                container.innerHTML = '';
+
+                data.articles.forEach(a => {
+                    // Format date exactly like Daganna style: 21-11-2025, 16:00
+                    const pubDate = new Date(a.publishedAt);
+                    const dateStr = pubDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).split('/').join('-');
+                    const timeStr = pubDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+
+                    // Clean description (180 chars max)
+                    const desc = (a.description || '').replace(/<[^>]*>/g, '').substring(0, 180) + (a.description.length > 180 ? '...' : '');
+
+                    // Search keywords
+                    const searchText = `${a.title} ${desc} ${a.source.name}`.toLowerCase();
+
+                    // Image (GNews always provides great ones)
+                    const img = a.image || 'https://via.placeholder.com/600x400/111/fff?text=News';
+
+                    const card = `
+                        <article class="news-card-photo" data-search="${searchText}">
+                            <div style="position:relative;">
+                                <img src="${img}" alt="${a.title}" class="news-thumb-img"
+                                     onerror="this.src='https://via.placeholder.com/600x400/111/fff?text=No+Image'">
+                                <div class="news-thumb-overlay">${dateStr}, ${timeStr}</div>
+                            </div>
+                            <div class="news-card-content">
+                                <h3>${a.title}</h3>
+                                <p>${desc || 'Tap to read more...'}</p>
+                            </div>
+                        </article>`;
+
+                    container.innerHTML += card;
+                });
+            })
+            .catch(err => {
+                document.querySelector('.news-container').innerHTML = 
+                    `<div class="loading">⚠️ GNews error: Check your token or connection<br><br>${err.message}</div>`;
+                console.error('GNews fetch error:', err);
+            });
+    </script>
 </body>
 </html>
