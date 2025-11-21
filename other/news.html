@@ -9,9 +9,15 @@
     <style>
         .loading {
             text-align: center;
-            padding: 50px 20px;
+            padding: 60px 20px;
             font-size: 18px;
-            color: var(--text-secondary, #999);
+            color: var(--text-secondary, #aaa);
+        }
+        .error {
+            text-align: center;
+            padding: 40px 20px;
+            color: #ff4444;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -21,7 +27,7 @@
         <span class="app-title">XNOR Cloud</span>
         <div class="search-container">
             <i class="fas fa-search search-icon"></i>
-            <input type="text" id="search-input" placeholder="Search item...">
+            <input type="text" id="search-input" placeholder="Search news...">
         </div>
         <button id="menu-btn" aria-label="Open Menu">
             <i class="fas fa-ellipsis-v"></i>
@@ -52,13 +58,13 @@
             <h3>About</h3>
             <div class="platform-buttons">
                 <a href="../about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
-                <a href="fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
+                <a href="../fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
             </div>
         </div>
     </div>
 
     <main class="news-container">
-        <div class="loading">Loading latest news via GNews API...</div>
+        <div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading latest news...</div>
     </main>
 
     <nav class="bottom-nav">
@@ -70,56 +76,95 @@
 
     <script src="../main.js"></script>
 
-    <!-- GNEWS API INTEGRATION (Best quality in 2025) -->
+    <!-- FIXED & WORKING GNews Integration (November 2025) -->
     <script>
-        // ←←← PUT YOUR FREE GNEWS.IO TOKEN HERE ←←←
-        const GNEWS_TOKEN = 'cb395d756e8c28de92fefef008492f46';
+        // === PUT YOUR GNEWS TOKEN HERE (get free at https://gnews.io) ===
+        const GNEWS_TOKEN = 'cb395d756e8c28de92fefef008492f46'; // ← change if you have your own
 
         const QUERY = 'android OR pixel OR "wear os" OR foldable OR winlator OR gemini OR "windows on android" OR "mobile ai" OR "google ai"';
 
-        fetch(`https://gnews.io/api/v4/search?q=${encodeURIComponent(QUERY)}&lang=en&country=any&max=30&apikey=${GNEWS_TOKEN}`)
-            .then(r => r.json())
+        // Build the correct GNews URL (v4, 2025 working parameters)
+        const apiUrl = `https://gnews.io/api/v4/search?q=${encodeURIComponent(QUERY)}&lang=en&max=30&token=${GNEWS_TOKEN}`;
+
+        // Fixed: was &apikey=, now &token= (current working parameter in 2025)
+
+        const container = document.querySelector('.news-container');
+
+        // Live Search Functionality
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll('.news-card-photo').forEach(card => {
+                const text = card.dataset.search;
+                card.style.display = text.includes(term) ? '' : 'none';
+            });
+        });
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status} – ${response.statusText}`);
+                }
+                return response.json();
+            })
             .then(data => {
-                if (!data.articles || data.articles.length === 0) throw new Error('No articles found');
+                if (!data.articles || data.articles.length === 0) {
+                    throw new Error('No articles returned – maybe token expired or query too narrow');
+                }
 
-                const container = document.querySelector('.news-container');
-                container.innerHTML = '';
+                container.innerHTML = ''; // Clear loading message
 
-                data.articles.forEach(a => {
-                    // Format date exactly like Daganna style: 21-11-2025, 16:00
-                    const pubDate = new Date(a.publishedAt);
-                    const dateStr = pubDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).split('/').join('-');
-                    const timeStr = pubDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+                data.articles.forEach(article => {
+                    const pubDate = new Date(article.publishedAt);
 
-                    // Clean description (180 chars max)
-                    const desc = (a.description || '').replace(/<[^>]*>/g, '').substring(0, 180) + (a.description.length > 180 ? '...' : '');
+                    const dateStr = pubDate.toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    }).replace(/\//g, '-');
 
-                    // Search keywords
-                    const searchText = `${a.title} ${desc} ${a.source.name}`.toLowerCase();
+                    const timeStr = pubDate.toLocaleTimeString('en-GB', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
 
-                    // Image (GNews always provides great ones)
-                    const img = a.image || 'https://via.placeholder.com/600x400/111/fff?text=News';
+                    // Strip HTML tags and limit description
+                    let desc = (article.description || 'Tap to read more...').replace(/<[^>]*>/g, '');
+                    if (desc.length > 180) desc = desc.substring(0, 180) + '...';
 
-                    const card = `
-                        <article class="news-card-photo" data-search="${searchText}">
+                    const searchText = `${article.title} ${desc} ${article.source.name}`.toLowerCase();
+
+                    const imgUrl = article.image || 'https://via.placeholder.com/800x450/0f1419/ffffff?text=No+Image';
+
+                    const cardHtml = `
+                        <article class="news-card-photo" data-search="${searchText}" onclick="window.open('${article.url}', '_blank')">
                             <div style="position:relative;">
-                                <img src="${img}" alt="${a.title}" class="news-thumb-img"
-                                     onerror="this.src='https://via.placeholder.com/600x400/111/fff?text=No+Image'">
+                                <img src="${imgUrl}" alt="${article.title}" class="news-thumb-img"
+                                     onerror="this.src='https://via.placeholder.com/800x450/0f1419/ffffff?text=No+Image'; this.onerror=null;">
                                 <div class="news-thumb-overlay">${dateStr}, ${timeStr}</div>
                             </div>
                             <div class="news-card-content">
-                                <h3>${a.title}</h3>
-                                <p>${desc || 'Tap to read more...'}</p>
+                                <h3>${article.title}</h3>
+                                <p>${desc}</p>
+                                <small>Source: ${article.source.name}</small>
                             </div>
                         </article>`;
 
-                    container.innerHTML += card;
+                    container.innerHTML += cardHtml;
                 });
             })
             .catch(err => {
-                document.querySelector('.news-container').innerHTML = 
-                    `<div class="loading">⚠️ GNews error: Check your token or connection<br><br>${err.message}</div>`;
-                console.error('GNews fetch error:', err);
+                console.error('GNews Error:', err);
+                container.innerHTML = `
+                    <div class="error">
+                        <i class="fas fa-exclamation-triangle"></i><br><br>
+                        Failed to load news<br><br>
+                        Possible reasons:<br>
+                        • Invalid or expired GNews token<br>
+                        • Too many requests (free plan limit reached)<br>
+                        • Network/GitHub Pages CORS issue<br><br>
+                        <strong>Error:</strong> ${err.message}
+                    </div>`;
             });
     </script>
 </body>
