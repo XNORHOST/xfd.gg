@@ -6,20 +6,6 @@
     <title>X.N.O.R News & Updates</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="../styles.css">
-    <style>
-        .loading {
-            text-align: center;
-            padding: 60px 20px;
-            font-size: 18px;
-            color: var(--text-secondary, #aaa);
-        }
-        .error {
-            text-align: center;
-            padding: 40px 20px;
-            color: #ff4444;
-            font-size: 16px;
-        }
-    </style>
 </head>
 <body>
 
@@ -27,18 +13,19 @@
         <span class="app-title">XNOR Cloud</span>
         <div class="search-container">
             <i class="fas fa-search search-icon"></i>
-            <input type="text" id="search-input" placeholder="Search news...">
+            <input type="text" id="search-input" placeholder="Search item...">
         </div>
         <button id="menu-btn" aria-label="Open Menu">
             <i class="fas fa-ellipsis-v"></i>
         </button>
     </header>
 
-    <!-- MENU OVERLAY (unchanged) -->
+    <!-- MENU OVERLAY (same as index) -->
     <div id="menu-overlay" class="menu-overlay">
         <div class="menu-content">
             <button id="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
             <h2>Settings</h2>
+            <!-- your theme switch and menu items -->
             <div class="theme-switch-container">
                 <span>Dark/Light Theme:</span>
                 <label class="switch">
@@ -46,7 +33,7 @@
                     <span class="slider round"></span>
                 </label>
             </div>
-            <hr><br>
+            <hr> <br>
             <h3>Download for:</h3>
             <div class="platform-buttons">
                 <a href="../android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
@@ -58,14 +45,26 @@
             <h3>About</h3>
             <div class="platform-buttons">
                 <a href="../about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
-                <a href="../fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
+                <a href="fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
             </div>
         </div>
     </div>
 
     <main class="news-container">
-        <div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading latest news...</div>
-    </main>
+    <!-- Loading message -->
+    <div id="loading" style="text-align:center; padding:40px; color:var(--text-secondary);">
+        <i class="fas fa-spinner fa-spin" style="font-size:24px;"></i> Loading latest tech news...
+    </div>
+
+    <!-- News will be injected here by JavaScript -->
+    <div id="news-grid"></div>
+
+    <!-- No results message (for search) -->
+    <div id="no-results" style="display:none; text-align:center; padding:50px; color:var(--text-secondary);">
+        <i class="fas fa-search" style="font-size:32px; margin-bottom:16px; opacity:0.5;"></i>
+        <p>No news found matching your search.</p>
+    </div>
+</main>
 
     <nav class="bottom-nav">
         <a href="../index.html" class="nav-btn"><i class="fas fa-home"></i><span>Home</span></a>
@@ -74,98 +73,135 @@
         <a href="news.html" class="nav-btn active"><i class="fas fa-newspaper"></i><span>News</span></a>
     </nav>
 
-    <script src="../main.js"></script>
+<script>
+// === XNOR Cloud - Auto News System (2025) ===
+// Fresh tech news from The Verge, TechCrunch, 9to5Google, Android Police, Ars Technica
 
-    <!-- FIXED & WORKING GNews Integration (November 2025) -->
-    <script>
-        // === PUT YOUR GNEWS TOKEN HERE (get free at https://gnews.io) ===
-        const GNEWS_TOKEN = 'cb395d756e8c28de92fefef008492f46'; // ← change if you have your own
+const newsGrid = document.getElementById('news-grid');
+const loading = document.getElementById('loading');
+const noResults = document.getElementById('no-results');
+const searchInput = document.getElementById('search-input');
 
-        const QUERY = 'android OR pixel OR "wear os" OR foldable OR winlator OR gemini OR "windows on android" OR "mobile ai" OR "google ai"';
+const FEEDS = [
+    'https://www.theverge.com/rss/index.xml',
+    'https://techcrunch.com/feed/',
+    'https://9to5google.com/rss',
+    'https://www.androidpolice.com/feed/',
+    'https://arstechnica.com/rss/',
+    'https://www.macrumors.com/macrumors.xml',
+    'https://www.xda-developers.com/feed/'
+];
 
-        // Build the correct GNews URL (v4, 2025 working parameters)
-        const apiUrl = `https://gnews.io/api/v4/search?q=${encodeURIComponent(QUERY)}&lang=en&max=30&token=${GNEWS_TOKEN}`;
+async function fetchFeed(url) {
+    try {
+        const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=';
+        const res = await fetch(proxy + encodeURIComponent(url));
+        const data = await res.json();
+        return data.items || [];
+    } catch (e) {
+        console.log("Feed failed:", url);
+        return [];
+    }
+}
 
-        // Fixed: was &apikey=, now &token= (current working parameter in 2025)
+function extractImage(content) {
+    if (!content) return 'https://via.placeholder.com/400x200/333/999?text=No+Image';
+    const match = content.match(/src=["'](.*?\.(jpg|jpeg|png|gif|webp))["']/i);
+    return match ? match[1] : 'https://via.placeholder.com/400x200/333/999?text=No+Image';
+}
 
-        const container = document.querySelector('.news-container');
+function cleanText(html) {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return div.textContent || div.innerText || '';
+}
 
-        // Live Search Functionality
-        const searchInput = document.getElementById('search-input');
-        searchInput.addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            document.querySelectorAll('.news-card-photo').forEach(card => {
-                const text = card.dataset.search;
-                card.style.display = text.includes(term) ? '' : 'none';
-            });
-        });
+function formatDate(dateStr) {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('en-GB', { day:'2-digit', month:'2-digit', year:'numeric' }) 
+        + ', ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+}
 
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status} – ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (!data.articles || data.articles.length === 0) {
-                    throw new Error('No articles returned – maybe token expired or query too narrow');
-                }
+async function loadAllNews() {
+    let allArticles = [];
+    
+    for (const feed of FEEDS) {
+        const articles = await fetchFeed(feed);
+        allArticles = allArticles.concat(articles);
+    }
 
-                container.innerHTML = ''; // Clear loading message
+    // Sort by date (newest first)
+    allArticles.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 
-                data.articles.forEach(article => {
-                    const pubDate = new Date(article.publishedAt);
+    // Remove duplicates by link
+    const seen = new Set();
+    allArticles = allArticles.filter(item => {
+        if (seen.has(item.link)) return false;
+        seen.add(item.link);
+        return true;
+    });
 
-                    const dateStr = pubDate.toLocaleDateString('en-GB', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric'
-                    }).replace(/\//g, '-');
+    renderNews(allArticles.slice(0, 50)); // Show latest 50
+    loading.style.display = 'none';
+}
 
-                    const timeStr = pubDate.toLocaleTimeString('en-GB', {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
+function renderNews(articles) {
+    if (articles.length === 0) {
+        noResults.style.display = 'block';
+        return;
+    }
 
-                    // Strip HTML tags and limit description
-                    let desc = (article.description || 'Tap to read more...').replace(/<[^>]*>/g, '');
-                    if (desc.length > 180) desc = desc.substring(0, 180) + '...';
+    newsGrid.innerHTML = '';
+    
+    articles.forEach(item => {
+        const img = extractImage(item.description || item.content);
+        const excerpt = cleanText(item.description || item.content).substring(0, 160) + '...';
+        const dateStr = formatDate(item.pubDate);
 
-                    const searchText = `${article.title} ${desc} ${article.source.name}`.toLowerCase();
+        const searchTerms = `${item.title} ${item.author || ''} ${item.categories?.join(' ') || ''} ${cleanText(item.description)}`.toLowerCase();
 
-                    const imgUrl = article.image || 'https://via.placeholder.com/800x450/0f1419/ffffff?text=No+Image';
+        const article = document.createElement('article');
+        article.className = 'news-card-photo';
+        article.dataset.search = searchTerms;
 
-                    const cardHtml = `
-                        <article class="news-card-photo" data-search="${searchText}" onclick="window.open('${article.url}', '_blank')">
-                            <div style="position:relative;">
-                                <img src="${imgUrl}" alt="${article.title}" class="news-thumb-img"
-                                     onerror="this.src='https://via.placeholder.com/800x450/0f1419/ffffff?text=No+Image'; this.onerror=null;">
-                                <div class="news-thumb-overlay">${dateStr}, ${timeStr}</div>
-                            </div>
-                            <div class="news-card-content">
-                                <h3>${article.title}</h3>
-                                <p>${desc}</p>
-                                <small>Source: ${article.source.name}</small>
-                            </div>
-                        </article>`;
+        article.innerHTML = `
+            <div style="position:relative;">
+                <img src="${img}" alt="${item.title}" class="news-thumb-img" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200/222/aaa?text=Image+Not+Found'">
+                <div class="news-thumb-overlay">${dateStr}</div>
+            </div>
+            <div class="news-card-content">
+                <h3>${item.title}</h3>
+                <p>${excerpt}</p>
+            </div>
+        `;
 
-                    container.innerHTML += cardHtml;
-                });
-            })
-            .catch(err => {
-                console.error('GNews Error:', err);
-                container.innerHTML = `
-                    <div class="error">
-                        <i class="fas fa-exclamation-triangle"></i><br><br>
-                        Failed to load news<br><br>
-                        Possible reasons:<br>
-                        • Invalid or expired GNews token<br>
-                        • Too many requests (free plan limit reached)<br>
-                        • Network/GitHub Pages CORS issue<br><br>
-                        <strong>Error:</strong> ${err.message}
-                    </div>`;
-            });
-    </script>
+        article.style.cursor = 'pointer';
+        article.onclick = () => window.open(item.link, '_blank');
+
+        newsGrid.appendChild(article);
+    });
+}
+
+// Live Search (reuses your existing search input)
+searchInput?.addEventListener('input', () => {
+    const term = searchInput.value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.news-card-photo');
+
+    let visible = 0;
+    cards.forEach(card => {
+        const matches = card.dataset.search.includes(term);
+        card.style.display = matches ? '' : 'none';
+        if (matches) visible++;
+    });
+
+    noResults.style.display = visible === 0 ? 'block' : 'none';
+});
+
+// Start loading news
+loadAllNews();
+</script>
+
+<!-- Keep your existing main.js if you have menu/theme code, or just remove it -->
+<script src="../main.js"></script>
 </body>
 </html>
