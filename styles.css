@@ -353,3 +353,115 @@ input:checked + .slider:before { transform:translateX(24px); }
     border-color: #007bff;
     box-shadow: 0 8px 20px rgba(0, 123, 255, 0.18);
 }
+
+/* MODERN CLOSE BUTTON – EXACTLY LIKE YOUR SCREENSHOT */
+#close-menu {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+#close-menu i {
+    font-size: 19px;
+    color: #ffffff;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+/* HOVER – lifts + scales + stronger glow */
+#close-menu:hover {
+    background: rgba(255, 255, 255, 0.28);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+#close-menu:active {
+    transform: scale(0.95);
+}
+
+/* LIGHT THEME – clean & soft */
+[data-theme="light"] #close-menu {
+    background: rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] #close-menu i {
+    color: #333;
+}
+
+[data-theme="light"] #close-menu:hover {
+    background: rgba(0, 123, 255, 0.15);
+    border-color: #007bff;
+    box-shadow: 0 10px 25px rgba(0, 123, 255, 0.2);
+}/* MODERN CLOSE BUTTON – EXACTLY LIKE YOUR SCREENSHOT */
+#close-menu {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+#close-menu i {
+    font-size: 19px;
+    color: #ffffff;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+/* HOVER – lifts + scales + stronger glow */
+#close-menu:hover {
+    background: rgba(255, 255, 255, 0.28);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+#close-menu:active {
+    transform: scale(0.95);
+}
+
+/* LIGHT THEME – clean & soft */
+[data-theme="light"] #close-menu {
+    background: rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] #close-menu i {
+    color: #333;
+}
+
+[data-theme="light"] #close-menu:hover {
+    background: rgba(0, 123, 255, 0.15);
+    border-color: #007bff;
+    box-shadow: 0 10px 25px rgba(0, 123, 255, 0.2);
+}
