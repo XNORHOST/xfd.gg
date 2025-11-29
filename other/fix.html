@@ -6,11 +6,6 @@
     <title>X.N.O.R Bug Fix & Troubleshooting</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="../styles.css">
-    <style>
-        .hidden { display: none; }
-        .form-group { margin-bottom: 20px; }
-        textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #222; color: #fff; }
-    </style>
 </head>
 <body>
 
@@ -21,11 +16,11 @@
         </button>
     </header>
 
-    <!-- Menu overlay (unchanged) -->
     <div id="menu-overlay" class="menu-overlay">
         <div class="menu-content">
             <button id="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
             <h2>Settings</h2>
+            <!-- your theme switch and menu items -->
             <div class="theme-switch-container">
                 <span>Dark/Light Theme:</span>
                 <label class="switch">
@@ -41,7 +36,7 @@
                 <a href="../windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
                 <a href="../mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
             </div>
-            <hr><br>
+            <hr> <br>
             <h3>About</h3>
             <div class="platform-buttons">
                 <a href="../about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
@@ -53,15 +48,13 @@
     <main class="bug-fix-container">
         <div class="form-wrapper">
             <h2><i class="fas fa-bug"></i> Bug Report</h2>
-            <p class="form-subtitle">Help us improve X.N.O.R Cloud!</p>
+            <p class="form-subtitle">Help us improve XNOR Cloud!</p>
 
             <form id="bug-report-form" class="contact-form">
-
-                <!-- Unit Path -->
                 <div class="form-group">
                     <label for="unit-path">Unit Path:</label>
                     <select id="unit-path" required>
-                        <option value="" disabled selected>Select where the problem is...</option>
+                        <option value="" disabled selected>Select category...</option>
                         <option value="Home">Home</option>
                         <option value="Android">Android</option>
                         <option value="Windows">Windows</option>
@@ -70,26 +63,23 @@
                     </select>
                 </div>
 
-                <!-- File Item – only for Android & Windows -->
-                <div class="form-group hidden" id="file-item-group">
+                <div class="form-group" id="file-item-group" style="display: none;">
                     <label for="file-item">File Item:</label>
-                    <select id="file-item">
+                    <select id="file-item" required disabled>
                         <option value="" disabled selected>Select file...</option>
                     </select>
                 </div>
 
-                <!-- Problem Issue -->
-                <div class="form-group" id="problem-issue-group">
+                <div class="form-group" id="problem-issue-group" style="display: none;">
                     <label for="problem-issue">Problem Issue:</label>
-                    <select id="problem-issue" required>
-                        <option value="" disabled selected>First select Unit Path</option>
+                    <select id="problem-issue" required disabled>
+                        <option value="" disabled selected>Select problem...</option>
                     </select>
                 </div>
 
-                <!-- Custom description when "Other" is chosen -->
-                <div class="form-group hidden" id="custom-description-group">
-                    <label for="custom-description">Please describe the issue:</label>
-                    <textarea id="custom-description" rows="5" placeholder="Tell us exactly what’s wrong..."></textarea>
+                <div class="form-group" id="describe-issue-group" style="display: none;">
+                    <label for="describe-issue">Please describe the issue:</label>
+                    <textarea id="describe-issue" rows="5" placeholder="Describe the issue in detail..." required></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn">
@@ -108,14 +98,14 @@
 
     <script src="../main.js"></script>
     <script>
-        // All file lists (same as your original)
-        const fileLists = {
-            "Android": ["ReVanced YouTube Music v8.10.52", "MicroG 0.3.1.4.240913", "Adobe XD 59.0.12.2", "Adobe Photoshop 2025", "Adobe Lightroom Classic 14.5.1", "Adobe Premiere Pro 2025"],
-            "Windows": ["Windows 10 22H2 (x64-bit)", "Windows 8.1 (x64)", "Windows 8.1 (x86)", "Windows 7 Pro (32-bit)", "Windows 7 Pro (64-bit)", "Kali Linux 2025.3", "Ubuntu 24.04.3 LTS", "Anhdv Boot 2024 v24.1 Premium", "Node.js 25.1.0", "GitHub Desktop 3.5.4"]
+        // Unit files for Android and Windows (using original data, adapted)
+        const unitFiles = {
+            "Android": ["ReVanced YouTube Music v8.10.52", "MicroG 0.3.1.4.240913"],
+            "Windows": ["Windows 10 22H2 (x 64-bit)", "Windows 8.1 (x64)", "Windows 8.1 (x86)", "Windows 7 Pro (32-bit)", "Windows 7 Pro (64-bit)"]
         };
 
-        // Problem lists for each Unit Path
-        const problemLists = {
+        // Problem issues for each unit path
+        const problemIssues = {
             "Home": [
                 "Homepage Loading Issue",
                 "Navigation bar not working",
@@ -126,112 +116,153 @@
             "Android": [
                 "Download link not working",
                 "App crashing after download",
-                "Wrong version download",
-                "File corrupted / incomplete",
-                "Slow download speed",
+                "wrong version download",
+                "file corrupted / incomplete",
+                "slow download speed",
                 "Other"
             ],
             "Windows": [
                 "Download link not working",
                 "App crashing after download",
-                "Wrong version download",
-                "File corrupted / incomplete",
-                "Slow download speed",
+                "wrong version download",
+                "file corrupted / incomplete",
+                "slow download speed",
                 "Other"
             ],
             "News": [
                 "News not uploading",
-                "Images not loading",
-                "Old achievements showing",
+                "images not loading",
+                "old achievements showing",
                 "Other"
-            ],
-            "Other": ["Other"] // Only one option – forces custom text
+            ]
         };
 
         const unitPathSelect = document.getElementById('unit-path');
         const fileItemGroup = document.getElementById('file-item-group');
-        const fileSelect = document.getElementById('file-item');
-        const problemSelect = document.getElementById('problem-issue');
-        const customDescGroup = document.getElementById('custom-description-group');
-        const customDesc = document.getElementById('custom-description');
+        const fileItemSelect = document.getElementById('file-item');
+        const problemIssueGroup = document.getElementById('problem-issue-group');
+        const problemIssueSelect = document.getElementById('problem-issue');
+        const describeIssueGroup = document.getElementById('describe-issue-group');
+        const describeIssueTextarea = document.getElementById('describe-issue');
 
-        // When Unit Path changes
-        unitPathSelect.addEventListener('change', function () {
-            const selected = this.value;
+        // Reset function to hide all dynamic sections
+        function resetForm() {
+            fileItemGroup.style.display = 'none';
+            fileItemSelect.disabled = true;
+            fileItemSelect.innerHTML = '<option value="" disabled selected>Select file...</option>';
 
-            // Reset everything
-            fileItemGroup.classList.add('hidden');
-            fileSelect.innerHTML = '<option value="" disabled selected>Select file...</option>';
-            problemSelect.innerHTML = '<option value="" disabled selected>Select problem...</option>';
-            customDescGroup.classList.add('hidden');
-            customDesc.required = false;
+            problemIssueGroup.style.display = 'none';
+            problemIssueSelect.disabled = true;
+            problemIssueSelect.innerHTML = '<option value="" disabled selected>Select problem...</option>';
 
-            if (selected) {
-                // Show File Item only for Android & Windows
-                if (selected === "Android" || selected === "Windows") {
-                    fileItemGroup.classList.remove('hidden');
-                    fileLists[selected].forEach(file => {
+            describeIssueGroup.style.display = 'none';
+            describeIssueTextarea.value = '';
+            describeIssueTextarea.required = false;
+        }
+
+        // Handle Unit Path change
+        unitPathSelect.addEventListener('change', () => {
+            const selectedUnit = unitPathSelect.value;
+            resetForm();
+
+            if (selectedUnit === 'Other') {
+                // For Other: Hide Problem Issue, show Describe Issue
+                problemIssueGroup.style.display = 'none';
+                describeIssueGroup.style.display = 'block';
+                describeIssueTextarea.required = true;
+                return;
+            }
+
+            // For Home, Android, Windows, News: Show File Item if applicable, then Problem Issue
+            if (['Android', 'Windows'].includes(selectedUnit)) {
+                fileItemGroup.style.display = 'block';
+                fileItemSelect.disabled = false;
+                fileItemSelect.innerHTML = '<option value="" disabled selected>Select file...</option>';
+                if (unitFiles[selectedUnit]) {
+                    unitFiles[selectedUnit].forEach(file => {
                         const opt = document.createElement('option');
                         opt.value = file;
                         opt.textContent = file;
-                        fileSelect.appendChild(opt);
+                        fileItemSelect.appendChild(opt);
                     });
                 }
+            }
 
-                // Populate Problem Issue
-                problemLists[selected].forEach(problem => {
+            problemIssueGroup.style.display = 'block';
+            problemIssueSelect.disabled = false;
+            problemIssueSelect.innerHTML = '<option value="" disabled selected>Select problem...</option>';
+            if (problemIssues[selectedUnit]) {
+                problemIssues[selectedUnit].forEach(issue => {
                     const opt = document.createElement('option');
-                    opt.value = problem;
-                    opt.textContent = problem;
-                    problemSelect.appendChild(opt);
+                    opt.value = issue;
+                    opt.textContent = issue;
+                    problemIssueSelect.appendChild(opt);
                 });
             }
         });
 
-        // When Problem Issue changes – show custom textarea only if "Other"
-        problemSelect.addEventListener('change', function () {
-            if (this.value === "Other") {
-                customDescGroup.classList.remove('hidden');
-                customDesc.required = true;
+        // Handle File Item change (for Android/Windows) - just enables Problem Issue if not already
+        fileItemSelect.addEventListener('change', () => {
+            if (fileItemSelect.value && !problemIssueGroup.style.display || problemIssueGroup.style.display === 'none') {
+                problemIssueGroup.style.display = 'block';
+                problemIssueSelect.disabled = false;
+            }
+        });
+
+        // Handle Problem Issue change
+        problemIssueSelect.addEventListener('change', () => {
+            const selectedProblem = problemIssueSelect.value;
+            if (selectedProblem === 'Other') {
+                // For Other in Problem Issue: Show Describe Issue, but DO NOT hide Problem Issue
+                describeIssueGroup.style.display = 'block';
+                describeIssueTextarea.required = true;
             } else {
-                customDescGroup.classList.add('hidden');
-                customDesc.required = false;
+                // Hide Describe Issue if not Other
+                describeIssueGroup.style.display = 'none';
+                describeIssueTextarea.required = false;
+                describeIssueTextarea.value = '';
             }
         });
 
         // Form submit
-        document.getElementById('bug-report-form').addEventListener('submit', function (e) {
+        document.getElementById('bug-report-form').addEventListener('submit', function(e) {
             e.preventDefault();
+            const unit = unitPathSelect.options[unitPathSelect.selectedIndex].text;
+            let message = `*Bug Report from X.N.O.R User:*\n\n*Unit Path:* ${unit}`;
 
-            const unitPath = unitPathSelect.options[unitPathSelect.selectedIndex].text;
-            let fileItem = "";
-            if (!fileItemGroup.classList.contains('hidden')) {
-                fileItem = fileSelect.options[fileSelect.selectedIndex]?.text || "";
+            if (unit !== 'Other') {
+                const file = fileItemSelect.value || 'N/A';
+                if (file !== 'N/A') {
+                    message += `\n*File Item:* ${file}`;
+                }
+                const problem = problemIssueSelect.value || 'N/A';
+                if (problem !== 'N/A') {
+                    message += `\n*Problem Issue:* ${problem}`;
+                }
+                if (describeIssueTextarea.value.trim() && problemIssueSelect.value === 'Other') {
+                    message += `\n*Please describe the issue:*\n${describeIssueTextarea.value.trim()}`;
+                }
+            } else {
+                if (describeIssueTextarea.value.trim()) {
+                    message += `\n*Please describe the issue:*\n${describeIssueTextarea.value.trim()}`;
+                } else {
+                    alert('Please describe the issue.');
+                    return;
+                }
             }
 
-            let problemText = problemSelect.options[problemSelect.selectedIndex].text;
-
-            // If "Other" was chosen, use custom description
-            if (problemSelect.value === "Other") {
-                problemText = "Other – " + (customDesc.value.trim() || "No description provided");
+            if (!message.includes('describe the issue') && !message.includes('Problem Issue:')) {
+                alert('Please select a problem issue or describe it.');
+                return;
             }
 
-            const message = `*Bug Report from X.N.O.R User:*\n\n` +
-                `*Unit Path:* ${unitPath}\n` +
-                (fileItem ? `*File Item:* ${fileItem}\n` : ``) +
-                `*Problem:* ${problemText}\n\n` +
-                `> *X.N.O.R Cloud™*`;
-
+            message += `\n\n> *X.N.O.R Cloud™*`;
             const url = `https://wa.me/94741148480?text=${encodeURIComponent(message)}`;
             window.open(url, '_blank');
-
-            // Reset form
             this.reset();
-            fileItemGroup.classList.add('hidden');
-            customDescGroup.classList.add('hidden');
-            fileSelect.innerHTML = '<option value="" disabled selected>Select file...</option>';
-            problemSelect.innerHTML = '<option value="" disabled selected>First select Unit Path</option>';
-            alert('Thank you! Report sent successfully');
+            resetForm();
+            unitPathSelect.value = '';
+            alert('Thank you! Report sent successfully 🎉');
         });
     </script>
 </body>
