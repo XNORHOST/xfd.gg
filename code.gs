@@ -1,182 +1,260 @@
-<!-- code.gs -->
-<!-- 
-  ============================================
-  XNOR CLOUD – Google Apps Script (code.gs)
-  Deploy as Web App → Copy URL → Use in JS
-  ============================================
-  Google Sheet Structure:
-  Sheet1: "Items"    → item-id, name, description, category, download_url, open_url, size, website, icon_url, search_tags
-  Sheet2: "News"     → news-id, title, content_excerpt, image_url, link, date, category
-  Sheet3: "Users"    → SESSION_ID, Username, Password, FullName, Lastname, Birthday, WhatsAppNumber, Gender, Country
-  Sheet4: "Favorites"→ SESSION_ID, item-id, name
--->
+// ============================================
+// XNOR CLOUD – Google Apps Script (code.gs)
+// ============================================
+// Sheet tabs must be named EXACTLY:
+//   Items, News, Users, Favorites
+//
+// Columns (first row = headers, data starts row 2):
+// Items     : item-id, name, description, category, download_url, open_url, size, website, icon_url, search_tags
+// News      : news-id, title, content_excerpt, image_url, link, date, category
+// Users     : SESSION_ID, Username, Password, FullName, Lastname, Birthday, WhatsAppNumber, Gender, Country
+// Favorites : SESSION_ID, item-id, name
+// ============================================
+
+const SS = SpreadsheetApp.getActiveSpreadsheet();
+
+// Helper: get sheet by name, return null if missing
+function getSheet(name) {
+  return SS.getSheetByName(name);
+}
+
+// Helper: build success response
+function success(data) {
+  return ContentService.createTextOutput(JSON.stringify({ success: true, ...data }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// Helper: build error response
+function error(msg) {
+  return ContentService.createTextOutput(JSON.stringify({ success: false, message: msg }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
 function doGet(e) {
   const action = e.parameter.action;
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  
-  if (action === 'getItems') {
-    const sheet = ss.getSheetByName('Items');
-    const data = sheet.getDataRange().getValues().slice(1);
-    const items = data.map(row => ({
-      itemId: row[0], name: row[1], description: row[2], category: row[3],
-      downloadUrl: row[4], openUrl: row[5], size: row[6], website: row[7],
-      iconUrl: row[8], searchTags: row[9]
-    }));
-    return ContentService.createTextOutput(JSON.stringify({ success: true, items }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-  
-  if (action === 'getNews') {
-    const sheet = ss.getSheetByName('News');
-    const data = sheet.getDataRange().getValues().slice(1);
-    const news = data.map(row => ({
-      newsId: row[0], title: row[1], contentExcerpt: row[2], imageUrl: row[3],
-      link: row[4], date: row[5], category: row[6]
-    }));
-    return ContentService.createTextOutput(JSON.stringify({ success: true, news }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-  
-  if (action === 'getFavorites') {
-    const sessionId = e.parameter.sessionId;
-    const sheet = ss.getSheetByName('Favorites');
-    const data = sheet.getDataRange().getValues().slice(1);
-    const favs = data.filter(row => row[0] === sessionId).map(row => ({
-      sessionId: row[0], itemId: row[1], name: row[2]
-    }));
-    return ContentService.createTextOutput(JSON.stringify({ success: true, favorites: favs }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-  
-  if (action === 'getUser') {
-    const sessionId = e.parameter.sessionId;
-    const sheet = ss.getSheetByName('Users');
-    const data = sheet.getDataRange().getValues().slice(1);
-    const user = data.find(row => row[0] === sessionId);
-    if (user) {
-      return ContentService.createTextOutput(JSON.stringify({
-        success: true, user: {
-          sessionId: user[0], username: user[1], fullName: user[3],
-          lastname: user[4], birthday: user[5], whatsappNumber: user[6],
-          gender: user[7], country: user[8]
-        }
-      })).setMimeType(ContentService.MimeType.JSON);
+  if (!action) return error('Missing action parameter.');
+
+  try {
+    switch (action) {
+      case 'getItems': return getItems();
+      case 'getNews': return getNews();
+      case 'getFavorites': return getFavorites(e);
+      case 'getUser': return getUser(e);
+      default: return error(`Unknown action: ${action}`);
     }
-    return ContentService.createTextOutput(JSON.stringify({ success: false, message: 'User not found' }))
-      .setMimeType(ContentService.MimeType.JSON);
+  } catch (ex) {
+    return error(`Script error: ${ex.message}`);
   }
-  
-  return ContentService.createTextOutput(JSON.stringify({ success: false, message: 'Invalid action' }))
-    .setMimeType(ContentService.MimeType.JSON);
 }
 
 function doPost(e) {
   const data = JSON.parse(e.postData.contents);
   const action = data.action;
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  
-  if (action === 'register') {
-    const usersSheet = ss.getSheetByName('Users');
-    const existing = usersSheet.getDataRange().getValues().slice(1);
-    if (existing.some(row => row[1] === data.username)) {
-      return ContentService.createTextOutput(JSON.stringify({ success: false, message: 'Username already exists' }))
-        .setMimeType(ContentService.MimeType.JSON);
+  if (!action) return error('Missing action parameter.');
+
+  try {
+    switch (action) {
+      case 'register': return register(data);
+      case 'login': return login(data);
+      case 'updateAccount': return updateAccount(data);
+      case 'changePassword': return changePassword(data);
+      case 'deleteAccount': return deleteAccount(data);
+      case 'addFavorite': return addFavorite(data);
+      case 'removeFavorite': return removeFavorite(data);
+      default: return error(`Unknown action: ${action}`);
     }
-    const sessionId = 'SESS_' + Utilities.getUuid();
-    const userCount = existing.length + 1;
-    usersSheet.appendRow([sessionId, data.username, data.password, data.fullName, data.lastname,
-      data.birthday, data.whatsappNumber, data.gender, data.country]);
-    return ContentService.createTextOutput(JSON.stringify({ success: true, sessionId, userCount }))
-      .setMimeType(ContentService.MimeType.JSON);
+  } catch (ex) {
+    return error(`Script error: ${ex.message}`);
   }
-  
-  if (action === 'login') {
-    const usersSheet = ss.getSheetByName('Users');
-    const existing = usersSheet.getDataRange().getValues().slice(1);
-    const user = existing.find(row => row[1] === data.username && row[2] === data.password);
-    if (user) {
-      return ContentService.createTextOutput(JSON.stringify({
-        success: true, sessionId: user[0], username: user[1], fullName: user[3],
-        lastname: user[4], birthday: user[5], whatsappNumber: user[6], gender: user[7], country: user[8]
-      })).setMimeType(ContentService.MimeType.JSON);
+}
+
+// ==================== GET ITEMS ====================
+function getItems() {
+  const sheet = getSheet('Items');
+  if (!sheet) return error("Sheet 'Items' not found.");
+  const rows = sheet.getDataRange().getValues().slice(1);
+  const items = rows.map(r => ({
+    itemId: r[0] || '',
+    name: r[1] || '',
+    description: r[2] || '',
+    category: r[3] || '',
+    downloadUrl: r[4] || '',
+    openUrl: r[5] || '',
+    size: r[6] || '',
+    website: r[7] || '',
+    iconUrl: r[8] || '',
+    searchTags: r[9] || ''
+  }));
+  return success({ items });
+}
+
+// ==================== GET NEWS ====================
+function getNews() {
+  const sheet = getSheet('News');
+  if (!sheet) return error("Sheet 'News' not found.");
+  const rows = sheet.getDataRange().getValues().slice(1);
+  const news = rows.map(r => ({
+    newsId: r[0] || '',
+    title: r[1] || '',
+    contentExcerpt: r[2] || '',
+    imageUrl: r[3] || '',
+    link: r[4] || '',
+    date: r[5] || '',
+    category: r[6] || ''
+  }));
+  return success({ news });
+}
+
+// ==================== GET FAVORITES ====================
+function getFavorites(e) {
+  const sessionId = e.parameter.sessionId;
+  if (!sessionId) return error('Missing sessionId.');
+  const sheet = getSheet('Favorites');
+  if (!sheet) return error("Sheet 'Favorites' not found.");
+  const rows = sheet.getDataRange().getValues().slice(1);
+  const favs = rows.filter(r => r[0] === sessionId).map(r => ({
+    sessionId: r[0],
+    itemId: r[1] || '',
+    name: r[2] || ''
+  }));
+  return success({ favorites: favs });
+}
+
+// ==================== GET USER ====================
+function getUser(e) {
+  const sessionId = e.parameter.sessionId;
+  if (!sessionId) return error('Missing sessionId.');
+  const sheet = getSheet('Users');
+  if (!sheet) return error("Sheet 'Users' not found.");
+  const rows = sheet.getDataRange().getValues().slice(1);
+  const user = rows.find(r => r[0] === sessionId);
+  if (!user) return error('User not found.');
+  return success({
+    user: {
+      sessionId: user[0],
+      username: user[1],
+      fullName: user[3],
+      lastname: user[4],
+      birthday: user[5],
+      whatsappNumber: user[6],
+      gender: user[7],
+      country: user[8]
     }
-    return ContentService.createTextOutput(JSON.stringify({ success: false, message: 'Invalid credentials' }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-  
-  if (action === 'updateAccount') {
-    const usersSheet = ss.getSheetByName('Users');
-    const existing = usersSheet.getDataRange().getValues();
-    for (let i = 1; i < existing.length; i++) {
-      if (existing[i][0] === data.sessionId) {
-        usersSheet.getRange(i + 1, 4).setValue(data.fullName);
-        usersSheet.getRange(i + 1, 5).setValue(data.lastname);
-        usersSheet.getRange(i + 1, 6).setValue(data.birthday);
-        usersSheet.getRange(i + 1, 7).setValue(data.whatsappNumber);
-        usersSheet.getRange(i + 1, 8).setValue(data.gender);
-        usersSheet.getRange(i + 1, 9).setValue(data.country);
-        return ContentService.createTextOutput(JSON.stringify({ success: true, message: 'Account updated' }))
-          .setMimeType(ContentService.MimeType.JSON);
-      }
+  });
+}
+
+// ==================== REGISTER ====================
+function register(data) {
+  const { username, password, fullName, lastname, birthday, whatsappNumber, gender, country } = data;
+  if (!username || !password) return error('Username and password required.');
+  const sheet = getSheet('Users');
+  if (!sheet) return error("Sheet 'Users' not found.");
+  const rows = sheet.getDataRange().getValues().slice(1);
+  if (rows.some(r => r[1] === username)) return error('Username already exists.');
+  const sessionId = 'SESS_' + Utilities.getUuid();
+  sheet.appendRow([sessionId, username, password, fullName || '', lastname || '', birthday || '', whatsappNumber || '', gender || '', country || '']);
+  return success({ sessionId, userCount: rows.length + 1 });
+}
+
+// ==================== LOGIN ====================
+function login(data) {
+  const { username, password } = data;
+  if (!username || !password) return error('Username and password required.');
+  const sheet = getSheet('Users');
+  if (!sheet) return error("Sheet 'Users' not found.");
+  const rows = sheet.getDataRange().getValues().slice(1);
+  const user = rows.find(r => r[1] === username && r[2] === password);
+  if (!user) return error('Invalid username or password.');
+  return success({
+    sessionId: user[0],
+    username: user[1],
+    fullName: user[3],
+    lastname: user[4],
+    birthday: user[5],
+    whatsappNumber: user[6],
+    gender: user[7],
+    country: user[8]
+  });
+}
+
+// ==================== UPDATE ACCOUNT ====================
+function updateAccount(data) {
+  const { sessionId, fullName, lastname, birthday, whatsappNumber, gender, country } = data;
+  if (!sessionId) return error('Missing sessionId.');
+  const sheet = getSheet('Users');
+  if (!sheet) return error("Sheet 'Users' not found.");
+  const rows = sheet.getDataRange().getValues();
+  for (let i = 1; i < rows.length; i++) {
+    if (rows[i][0] === sessionId) {
+      const row = i + 1;
+      sheet.getRange(row, 4).setValue(fullName || '');
+      sheet.getRange(row, 5).setValue(lastname || '');
+      sheet.getRange(row, 6).setValue(birthday || '');
+      sheet.getRange(row, 7).setValue(whatsappNumber || '');
+      sheet.getRange(row, 8).setValue(gender || '');
+      sheet.getRange(row, 9).setValue(country || '');
+      return success({ message: 'Account updated.' });
     }
-    return ContentService.createTextOutput(JSON.stringify({ success: false, message: 'User not found' }))
-      .setMimeType(ContentService.MimeType.JSON);
   }
-  
-  if (action === 'changePassword') {
-    const usersSheet = ss.getSheetByName('Users');
-    const existing = usersSheet.getDataRange().getValues();
-    for (let i = 1; i < existing.length; i++) {
-      if (existing[i][0] === data.sessionId && existing[i][2] === data.oldPassword) {
-        usersSheet.getRange(i + 1, 3).setValue(data.newPassword);
-        return ContentService.createTextOutput(JSON.stringify({ success: true, message: 'Password changed' }))
-          .setMimeType(ContentService.MimeType.JSON);
-      }
+  return error('User not found.');
+}
+
+// ==================== CHANGE PASSWORD ====================
+function changePassword(data) {
+  const { sessionId, oldPassword, newPassword } = data;
+  if (!sessionId || !oldPassword || !newPassword) return error('Missing fields.');
+  const sheet = getSheet('Users');
+  if (!sheet) return error("Sheet 'Users' not found.");
+  const rows = sheet.getDataRange().getValues();
+  for (let i = 1; i < rows.length; i++) {
+    if (rows[i][0] === sessionId && rows[i][2] === oldPassword) {
+      sheet.getRange(i + 1, 3).setValue(newPassword);
+      return success({ message: 'Password changed.' });
     }
-    return ContentService.createTextOutput(JSON.stringify({ success: false, message: 'Incorrect old password' }))
-      .setMimeType(ContentService.MimeType.JSON);
   }
-  
-  if (action === 'deleteAccount') {
-    const usersSheet = ss.getSheetByName('Users');
-    const existing = usersSheet.getDataRange().getValues();
-    for (let i = existing.length - 1; i >= 1; i--) {
-      if (existing[i][0] === data.sessionId) {
-        usersSheet.deleteRow(i + 1);
-        return ContentService.createTextOutput(JSON.stringify({ success: true, message: 'Account deleted' }))
-          .setMimeType(ContentService.MimeType.JSON);
-      }
+  return error('Incorrect current password.');
+}
+
+// ==================== DELETE ACCOUNT ====================
+function deleteAccount(data) {
+  const { sessionId } = data;
+  if (!sessionId) return error('Missing sessionId.');
+  const sheet = getSheet('Users');
+  if (!sheet) return error("Sheet 'Users' not found.");
+  const rows = sheet.getDataRange().getValues();
+  for (let i = rows.length - 1; i >= 1; i--) {
+    if (rows[i][0] === sessionId) {
+      sheet.deleteRow(i + 1);
+      return success({ message: 'Account deleted.' });
     }
-    return ContentService.createTextOutput(JSON.stringify({ success: false, message: 'User not found' }))
-      .setMimeType(ContentService.MimeType.JSON);
   }
-  
-  if (action === 'addFavorite') {
-    const favSheet = ss.getSheetByName('Favorites');
-    const existing = favSheet.getDataRange().getValues().slice(1);
-    if (existing.some(row => row[0] === data.sessionId && row[1] === data.itemId)) {
-      return ContentService.createTextOutput(JSON.stringify({ success: false, message: 'Already favorited' }))
-        .setMimeType(ContentService.MimeType.JSON);
+  return error('User not found.');
+}
+
+// ==================== ADD FAVORITE ====================
+function addFavorite(data) {
+  const { sessionId, itemId, name } = data;
+  if (!sessionId || !itemId) return error('Missing sessionId or itemId.');
+  const sheet = getSheet('Favorites');
+  if (!sheet) return error("Sheet 'Favorites' not found.");
+  const rows = sheet.getDataRange().getValues().slice(1);
+  if (rows.some(r => r[0] === sessionId && r[1] === itemId)) return error('Already in favorites.');
+  sheet.appendRow([sessionId, itemId, name || '']);
+  return success({ message: 'Added to favorites.' });
+}
+
+// ==================== REMOVE FAVORITE ====================
+function removeFavorite(data) {
+  const { sessionId, itemId } = data;
+  if (!sessionId || !itemId) return error('Missing sessionId or itemId.');
+  const sheet = getSheet('Favorites');
+  if (!sheet) return error("Sheet 'Favorites' not found.");
+  const rows = sheet.getDataRange().getValues();
+  for (let i = rows.length - 1; i >= 1; i--) {
+    if (rows[i][0] === sessionId && rows[i][1] === itemId) {
+      sheet.deleteRow(i + 1);
+      return success({ message: 'Removed from favorites.' });
     }
-    favSheet.appendRow([data.sessionId, data.itemId, data.name]);
-    return ContentService.createTextOutput(JSON.stringify({ success: true, message: 'Added to favorites' }))
-      .setMimeType(ContentService.MimeType.JSON);
   }
-  
-  if (action === 'removeFavorite') {
-    const favSheet = ss.getSheetByName('Favorites');
-    const existing = favSheet.getDataRange().getValues();
-    for (let i = existing.length - 1; i >= 1; i--) {
-      if (existing[i][0] === data.sessionId && existing[i][1] === data.itemId) {
-        favSheet.deleteRow(i + 1);
-        return ContentService.createTextOutput(JSON.stringify({ success: true, message: 'Removed from favorites' }))
-          .setMimeType(ContentService.MimeType.JSON);
-      }
-    }
-    return ContentService.createTextOutput(JSON.stringify({ success: false, message: 'Not found' }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-  
-  return ContentService.createTextOutput(JSON.stringify({ success: false, message: 'Invalid action' }))
-    .setMimeType(ContentService.MimeType.JSON);
+  return error('Favorite not found.');
 }
