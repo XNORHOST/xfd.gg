@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XNOR Cloud - Favorites</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="top-bar">
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+        <span class="app-title">My Favorites</span>
+        <button id="menu-btn" aria-label="Open Menu">
+            <i class="fas fa-ellipsis-v"></i>
+        </button>
+    </header>
+
+    <div id="menu-overlay" class="menu-overlay">
+        <div class="menu-content">
+            <button id="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
+            <h2>Settings</h2>
+            <div class="theme-switch-container">
+                <span>Dark/Light Theme:</span>
+                <label class="switch">
+                    <input type="checkbox" id="theme-switch">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <hr><br>
+            <h3>Account</h3>
+            <div class="platform-buttons">
+                <a href="login.html" class="platform-btn"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="account.html" class="platform-btn"><i class="fas fa-user"></i> My Account</a>
+            </div>
+            <hr><br>
+            <h3>Download for:</h3>
+            <div class="platform-buttons">
+                <a href="android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
+                <a href="apple.html" class="platform-btn"><i class="fab fa-apple"></i> Apple</a>
+                <a href="windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
+                <a href="mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
+            </div>
+        </div>
+    </div>
+
+    <main style="padding:16px;">
+        <div id="loading-favs" style="text-align:center;padding:40px;color:var(--secondary);">
+            <i class="fas fa-spinner fa-spin" style="font-size:24px;"></i> Loading favorites...
+        </div>
+        <div id="favorites-grid"></div>
+        <div id="no-favorites" style="display:none;text-align:center;padding:50px;color:var(--secondary);">
+            <i class="far fa-heart" style="font-size:48px;margin-bottom:16px;opacity:0.3;"></i>
+            <p>No favorites saved yet.</p>
+            <a href="index.html" class="platform-btn" style="display:inline-flex;margin-top:16px;">
+                <i class="fas fa-home"></i> Browse Items
+            </a>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-btn"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="android.html" class="nav-btn"><i class="fab fa-android"></i><span>Android</span></a>
+        <a href="windows.html" class="nav-btn"><i class="fab fa-windows"></i><span>Windows</span></a>
+        <a href="other/news.html" class="nav-btn"><i class="fas fa-newspaper"></i><span>News</span></a>
+    </nav>
+
+    <script src="main.js"></script>
+    <script>
+    async function loadFavorites() {
+        const user = XNOR.getSessionUser();
+        const grid = document.getElementById('favorites-grid');
+        const loading = document.getElementById('loading-favs');
+        const noFavs = document.getElementById('no-favorites');
+
+        if (!user) {
+            loading.innerHTML = '<p>Please <a href="login.html" style="color:var(--blue);">login</a> to view favorites.</p>';
+            return;
+        }
+
+        try {
+            // Get favorites from sheet
+            const favResult = await XNOR.apiGet('getFavorites', { sessionId: user.sessionId });
+            // Get all items
+            const itemsResult = await XNOR.apiGet('getItems');
+
+            if (!favResult.success || !favResult.favorites || favResult.favorites.length === 0) {
+                loading.style.display = 'none';
+                noFavs.style.display = 'block';
+                return;
+            }
+
+            loading.style.display = 'none';
+            const favs = favResult.favorites;
+            const allItems = itemsResult.success ? itemsResult.items : [];
+
+            favs.forEach((fav, index) => {
+                const item = allItems.find(i => i.itemId === fav.itemId) || {};
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <button class="fav-btn active" data-item-id="${fav.itemId}" data-item-name="${fav.name}">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <div class="app-header">
+                        <a href="${item.openUrl || '#'}" target="_blank" class="thumb-link">
+                            <img src="${item.iconUrl || 'https://via.placeholder.com/64'}" alt="${fav.name}" class="app-icon" onerror="this.src='https://via.placeholder.com/64/333/aaa?text=Fav'">
+                        </a>
+                        <div class="app-info">
+                            <h3>#${index + 1} ${fav.name || item.name || 'Unknown'}</h3>
+                            <div class="app-details">
+                                <span class="detail-item website">${item.website || 'N/A'}</span>
+                                <span class="detail-item size">${item.size || 'N/A'}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="app-description">${item.description || ''}</p>
+                    <div class="actions">
+                        <a href="${item.openUrl || '#'}" class="action-btn open-btn" target="_blank"><i class="fas fa-external-link-alt"></i>Open</a>
+                        <a href="${item.downloadUrl || '#'}" class="action-btn download-btn"><i class="fas fa-download"></i>Download</a>
+                    </div>`;
+                grid.appendChild(card);
+            });
+
+            // Init fav buttons (for unfavoriting)
+            XNOR.initFavoriteButtons();
+
+        } catch (e) {
+            console.error('Failed to load favorites:', e);
+            loading.innerHTML = '<p>Error loading favorites. Please try again later.</p>';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadFavorites);
+    </script>
+</body>
+</html>

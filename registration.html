@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XNOR Cloud - Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="top-bar">
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+        <span class="app-title">Register</span>
+        <button id="menu-btn" aria-label="Open Menu">
+            <i class="fas fa-ellipsis-v"></i>
+        </button>
+    </header>
+
+    <div id="menu-overlay" class="menu-overlay">
+        <div class="menu-content">
+            <button id="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
+            <h2>Settings</h2>
+            <div class="theme-switch-container">
+                <span>Dark/Light Theme:</span>
+                <label class="switch">
+                    <input type="checkbox" id="theme-switch">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <hr><br>
+            <h3>Download for:</h3>
+            <div class="platform-buttons">
+                <a href="android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
+                <a href="apple.html" class="platform-btn"><i class="fab fa-apple"></i> Apple</a>
+                <a href="windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
+                <a href="mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
+            </div>
+        </div>
+    </div>
+
+    <main style="display:flex;align-items:center;justify-content:center;padding:20px;">
+        <div class="form-wrapper">
+            <h2><i class="fas fa-user-plus"></i> Register</h2>
+            <p class="form-subtitle">Create your XNOR Cloud account</p>
+
+            <form id="register-form" class="contact-form">
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" placeholder="Enter full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last Name:</label>
+                    <input type="text" id="lastname" placeholder="Enter last name" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" placeholder="Choose a username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" placeholder="Create a password" required>
+                </div>
+                <div class="form-group">
+                    <label for="birthday">Birthday:</label>
+                    <input type="date" id="birthday" required>
+                </div>
+                <div class="form-group">
+                    <label for="whatsapp">WhatsApp Number:</label>
+                    <input type="tel" id="whatsapp" placeholder="+94XXXXXXXXX" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" required>
+                        <option value="" disabled selected>Select gender...</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <select id="country" required>
+                        <option value="" disabled selected>Select country...</option>
+                    </select>
+                </div>
+                <div id="register-error" style="color:var(--danger);text-align:center;margin-bottom:10px;display:none;"></div>
+                <div id="register-success" style="color:#28a745;text-align:center;margin-bottom:10px;display:none;"></div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+            </form>
+
+            <p class="form-link">
+                Already have an account? <a href="login.html">Login here</a>
+            </p>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+    <script>
+    // Countries list
+    const countries = [
+        "Afghanistan", "Albania", "Algeria", "Argentina", "Australia", "Austria", "Bangladesh",
+        "Belgium", "Brazil", "Canada", "China", "Colombia", "Denmark", "Egypt", "Finland",
+        "France", "Germany", "Greece", "India", "Indonesia", "Iran", "Iraq", "Ireland",
+        "Israel", "Italy", "Japan", "Kenya", "Malaysia", "Mexico", "Nepal", "Netherlands",
+        "New Zealand", "Nigeria", "Norway", "Pakistan", "Philippines", "Poland", "Portugal",
+        "Russia", "Saudi Arabia", "Singapore", "South Africa", "South Korea", "Spain",
+        "Sri Lanka", "Sweden", "Switzerland", "Thailand", "Turkey", "UAE", "UK", "USA",
+        "Vietnam", "Zimbabwe"
+    ];
+
+    const countrySelect = document.getElementById('country');
+    countries.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = c;
+        countrySelect.appendChild(opt);
+    });
+
+    document.getElementById('register-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const errorDiv = document.getElementById('register-error');
+        const successDiv = document.getElementById('register-success');
+        errorDiv.style.display = 'none';
+        successDiv.style.display = 'none';
+
+        const data = {
+            action: 'register',
+            fullName: document.getElementById('fullName').value.trim(),
+            lastname: document.getElementById('lastname').value.trim(),
+            username: document.getElementById('username').value.trim(),
+            password: document.getElementById('password').value.trim(),
+            birthday: document.getElementById('birthday').value,
+            whatsappNumber: document.getElementById('whatsapp').value.trim(),
+            gender: document.getElementById('gender').value,
+            country: document.getElementById('country').value
+        };
+
+        if (Object.values(data).some(v => !v && v !== undefined)) {
+            errorDiv.textContent = 'Please fill in all fields.';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        const result = await XNOR.apiPost(data);
+
+        if (result.success) {
+            successDiv.textContent = 'Registration successful! Redirecting...';
+            successDiv.style.display = 'block';
+            XNOR.setSessionUser({
+                sessionId: result.sessionId,
+                username: data.username,
+                fullName: data.fullName,
+                lastname: data.lastname,
+                birthday: data.birthday,
+                whatsappNumber: data.whatsappNumber,
+                gender: data.gender,
+                country: data.country
+            });
+            setTimeout(() => { window.location.href = 'account.html'; }, 1500);
+        } else {
+            errorDiv.textContent = result.message || 'Registration failed.';
+            errorDiv.style.display = 'block';
+        }
+    });
+    </script>
+</body>
+</html>
