@@ -20,7 +20,6 @@
         <div class="menu-content">
             <button id="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
             <h2>Settings</h2>
-            <!-- your theme switch and menu items -->
             <div class="theme-switch-container">
                 <span>Dark/Light Theme:</span>
                 <label class="switch">
@@ -97,173 +96,199 @@
     </nav>
 
     <script src="../main.js"></script>
-    <script>
-        // Unit files for Android and Windows (using original data, adapted)
-        const unitFiles = {
-            "Android": ["ReVanced YouTube Music v8.10.52", "MicroG 0.3.1.4.240913"],
-            "Windows": ["Windows 10 22H2 (x 64-bit)", "Windows 8.1 (x64)", "Windows 8.1 (x86)", "Windows 7 Pro (32-bit)", "Windows 7 Pro (64-bit)"]
-        };
+<script>
+// ==================== DYNAMIC ITEM LOADING ====================
+let allItems = []; // will store all items from sheet
 
-        // Problem issues for each unit path
-        const problemIssues = {
-            "Home": [
-                "Homepage Loading Issue",
-                "Navigation bar not working",
-                "Searching function broken",
-                "Refresh Page Problem",
-                "Other"
-            ],
-            "Android": [
-                "Download link not working",
-                "App crashing after download",
-                "wrong version download",
-                "file corrupted / incomplete",
-                "slow download speed",
-                "Other"
-            ],
-            "Windows": [
-                "Download link not working",
-                "App crashing after download",
-                "wrong version download",
-                "file corrupted / incomplete",
-                "slow download speed",
-                "Other"
-            ],
-            "News": [
-                "News not uploading",
-                "images not loading",
-                "old achievements showing",
-                "Other"
-            ]
-        };
-
-        const unitPathSelect = document.getElementById('unit-path');
-        const fileItemGroup = document.getElementById('file-item-group');
-        const fileItemSelect = document.getElementById('file-item');
-        const problemIssueGroup = document.getElementById('problem-issue-group');
-        const problemIssueSelect = document.getElementById('problem-issue');
-        const describeIssueGroup = document.getElementById('describe-issue-group');
-        const describeIssueTextarea = document.getElementById('describe-issue');
-
-        // Reset function to hide all dynamic sections
-        function resetForm() {
-            fileItemGroup.style.display = 'none';
-            fileItemSelect.disabled = true;
-            fileItemSelect.innerHTML = '<option value="" disabled selected>Select file...</option>';
-
-            problemIssueGroup.style.display = 'none';
-            problemIssueSelect.disabled = true;
-            problemIssueSelect.innerHTML = '<option value="" disabled selected>Select problem...</option>';
-
-            describeIssueGroup.style.display = 'none';
-            describeIssueTextarea.value = '';
-            describeIssueTextarea.required = false;
+async function loadItemsFromSheet() {
+    try {
+        const result = await XNOR.apiGet('getItems');
+        if (result.success && result.items) {
+            allItems = result.items;
+        } else {
+            allItems = [];
         }
+    } catch (e) {
+        console.warn('Could not load items from sheet', e);
+        allItems = [];
+    }
+}
 
-        // Handle Unit Path change
-        unitPathSelect.addEventListener('change', () => {
-            const selectedUnit = unitPathSelect.value;
-            resetForm();
+// Filter items by the exact category names used in your Google Sheet
+function getItemsByCategory(category) {
+    const categoryMap = {
+        'Android': 'Android Apps',
+        'Windows': 'Windows ISOs'
+    };
+    const targetCategory = categoryMap[category] || category;
+    return allItems.filter(item => item.category === targetCategory);
+}
 
-            if (selectedUnit === 'Other') {
-                // For Other: Hide Problem Issue, show Describe Issue
-                problemIssueGroup.style.display = 'none';
-                describeIssueGroup.style.display = 'block';
-                describeIssueTextarea.required = true;
-                return;
-            }
+// Problem issues (unchanged)
+const problemIssues = {
+    "Home": [
+        "Homepage Loading Issue",
+        "Navigation bar not working",
+        "Searching function broken",
+        "Refresh Page Problem",
+        "Other"
+    ],
+    "Android": [
+        "Download link not working",
+        "App crashing after download",
+        "wrong version download",
+        "file corrupted / incomplete",
+        "slow download speed",
+        "Other"
+    ],
+    "Windows": [
+        "Download link not working",
+        "App crashing after download",
+        "wrong version download",
+        "file corrupted / incomplete",
+        "slow download speed",
+        "Other"
+    ],
+    "News": [
+        "News not uploading",
+        "images not loading",
+        "old achievements showing",
+        "Other"
+    ]
+};
 
-            // For Home, Android, Windows, News: Show File Item if applicable, then Problem Issue
-            if (['Android', 'Windows'].includes(selectedUnit)) {
-                fileItemGroup.style.display = 'block';
-                fileItemSelect.disabled = false;
-                fileItemSelect.innerHTML = '<option value="" disabled selected>Select file...</option>';
-                if (unitFiles[selectedUnit]) {
-                    unitFiles[selectedUnit].forEach(file => {
-                        const opt = document.createElement('option');
-                        opt.value = file;
-                        opt.textContent = file;
-                        fileItemSelect.appendChild(opt);
-                    });
-                }
-            }
+const unitPathSelect = document.getElementById('unit-path');
+const fileItemGroup = document.getElementById('file-item-group');
+const fileItemSelect = document.getElementById('file-item');
+const problemIssueGroup = document.getElementById('problem-issue-group');
+const problemIssueSelect = document.getElementById('problem-issue');
+const describeIssueGroup = document.getElementById('describe-issue-group');
+const describeIssueTextarea = document.getElementById('describe-issue');
 
-            problemIssueGroup.style.display = 'block';
-            problemIssueSelect.disabled = false;
-            problemIssueSelect.innerHTML = '<option value="" disabled selected>Select problem...</option>';
-            if (problemIssues[selectedUnit]) {
-                problemIssues[selectedUnit].forEach(issue => {
-                    const opt = document.createElement('option');
-                    opt.value = issue;
-                    opt.textContent = issue;
-                    problemIssueSelect.appendChild(opt);
-                });
-            }
+// Reset dynamic sections
+function resetForm() {
+    fileItemGroup.style.display = 'none';
+    fileItemSelect.disabled = true;
+    fileItemSelect.innerHTML = '<option value="" disabled selected>Select file...</option>';
+
+    problemIssueGroup.style.display = 'none';
+    problemIssueSelect.disabled = true;
+    problemIssueSelect.innerHTML = '<option value="" disabled selected>Select problem...</option>';
+
+    describeIssueGroup.style.display = 'none';
+    describeIssueTextarea.value = '';
+    describeIssueTextarea.required = false;
+}
+
+// Handle Unit Path change
+unitPathSelect.addEventListener('change', () => {
+    const selectedUnit = unitPathSelect.value;
+    resetForm();
+
+    if (selectedUnit === 'Other') {
+        // For Other: only describe issue
+        describeIssueGroup.style.display = 'block';
+        describeIssueTextarea.required = true;
+        return;
+    }
+
+    // Show file item for Android/Windows
+    if (['Android', 'Windows'].includes(selectedUnit)) {
+        fileItemGroup.style.display = 'block';
+        fileItemSelect.disabled = false;
+        fileItemSelect.innerHTML = ''; // clear
+
+        const items = getItemsByCategory(selectedUnit);
+        if (items.length > 0) {
+            items.forEach(item => {
+                const opt = document.createElement('option');
+                opt.value = item.name || item.itemId;
+                opt.textContent = item.name || 'Unknown';
+                fileItemSelect.appendChild(opt);
+            });
+        } else {
+            // NO FALLBACK – show message if sheet is empty
+            const opt = document.createElement('option');
+            opt.value = '';
+            opt.disabled = true;
+            opt.selected = true;
+            opt.textContent = 'No items found (check sheet)';
+            fileItemSelect.appendChild(opt);
+        }
+    }
+
+    // Show problem issues
+    problemIssueGroup.style.display = 'block';
+    problemIssueSelect.disabled = false;
+    problemIssueSelect.innerHTML = '<option value="" disabled selected>Select problem...</option>';
+    if (problemIssues[selectedUnit]) {
+        problemIssues[selectedUnit].forEach(issue => {
+            const opt = document.createElement('option');
+            opt.value = issue;
+            opt.textContent = issue;
+            problemIssueSelect.appendChild(opt);
         });
+    }
+});
 
-        // Handle File Item change (for Android/Windows) - just enables Problem Issue if not already
-        fileItemSelect.addEventListener('change', () => {
-            if (fileItemSelect.value && !problemIssueGroup.style.display || problemIssueGroup.style.display === 'none') {
-                problemIssueGroup.style.display = 'block';
-                problemIssueSelect.disabled = false;
-            }
-        });
+// Handle Problem Issue change
+problemIssueSelect.addEventListener('change', () => {
+    const selectedProblem = problemIssueSelect.value;
+    if (selectedProblem === 'Other') {
+        describeIssueGroup.style.display = 'block';
+        describeIssueTextarea.required = true;
+    } else {
+        describeIssueGroup.style.display = 'none';
+        describeIssueTextarea.required = false;
+        describeIssueTextarea.value = '';
+    }
+});
 
-        // Handle Problem Issue change
-        problemIssueSelect.addEventListener('change', () => {
-            const selectedProblem = problemIssueSelect.value;
-            if (selectedProblem === 'Other') {
-                // For Other in Problem Issue: Show Describe Issue, but DO NOT hide Problem Issue
-                describeIssueGroup.style.display = 'block';
-                describeIssueTextarea.required = true;
-            } else {
-                // Hide Describe Issue if not Other
-                describeIssueGroup.style.display = 'none';
-                describeIssueTextarea.required = false;
-                describeIssueTextarea.value = '';
-            }
-        });
+// Form submit
+document.getElementById('bug-report-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const unit = unitPathSelect.options[unitPathSelect.selectedIndex].text;
+    const sessionId = XNOR.getSessionId(); // Session ID automatically generated
+    const user = XNOR.getSessionUser();
+    let message = `*Bug Report from X.N.O.R User*\n\n`;
+    message += `*Session ID:* ${sessionId}\n`;
+    if (user && user.username) {
+        message += `*User:* ${user.username}\n`;
+    }
+    message += `*Unit Path:* ${unit}\n`;
 
-        // Form submit
-        document.getElementById('bug-report-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const unit = unitPathSelect.options[unitPathSelect.selectedIndex].text;
-            let message = `*Bug Report from X.N.O.R User:*\n\n*Unit Path:* ${unit}`;
+    if (unit !== 'Other') {
+        const file = fileItemSelect.value || 'N/A';
+        if (file !== 'N/A' && file !== '') {
+            message += `*File Item:* ${file}\n`;
+        }
+        const problem = problemIssueSelect.value || 'N/A';
+        if (problem !== 'N/A') {
+            message += `*Problem Issue:* ${problem}\n`;
+        }
+        if (describeIssueTextarea.value.trim() && problemIssueSelect.value === 'Other') {
+            message += `*Description:*\n${describeIssueTextarea.value.trim()}\n`;
+        }
+    } else {
+        if (describeIssueTextarea.value.trim()) {
+            message += `*Description:*\n${describeIssueTextarea.value.trim()}\n`;
+        } else {
+            alert('Please describe the issue.');
+            return;
+        }
+    }
 
-            if (unit !== 'Other') {
-                const file = fileItemSelect.value || 'N/A';
-                if (file !== 'N/A') {
-                    message += `\n*File Item:* ${file}`;
-                }
-                const problem = problemIssueSelect.value || 'N/A';
-                if (problem !== 'N/A') {
-                    message += `\n*Problem Issue:* ${problem}`;
-                }
-                if (describeIssueTextarea.value.trim() && problemIssueSelect.value === 'Other') {
-                    message += `\n*Please describe the issue:*\n${describeIssueTextarea.value.trim()}`;
-                }
-            } else {
-                if (describeIssueTextarea.value.trim()) {
-                    message += `\n*Please describe the issue:*\n${describeIssueTextarea.value.trim()}`;
-                } else {
-                    alert('Please describe the issue.');
-                    return;
-                }
-            }
+    message += `\n> *X.N.O.R Cloud™*`;
+    const url = `https://wa.me/94741148480?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+    this.reset();
+    resetForm();
+    unitPathSelect.value = '';
+    alert('Thank you! Report sent successfully 🎉');
+});
 
-            if (!message.includes('describe the issue') && !message.includes('Problem Issue:')) {
-                alert('Please select a problem issue or describe it.');
-                return;
-            }
-
-            message += `\n\n> *X.N.O.R Cloud™*`;
-            const url = `https://wa.me/94741148480?text=${encodeURIComponent(message)}`;
-            window.open(url, '_blank');
-            this.reset();
-            resetForm();
-            unitPathSelect.value = '';
-            alert('Thank you! Report sent successfully 🎉');
-        });
-    </script>
+// Initial load
+loadItemsFromSheet();
+</script>
 </body>
 </html>
