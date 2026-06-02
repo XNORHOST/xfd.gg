@@ -1,30 +1,28 @@
 // ============================================
 // XNOR CLOUD – Google Apps Script (code.gs)
 // ============================================
-// Sheet tabs must be named EXACTLY:
-//   Items, News, Users, Favorites
+// Sheet tabs required (exact names, case‑sensitive):
+//   Windows, Android, Mac, Apple, News, Users, Favorite, WhatsApp Number
 //
 // Columns (first row = headers, data starts row 2):
-// Items     : item-id, name, description, category, download_url, open_url, size, website, icon_url, search_tags
-// News      : news-id, title, content_excerpt, image_url, link, date, category
-// Users     : SESSION_ID, Username, Password, FullName, Lastname, Birthday, WhatsAppNumber, Gender, Country
-// Favorites : SESSION_ID, item-id, name
+// Windows, Android, Mac, Apple : item‑id, name, description, category, download_url, open_url, size, website, icon_url, search_tags
+// News                         : news‑id, title, content_excerpt, image_url, link, date, category
+// Users                        : SESSION_ID, Username, Email, Password, FirstName, LastName, Birthday, WhatsApp Number, Gender, Country, Login timestamp
+// Favorite                     : SESSION_ID, item‑id, name
+// WhatsApp Number              : Contact Name, WhatsApp Number, SESSION_ID
 // ============================================
 
 const SS = SpreadsheetApp.getActiveSpreadsheet();
 
-// Helper: get sheet by name, return null if missing
 function getSheet(name) {
   return SS.getSheetByName(name);
 }
 
-// Helper: build success response
 function success(data) {
   return ContentService.createTextOutput(JSON.stringify({ success: true, ...data }))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-// Helper: build error response
 function error(msg) {
   return ContentService.createTextOutput(JSON.stringify({ success: false, message: msg }))
     .setMimeType(ContentService.MimeType.JSON);
@@ -33,10 +31,10 @@ function error(msg) {
 function doGet(e) {
   const action = e.parameter.action;
   if (!action) return error('Missing action parameter.');
-
   try {
     switch (action) {
-      case 'getItems': return getItems();
+      case 'getHomeItems': return getHomeItems();
+      case 'getPlatformItems': return getPlatformItems(e.parameter.platform);
       case 'getNews': return getNews();
       case 'getFavorites': return getFavorites(e);
       case 'getUser': return getUser(e);
@@ -51,7 +49,6 @@ function doPost(e) {
   const data = JSON.parse(e.postData.contents);
   const action = data.action;
   if (!action) return error('Missing action parameter.');
-
   try {
     switch (action) {
       case 'register': return register(data);
@@ -68,10 +65,37 @@ function doPost(e) {
   }
 }
 
-// ==================== GET ITEMS ====================
-function getItems() {
-  const sheet = getSheet('Items');
-  if (!sheet) return error("Sheet 'Items' not found.");
+// ---------- GET ITEMS ----------
+function getHomeItems() {
+  const platforms = ['Windows', 'Android', 'Mac', 'Apple'];
+  const allItems = [];
+  platforms.forEach(platform => {
+    const sheet = getSheet(platform);
+    if (!sheet) return;
+    const rows = sheet.getDataRange().getValues().slice(1);
+    rows.forEach(r => {
+      allItems.push({
+        itemId: r[0] || '',
+        name: r[1] || '',
+        description: r[2] || '',
+        category: r[3] || '',
+        downloadUrl: r[4] || '',
+        openUrl: r[5] || '',
+        size: r[6] || '',
+        website: r[7] || '',
+        iconUrl: r[8] || '',
+        searchTags: r[9] || '',
+        platform: platform
+      });
+    });
+  });
+  return success({ items: allItems });
+}
+
+function getPlatformItems(platform) {
+  if (!platform) return error('Missing platform parameter.');
+  const sheet = getSheet(platform);
+  if (!sheet) return error(`Sheet '${platform}' not found.`);
   const rows = sheet.getDataRange().getValues().slice(1);
   const items = rows.map(r => ({
     itemId: r[0] || '',
@@ -83,12 +107,12 @@ function getItems() {
     size: r[6] || '',
     website: r[7] || '',
     iconUrl: r[8] || '',
-    searchTags: r[9] || ''
+    searchTags: r[9] || '',
+    platform: platform
   }));
   return success({ items });
 }
 
-// ==================== GET NEWS ====================
 function getNews() {
   const sheet = getSheet('News');
   if (!sheet) return error("Sheet 'News' not found.");
@@ -105,12 +129,11 @@ function getNews() {
   return success({ news });
 }
 
-// ==================== GET FAVORITES ====================
 function getFavorites(e) {
   const sessionId = e.parameter.sessionId;
   if (!sessionId) return error('Missing sessionId.');
-  const sheet = getSheet('Favorites');
-  if (!sheet) return error("Sheet 'Favorites' not found.");
+  const sheet = getSheet('Favorite');
+  if (!sheet) return error("Sheet 'Favorite' not found.");
   const rows = sheet.getDataRange().getValues().slice(1);
   const favs = rows.filter(r => r[0] === sessionId).map(r => ({
     sessionId: r[0],
@@ -120,7 +143,6 @@ function getFavorites(e) {
   return success({ favorites: favs });
 }
 
-// ==================== GET USER ====================
 function getUser(e) {
   const sessionId = e.parameter.sessionId;
   if (!sessionId) return error('Missing sessionId.');
@@ -133,53 +155,80 @@ function getUser(e) {
     user: {
       sessionId: user[0],
       username: user[1],
-      fullName: user[3],
-      lastname: user[4],
-      birthday: user[5],
-      whatsappNumber: user[6],
-      gender: user[7],
-      country: user[8]
+      email: user[2] || '',
+      firstName: user[4] || '',
+      lastName: user[5] || '',
+      birthday: user[6] || '',
+      whatsappNumber: user[7] || '',
+      gender: user[8] || '',
+      country: user[9] || '',
+      loginTimestamp: user[10] || ''
     }
   });
 }
 
-// ==================== REGISTER ====================
+// ---------- REGISTER ----------
 function register(data) {
-  const { username, password, fullName, lastname, birthday, whatsappNumber, gender, country } = data;
-  if (!username || !password) return error('Username and password required.');
-  const sheet = getSheet('Users');
-  if (!sheet) return error("Sheet 'Users' not found.");
-  const rows = sheet.getDataRange().getValues().slice(1);
-  if (rows.some(r => r[1] === username)) return error('Username already exists.');
+  const { username, email, password, firstName, lastName, birthday, whatsappNumber, gender, country } = data;
+  if (!username || !password || !email) return error('Username, email and password are required.');
+  const usersSheet = getSheet('Users');
+  if (!usersSheet) return error("Sheet 'Users' not found.");
+  const existing = usersSheet.getDataRange().getValues().slice(1);
+  if (existing.some(r => r[1] === username)) return error('Username already exists.');
+  if (existing.some(r => r[2] === email)) return error('Email already registered.');
+
   const sessionId = 'SESS_' + Utilities.getUuid();
-  sheet.appendRow([sessionId, username, password, fullName || '', lastname || '', birthday || '', whatsappNumber || '', gender || '', country || '']);
-  return success({ sessionId, userCount: rows.length + 1 });
+  const timestamp = ''; // will be filled on first login
+  usersSheet.appendRow([sessionId, username, email, password, firstName, lastName, birthday, whatsappNumber, gender, country, timestamp]);
+
+  // Add to WhatsApp Number sheet
+  const waSheet = getSheet('WhatsApp Number');
+  if (waSheet) {
+    const userCount = existing.length + 1; // rows excluding header
+    const birthYear = birthday ? new Date(birthday).getFullYear() : '????';
+    const contactName = `U${userCount}/${country || 'XX'}-${birthYear}:${gender || 'O'}`;
+    waSheet.appendRow([contactName, whatsappNumber || '', sessionId]);
+  }
+  return success({ sessionId, userCount: existing.length + 1 });
 }
 
-// ==================== LOGIN ====================
+// ---------- LOGIN ----------
 function login(data) {
   const { username, password } = data;
   if (!username || !password) return error('Username and password required.');
   const sheet = getSheet('Users');
   if (!sheet) return error("Sheet 'Users' not found.");
   const rows = sheet.getDataRange().getValues().slice(1);
-  const user = rows.find(r => r[1] === username && r[2] === password);
-  if (!user) return error('Invalid username or password.');
+  const userRowIndex = rows.findIndex(r => r[1] === username && r[3] === password);
+  if (userRowIndex === -1) return error('Invalid username or password.');
+
+  // Update login timestamp (Sri Lanka time, format: D2026-05-31 T12:31:00)
+  const now = new Date();
+  const offsetMs = 5.5 * 60 * 60 * 1000; // GMT+5:30
+  const slTime = new Date(now.getTime() + offsetMs);
+  const pad = n => n.toString().padStart(2, '0');
+  const formatted = `D${slTime.getUTCFullYear()}-${pad(slTime.getUTCMonth()+1)}-${pad(slTime.getUTCDate())} T${pad(slTime.getUTCHours())}:${pad(slTime.getUTCMinutes())}:${pad(slTime.getUTCSeconds())}`;
+  const rowToUpdate = userRowIndex + 2; // +1 for header
+  sheet.getRange(rowToUpdate, 11).setValue(formatted); // column 11 = Login timestamp
+
+  const user = rows[userRowIndex];
   return success({
     sessionId: user[0],
     username: user[1],
-    fullName: user[3],
-    lastname: user[4],
-    birthday: user[5],
-    whatsappNumber: user[6],
-    gender: user[7],
-    country: user[8]
+    email: user[2],
+    firstName: user[4],
+    lastName: user[5],
+    birthday: user[6],
+    whatsappNumber: user[7],
+    gender: user[8],
+    country: user[9],
+    loginTimestamp: formatted
   });
 }
 
-// ==================== UPDATE ACCOUNT ====================
+// ---------- UPDATE ACCOUNT ----------
 function updateAccount(data) {
-  const { sessionId, fullName, lastname, birthday, whatsappNumber, gender, country } = data;
+  const { sessionId, email, firstName, lastName, birthday, whatsappNumber, gender, country } = data;
   if (!sessionId) return error('Missing sessionId.');
   const sheet = getSheet('Users');
   if (!sheet) return error("Sheet 'Users' not found.");
@@ -187,19 +236,20 @@ function updateAccount(data) {
   for (let i = 1; i < rows.length; i++) {
     if (rows[i][0] === sessionId) {
       const row = i + 1;
-      sheet.getRange(row, 4).setValue(fullName || '');
-      sheet.getRange(row, 5).setValue(lastname || '');
-      sheet.getRange(row, 6).setValue(birthday || '');
-      sheet.getRange(row, 7).setValue(whatsappNumber || '');
-      sheet.getRange(row, 8).setValue(gender || '');
-      sheet.getRange(row, 9).setValue(country || '');
+      sheet.getRange(row, 3).setValue(email || '');
+      sheet.getRange(row, 5).setValue(firstName || '');
+      sheet.getRange(row, 6).setValue(lastName || '');
+      sheet.getRange(row, 7).setValue(birthday || '');
+      sheet.getRange(row, 8).setValue(whatsappNumber || '');
+      sheet.getRange(row, 9).setValue(gender || '');
+      sheet.getRange(row, 10).setValue(country || '');
       return success({ message: 'Account updated.' });
     }
   }
   return error('User not found.');
 }
 
-// ==================== CHANGE PASSWORD ====================
+// ---------- CHANGE PASSWORD ----------
 function changePassword(data) {
   const { sessionId, oldPassword, newPassword } = data;
   if (!sessionId || !oldPassword || !newPassword) return error('Missing fields.');
@@ -207,15 +257,15 @@ function changePassword(data) {
   if (!sheet) return error("Sheet 'Users' not found.");
   const rows = sheet.getDataRange().getValues();
   for (let i = 1; i < rows.length; i++) {
-    if (rows[i][0] === sessionId && rows[i][2] === oldPassword) {
-      sheet.getRange(i + 1, 3).setValue(newPassword);
+    if (rows[i][0] === sessionId && rows[i][3] === oldPassword) { // password column 4
+      sheet.getRange(i + 1, 4).setValue(newPassword);
       return success({ message: 'Password changed.' });
     }
   }
   return error('Incorrect current password.');
 }
 
-// ==================== DELETE ACCOUNT ====================
+// ---------- DELETE ACCOUNT ----------
 function deleteAccount(data) {
   const { sessionId } = data;
   if (!sessionId) return error('Missing sessionId.');
@@ -225,30 +275,30 @@ function deleteAccount(data) {
   for (let i = rows.length - 1; i >= 1; i--) {
     if (rows[i][0] === sessionId) {
       sheet.deleteRow(i + 1);
+      // Optionally delete favorites and WhatsApp entry
       return success({ message: 'Account deleted.' });
     }
   }
   return error('User not found.');
 }
 
-// ==================== ADD FAVORITE ====================
+// ---------- FAVORITES ----------
 function addFavorite(data) {
   const { sessionId, itemId, name } = data;
   if (!sessionId || !itemId) return error('Missing sessionId or itemId.');
-  const sheet = getSheet('Favorites');
-  if (!sheet) return error("Sheet 'Favorites' not found.");
-  const rows = sheet.getDataRange().getValues().slice(1);
-  if (rows.some(r => r[0] === sessionId && r[1] === itemId)) return error('Already in favorites.');
+  const sheet = getSheet('Favorite');
+  if (!sheet) return error("Sheet 'Favorite' not found.");
+  const existing = sheet.getDataRange().getValues().slice(1);
+  if (existing.some(r => r[0] === sessionId && r[1] === itemId)) return error('Already in favorites.');
   sheet.appendRow([sessionId, itemId, name || '']);
   return success({ message: 'Added to favorites.' });
 }
 
-// ==================== REMOVE FAVORITE ====================
 function removeFavorite(data) {
   const { sessionId, itemId } = data;
   if (!sessionId || !itemId) return error('Missing sessionId or itemId.');
-  const sheet = getSheet('Favorites');
-  if (!sheet) return error("Sheet 'Favorites' not found.");
+  const sheet = getSheet('Favorite');
+  if (!sheet) return error("Sheet 'Favorite' not found.");
   const rows = sheet.getDataRange().getValues();
   for (let i = rows.length - 1; i >= 1; i--) {
     if (rows[i][0] === sessionId && rows[i][1] === itemId) {
