@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>XNOR Cloud</title>
+  <title>XNOR Cloud - Apple</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -19,11 +19,10 @@
 
   <main id="item-list">
     <div id="loading-items" style="text-align:center;padding:40px;color:var(--secondary);">
-      <i class="fas fa-spinner fa-spin" style="font-size:24px;"></i> Loading items...
+      <i class="fas fa-spinner fa-spin" style="font-size:24px;"></i> Loading Apple items...
     </div>
     <div id="dynamic-items"></div>
 
-    <!-- MENU OVERLAY -->
     <div id="menu-overlay" class="menu-overlay">
       <div class="menu-content">
         <button id="close-menu"><i class="fas fa-times"></i></button>
@@ -46,7 +45,7 @@
         <h3>Download for:</h3>
         <div class="platform-buttons">
           <a href="android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
-          <a href="apple.html" class="platform-btn"><i class="fab fa-apple"></i> Apple</a>
+          <a href="apple.html" class="platform-btn active"><i class="fab fa-apple"></i> Apple</a>
           <a href="windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
           <a href="mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
         </div>
@@ -61,7 +60,7 @@
   </main>
 
   <nav class="bottom-nav">
-    <a href="index.html" class="nav-btn active"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="index.html" class="nav-btn"><i class="fas fa-home"></i><span>Home</span></a>
     <a href="android.html" class="nav-btn"><i class="fab fa-android"></i><span>Android</span></a>
     <a href="windows.html" class="nav-btn"><i class="fab fa-windows"></i><span>Windows</span></a>
     <a href="other/news.html" class="nav-btn"><i class="fas fa-newspaper"></i><span>News</span></a>
@@ -69,74 +68,66 @@
 
   <script src="main.js"></script>
   <script>
+    const PLATFORM = 'Apple';
+    // identical loadItems()
     async function loadItems() {
       const container = document.getElementById('dynamic-items');
       const loading = document.getElementById('loading-items');
-      const categoryIcons = {
-        'Windows ISOs': 'fab fa-windows',
-        'Linux Distros': 'fab fa-linux',
-        'Adobe Software': 'fas fa-paint-brush',
-        'Programming': 'fas fa-code',
-        'Android Apps': 'fab fa-android',
-        'Default': 'fas fa-box'
-      };
 
       try {
-        const result = await XNOR.apiGet('getHomeItems');
+        const result = await XNOR.apiGet('getPlatformItems', { platform: PLATFORM });
         if (!result.success || !result.items || result.items.length === 0) {
-          loading.innerHTML = '<p>No items found. Add items to the platform sheets.</p>';
+          loading.innerHTML = '<p>No items found. Add items to the Apple sheet.</p>';
           return;
         }
         loading.style.display = 'none';
         const items = result.items;
 
-        // Group by platform then by category
-        const platformMap = {};
-        items.forEach((item, idx) => {
-          const plat = item.platform || 'Other';
+        const categories = {};
+        items.forEach((item, index) => {
           const cat = item.category || 'Uncategorized';
-          if (!platformMap[plat]) platformMap[plat] = {};
-          if (!platformMap[plat][cat]) platformMap[plat][cat] = [];
-          platformMap[plat][cat].push({ ...item, serial: idx + 1 });
+          if (!categories[cat]) categories[cat] = [];
+          categories[cat].push({ ...item, serial: index + 1 });
         });
 
         let html = '';
         let globalSerial = 1;
-        for (const [platform, categories] of Object.entries(platformMap)) {
-          html += `<div class="content-section"><h3 class="section-title"><i class="fas fa-box"></i> ${platform}</h3><div class="section-divider"></div>`;
-          for (const [category, catItems] of Object.entries(categories)) {
-            const iconClass = categoryIcons[category] || categoryIcons['Default'];
-            html += `<h4 style="padding-left:16px;margin-bottom:8px;"><i class="${iconClass}"></i> ${category}</h4>`;
-            catItems.forEach(item => {
-              html += `
-              <div class="card" data-search="${item.searchTags||''} ${item.name||''} ${item.description||''} ${item.size||''} ${item.website||''}">
-                <button class="fav-btn" data-item-id="${item.itemId}" data-item-name="${item.name}"><i class="far fa-heart"></i></button>
-                <div class="app-header">
-                  <a href="${item.openUrl||'#'}" target="_blank" class="thumb-link">
-                    <img src="${item.iconUrl||'https://via.placeholder.com/64'}" alt="${item.name}" class="app-icon" onerror="this.src='https://via.placeholder.com/64/333/aaa?text=App'">
-                  </a>
-                  <div class="app-info">
-                    <h3>#${globalSerial} ${item.name||'Unknown'}</h3>
-                    <div class="app-details">
-                      <span class="detail-item website">${item.website||'N/A'}</span>
-                      <span class="detail-item size">${item.size||'N/A'}</span>
-                    </div>
+        for (const [category, catItems] of Object.entries(categories)) {
+          html += `
+          <div class="content-section">
+            <h3 class="section-title"><i class="fab fa-apple"></i> ${category}</h3>
+            <div class="section-divider"></div>`;
+
+          catItems.forEach(item => {
+            html += `
+            <div class="card" data-search="${item.searchTags||''} ${item.name||''} ${item.description||''} ${item.size||''} ${item.website||''}">
+              <button class="fav-btn" data-item-id="${item.itemId}" data-item-name="${item.name}">
+                <i class="far fa-heart"></i>
+              </button>
+              <div class="app-header">
+                <a href="${item.openUrl||'#'}" target="_blank" class="thumb-link">
+                  <img src="${item.iconUrl||'https://via.placeholder.com/64'}" alt="${item.name}" class="app-icon" onerror="this.src='https://via.placeholder.com/64/333/aaa?text=App'">
+                </a>
+                <div class="app-info">
+                  <h3>#${globalSerial} ${item.name||'Unknown'}</h3>
+                  <div class="app-details">
+                    <span class="detail-item website">${item.website||'N/A'}</span>
+                    <span class="detail-item size">${item.size||'N/A'}</span>
                   </div>
                 </div>
-                <p class="app-description">${item.description||''}</p>
-                <div class="actions">
-                  <a href="${item.openUrl||'#'}" class="action-btn open-btn" target="_blank"><i class="fas fa-external-link-alt"></i>Open</a>
-                  <a href="${item.downloadUrl||'#'}" class="action-btn download-btn" id="dl-${globalSerial}"><i class="fas fa-download"></i>Download</a>
-                </div>
-              </div>`;
-              globalSerial++;
-            });
-          }
+              </div>
+              <p class="app-description">${item.description||''}</p>
+              <div class="actions">
+                <a href="${item.openUrl||'#'}" class="action-btn open-btn" target="_blank"><i class="fas fa-external-link-alt"></i>Open</a>
+                <a href="${item.downloadUrl||'#'}" class="action-btn download-btn"><i class="fas fa-download"></i>Download</a>
+              </div>
+            </div>`;
+            globalSerial++;
+          });
           html += `</div>`;
         }
         container.innerHTML = html;
 
-        // Download button login check
         document.querySelectorAll('.download-btn').forEach(btn => {
           btn.addEventListener('click', function(e) {
             if (!XNOR.isLoggedIn()) {

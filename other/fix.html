@@ -1,294 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X.N.O.R Bug Fix & Troubleshooting</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="../styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>X.N.O.R Bug Fix & Troubleshooting</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+  <header class="top-bar">
+    <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Fix Issues</a>
+    <button id="menu-btn"><i class="fas fa-ellipsis-v"></i></button>
+  </header>
 
-    <header class="top-bar">
-        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Fix Issues</a>
-        <button id="menu-btn" aria-label="Open Menu">
-            <i class="fas fa-ellipsis-v"></i>
-        </button>
-    </header>
-
-    <div id="menu-overlay" class="menu-overlay">
-        <div class="menu-content">
-            <button id="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
-            <h2>Settings</h2>
-            <div class="theme-switch-container">
-                <span>Dark/Light Theme:</span>
-                <label class="switch">
-                    <input type="checkbox" id="theme-switch">
-                    <span class="slider round"></span>
-                </label>
-            </div>
-            <hr><br>
-            <h3>Download for:</h3>
-            <div class="platform-buttons">
-                <a href="../android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
-                <a href="../apple.html" class="platform-btn"><i class="fab fa-apple"></i> Apple</a>
-                <a href="../windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
-                <a href="../mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
-            </div>
-            <hr> <br>
-            <h3>About</h3>
-            <div class="platform-buttons">
-                <a href="../about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
-                <a href="fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
-            </div>
-        </div>
+  <div id="menu-overlay" class="menu-overlay">
+    <div class="menu-content">
+      <button id="close-menu"><i class="fas fa-times"></i></button>
+      <h2>Settings</h2>
+      <div class="theme-switch-container">
+        <span>Dark/Light Theme:</span>
+        <label class="switch"><input type="checkbox" id="theme-switch"><span class="slider round"></span></label>
+      </div>
+      <hr><br>
+      <h3>Download for:</h3>
+      <div class="platform-buttons">
+        <a href="../android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
+        <a href="../apple.html" class="platform-btn"><i class="fab fa-apple"></i> Apple</a>
+        <a href="../windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
+        <a href="../mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
+      </div>
+      <hr><br>
+      <h3>About</h3>
+      <div class="platform-buttons">
+        <a href="../about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
+        <a href="fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
+      </div>
     </div>
+  </div>
 
-    <main class="bug-fix-container">
-        <div class="form-wrapper">
-            <h2><i class="fas fa-bug"></i> Bug Report</h2>
-            <p class="form-subtitle">Help us improve XNOR Cloud!</p>
+  <main class="bug-fix-container">
+    <div class="form-wrapper">
+      <h2><i class="fas fa-bug"></i> Bug Report</h2>
+      <p class="form-subtitle">Help us improve XNOR Cloud!</p>
 
-            <form id="bug-report-form" class="contact-form">
-                <div class="form-group">
-                    <label for="unit-path">Unit Path:</label>
-                    <select id="unit-path" required>
-                        <option value="" disabled selected>Select category...</option>
-                        <option value="Home">Home</option>
-                        <option value="Android">Android</option>
-                        <option value="Windows">Windows</option>
-                        <option value="News">News</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-
-                <div class="form-group" id="file-item-group" style="display: none;">
-                    <label for="file-item">File Item:</label>
-                    <select id="file-item" required disabled>
-                        <option value="" disabled selected>Select file...</option>
-                    </select>
-                </div>
-
-                <div class="form-group" id="problem-issue-group" style="display: none;">
-                    <label for="problem-issue">Problem Issue:</label>
-                    <select id="problem-issue" required disabled>
-                        <option value="" disabled selected>Select problem...</option>
-                    </select>
-                </div>
-
-                <div class="form-group" id="describe-issue-group" style="display: none;">
-                    <label for="describe-issue">Please describe the issue:</label>
-                    <textarea id="describe-issue" rows="5" placeholder="Describe the issue in detail..." required></textarea>
-                </div>
-
-                <button type="submit" class="submit-btn">
-                    <i class="fab fa-whatsapp"></i> Send via WhatsApp
-                </button>
-            </form>
+      <form id="bug-report-form" class="contact-form">
+        <div class="form-group">
+          <label>Category:</label>
+          <select id="unit-path" required>
+            <option value="" disabled selected>Select category...</option>
+            <option value="Home">Home</option>
+            <option value="Windows">Windows</option>
+            <option value="Android">Android</option>
+            <option value="Apple">Apple</option>
+            <option value="Mac">Mac</option>
+            <option value="News">News</option>
+            <option value="Login">Login</option>
+            <option value="Registration">Registration</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
-    </main>
 
-    <nav class="bottom-nav">
-        <a href="../index.html" class="nav-btn"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="../android.html" class="nav-btn"><i class="fab fa-android"></i><span>Android</span></a>
-        <a href="../windows.html" class="nav-btn"><i class="fab fa-windows"></i><span>Windows</span></a>
-        <a href="news.html" class="nav-btn"><i class="fas fa-newspaper"></i><span>News</span></a>
-    </nav>
+        <div class="form-group" id="file-item-group" style="display:none;">
+          <label>File Item:</label>
+          <select id="file-item" disabled></select>
+        </div>
 
-    <script src="../main.js"></script>
-<script>
-// ==================== DYNAMIC ITEM LOADING ====================
-let allItems = []; // will store all items from sheet
+        <div class="form-group" id="problem-issue-group" style="display:none;">
+          <label>Problem Issue:</label>
+          <select id="problem-issue" disabled>
+            <option value="" disabled selected>Select problem...</option>
+          </select>
+        </div>
 
-async function loadItemsFromSheet() {
-    try {
-        const result = await XNOR.apiGet('getItems');
-        if (result.success && result.items) {
-            allItems = result.items;
-        } else {
-            allItems = [];
-        }
-    } catch (e) {
-        console.warn('Could not load items from sheet', e);
-        allItems = [];
-    }
-}
+        <div class="form-group" id="describe-issue-group" style="display:none;">
+          <label>Please describe the issue:</label>
+          <textarea id="describe-issue" rows="5" placeholder="Describe the issue..."></textarea>
+        </div>
 
-// Filter items by the exact category names used in your Google Sheet
-function getItemsByCategory(category) {
-    const categoryMap = {
-        'Android': 'Android Apps',
-        'Windows': 'Windows ISOs'
+        <button type="submit" class="submit-btn"><i class="fab fa-whatsapp"></i> Send via WhatsApp</button>
+      </form>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="../index.html" class="nav-btn"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="../android.html" class="nav-btn"><i class="fab fa-android"></i><span>Android</span></a>
+    <a href="../windows.html" class="nav-btn"><i class="fab fa-windows"></i><span>Windows</span></a>
+    <a href="news.html" class="nav-btn"><i class="fas fa-newspaper"></i><span>News</span></a>
+  </nav>
+
+  <script src="../main.js"></script>
+  <script>
+    const platformSheets = ['Windows','Android','Mac','Apple'];
+    const issueLists = {
+      Windows: ['Download link not working','App crashing after download','Wrong version download','File corrupted / incomplete','Slow download speed','Other'],
+      Android: ['Download link not working','App crashing after download','Wrong version download','File corrupted / incomplete','Slow download speed','Other'],
+      Mac: ['Download link not working','App crashing after download','Wrong version download','File corrupted / incomplete','Slow download speed','Other'],
+      Apple: ['Download link not working','App crashing after download','Wrong version download','File corrupted / incomplete','Slow download speed','Other'],
+      News: ['News not uploading','Images not loading','Old achievements showing','Other'],
+      Home: ['Homepage loading issue','Navigation not working','Search broken','Refresh problem','Other'],
+      Login: ['Cannot login','Forgot password','Session expired','Other'],
+      Registration: ['Form not submitting','Email already used','Username taken','Other'],
+      Other: []
     };
-    const targetCategory = categoryMap[category] || category;
-    return allItems.filter(item => item.category === targetCategory);
-}
 
-// Problem issues (unchanged)
-const problemIssues = {
-    "Home": [
-        "Homepage Loading Issue",
-        "Navigation bar not working",
-        "Searching function broken",
-        "Refresh Page Problem",
-        "Other"
-    ],
-    "Android": [
-        "Download link not working",
-        "App crashing after download",
-        "wrong version download",
-        "file corrupted / incomplete",
-        "slow download speed",
-        "Other"
-    ],
-    "Windows": [
-        "Download link not working",
-        "App crashing after download",
-        "wrong version download",
-        "file corrupted / incomplete",
-        "slow download speed",
-        "Other"
-    ],
-    "News": [
-        "News not uploading",
-        "images not loading",
-        "old achievements showing",
-        "Other"
-    ]
-};
+    const unitSelect = document.getElementById('unit-path');
+    const fileGroup = document.getElementById('file-item-group');
+    const fileSelect = document.getElementById('file-item');
+    const issueGroup = document.getElementById('problem-issue-group');
+    const issueSelect = document.getElementById('problem-issue');
+    const descGroup = document.getElementById('describe-issue-group');
+    const descTextarea = document.getElementById('describe-issue');
 
-const unitPathSelect = document.getElementById('unit-path');
-const fileItemGroup = document.getElementById('file-item-group');
-const fileItemSelect = document.getElementById('file-item');
-const problemIssueGroup = document.getElementById('problem-issue-group');
-const problemIssueSelect = document.getElementById('problem-issue');
-const describeIssueGroup = document.getElementById('describe-issue-group');
-const describeIssueTextarea = document.getElementById('describe-issue');
-
-// Reset dynamic sections
-function resetForm() {
-    fileItemGroup.style.display = 'none';
-    fileItemSelect.disabled = true;
-    fileItemSelect.innerHTML = '<option value="" disabled selected>Select file...</option>';
-
-    problemIssueGroup.style.display = 'none';
-    problemIssueSelect.disabled = true;
-    problemIssueSelect.innerHTML = '<option value="" disabled selected>Select problem...</option>';
-
-    describeIssueGroup.style.display = 'none';
-    describeIssueTextarea.value = '';
-    describeIssueTextarea.required = false;
-}
-
-// Handle Unit Path change
-unitPathSelect.addEventListener('change', () => {
-    const selectedUnit = unitPathSelect.value;
-    resetForm();
-
-    if (selectedUnit === 'Other') {
-        // For Other: only describe issue
-        describeIssueGroup.style.display = 'block';
-        describeIssueTextarea.required = true;
-        return;
+    function resetForm() {
+      fileGroup.style.display = 'none';
+      fileSelect.disabled = true;
+      fileSelect.innerHTML = '';
+      issueGroup.style.display = 'none';
+      issueSelect.disabled = true;
+      issueSelect.innerHTML = '<option value="" disabled selected>Select problem...</option>';
+      descGroup.style.display = 'none';
+      descTextarea.required = false;
+      descTextarea.value = '';
     }
 
-    // Show file item for Android/Windows
-    if (['Android', 'Windows'].includes(selectedUnit)) {
-        fileItemGroup.style.display = 'block';
-        fileItemSelect.disabled = false;
-        fileItemSelect.innerHTML = ''; // clear
+    // Pre-fill from URL params
+    const urlParams = new URLSearchParams(location.search);
+    const preItem = urlParams.get('item');
+    const preCat = urlParams.get('category');
 
-        const items = getItemsByCategory(selectedUnit);
-        if (items.length > 0) {
-            items.forEach(item => {
-                const opt = document.createElement('option');
-                opt.value = item.name || item.itemId;
-                opt.textContent = item.name || 'Unknown';
-                fileItemSelect.appendChild(opt);
-            });
-        } else {
-            // NO FALLBACK – show message if sheet is empty
-            const opt = document.createElement('option');
-            opt.value = '';
-            opt.disabled = true;
-            opt.selected = true;
-            opt.textContent = 'No items found (check sheet)';
-            fileItemSelect.appendChild(opt);
-        }
-    }
-
-    // Show problem issues
-    problemIssueGroup.style.display = 'block';
-    problemIssueSelect.disabled = false;
-    problemIssueSelect.innerHTML = '<option value="" disabled selected>Select problem...</option>';
-    if (problemIssues[selectedUnit]) {
-        problemIssues[selectedUnit].forEach(issue => {
-            const opt = document.createElement('option');
-            opt.value = issue;
-            opt.textContent = issue;
-            problemIssueSelect.appendChild(opt);
+    async function loadItemsForPlatform(platform) {
+      const result = await XNOR.apiGet('getPlatformItems', { platform });
+      if (result.success && result.items) {
+        result.items.forEach(item => {
+          const opt = document.createElement('option');
+          opt.value = item.name || item.itemId;
+          opt.textContent = item.name || 'Unknown';
+          fileSelect.appendChild(opt);
         });
-    }
-});
-
-// Handle Problem Issue change
-problemIssueSelect.addEventListener('change', () => {
-    const selectedProblem = problemIssueSelect.value;
-    if (selectedProblem === 'Other') {
-        describeIssueGroup.style.display = 'block';
-        describeIssueTextarea.required = true;
-    } else {
-        describeIssueGroup.style.display = 'none';
-        describeIssueTextarea.required = false;
-        describeIssueTextarea.value = '';
-    }
-});
-
-// Form submit
-document.getElementById('bug-report-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const unit = unitPathSelect.options[unitPathSelect.selectedIndex].text;
-    const sessionId = XNOR.getSessionId(); // Session ID automatically generated
-    const user = XNOR.getSessionUser();
-    let message = `*Bug Report from X.N.O.R User*\n\n`;
-    message += `*Session ID:* ${sessionId}\n`;
-    if (user && user.username) {
-        message += `*User:* ${user.username}\n`;
-    }
-    message += `*Unit Path:* ${unit}\n`;
-
-    if (unit !== 'Other') {
-        const file = fileItemSelect.value || 'N/A';
-        if (file !== 'N/A' && file !== '') {
-            message += `*File Item:* ${file}\n`;
-        }
-        const problem = problemIssueSelect.value || 'N/A';
-        if (problem !== 'N/A') {
-            message += `*Problem Issue:* ${problem}\n`;
-        }
-        if (describeIssueTextarea.value.trim() && problemIssueSelect.value === 'Other') {
-            message += `*Description:*\n${describeIssueTextarea.value.trim()}\n`;
-        }
-    } else {
-        if (describeIssueTextarea.value.trim()) {
-            message += `*Description:*\n${describeIssueTextarea.value.trim()}\n`;
-        } else {
-            alert('Please describe the issue.');
-            return;
-        }
+      } else {
+        fileSelect.innerHTML = '<option value="" disabled>No items found</option>';
+      }
     }
 
-    message += `\n> *X.N.O.R Cloud™*`;
-    const url = `https://wa.me/94741148480?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
-    this.reset();
-    resetForm();
-    unitPathSelect.value = '';
-    alert('Thank you! Report sent successfully 🎉');
-});
+    unitSelect.addEventListener('change', () => {
+      resetForm();
+      const val = unitSelect.value;
+      if (val === 'Other') {
+        descGroup.style.display = 'block';
+        descTextarea.required = true;
+        return;
+      }
+      if (['Windows','Android','Mac','Apple'].includes(val)) {
+        fileGroup.style.display = 'block';
+        fileSelect.disabled = false;
+        fileSelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
+        loadItemsForPlatform(val);
+        issueGroup.style.display = 'block';
+        issueSelect.disabled = false;
+        issueSelect.innerHTML = '<option value="" disabled selected>Select problem...</option>';
+        (issueLists[val]||[]).forEach(iss => {
+          const opt = document.createElement('option'); opt.value=iss; opt.textContent=iss; issueSelect.appendChild(opt);
+        });
+      } else {
+        // Home, News, Login, Registration
+        issueGroup.style.display = 'block';
+        issueSelect.disabled = false;
+        issueSelect.innerHTML = '<option value="" disabled selected>Select problem...</option>';
+        (issueLists[val]||[]).forEach(iss => {
+          const opt = document.createElement('option'); opt.value=iss; opt.textContent=iss; issueSelect.appendChild(opt);
+        });
+      }
+    });
 
-// Initial load
-loadItemsFromSheet();
-</script>
+    issueSelect.addEventListener('change', () => {
+      if (issueSelect.value === 'Other') {
+        descGroup.style.display = 'block';
+        descTextarea.required = true;
+      } else {
+        descGroup.style.display = 'none';
+        descTextarea.required = false;
+      }
+    });
+
+    // Pre‑select if came from favorites
+    if (preItem && preCat) {
+      unitSelect.value = preCat;
+      unitSelect.dispatchEvent(new Event('change'));
+      // After items load, set the file item
+      setTimeout(() => {
+        if (fileSelect.options.length > 0) {
+          for (let i=0; i<fileSelect.options.length; i++) {
+            if (fileSelect.options[i].text === preItem || fileSelect.options[i].value === preItem) {
+              fileSelect.selectedIndex = i;
+              break;
+            }
+          }
+        }
+      }, 1500);
+    }
+
+    document.getElementById('bug-report-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const unit = unitSelect.options[unitSelect.selectedIndex].text;
+      const sessionId = XNOR.getSessionId();
+      const user = XNOR.getSessionUser();
+      let msg = `*Bug Report from X.N.O.R User*\n\n*Session ID:* ${sessionId}\n`;
+      if (user && user.username) msg += `*User:* ${user.username}\n`;
+      msg += `*Category:* ${unit}\n`;
+      if (fileSelect.disabled === false && fileSelect.value) msg += `*File Item:* ${fileSelect.value}\n`;
+      if (issueSelect.disabled === false && issueSelect.value) msg += `*Problem:* ${issueSelect.value}\n`;
+      if (descTextarea.value.trim()) msg += `*Description:*\n${descTextarea.value.trim()}\n`;
+      msg += `\n> *X.N.O.R Cloud™*`;
+      const waUrl = `https://wa.me/94741148480?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank');
+      this.reset();
+      resetForm();
+      alert('Thank you! Report sent 🎉');
+    });
+  </script>
 </body>
 </html>

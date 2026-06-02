@@ -1,242 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XNOR Cloud - My Account</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XNOR Cloud - My Account</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <header class="top-bar">
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+    <span class="app-title">My Account</span>
+    <button id="menu-btn"><i class="fas fa-ellipsis-v"></i></button>
+  </header>
 
-    <header class="top-bar">
-        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
-        <span class="app-title">My Account</span>
-        <button id="menu-btn" aria-label="Open Menu">
-            <i class="fas fa-ellipsis-v"></i>
-        </button>
-    </header>
+  <div id="menu-overlay" class="menu-overlay">
+    <div class="menu-content">
+      <button id="close-menu"><i class="fas fa-times"></i></button>
+      <h2>Settings</h2>
+      <div class="theme-switch-container">
+        <span>Dark/Light Theme:</span>
+        <label class="switch">
+          <input type="checkbox" id="theme-switch">
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <hr><br>
+      <button id="logout-btn" class="danger-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
 
-    <div id="menu-overlay" class="menu-overlay">
-        <div class="menu-content">
-            <button id="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
-            <h2>Settings</h2>
-            <div class="theme-switch-container">
-                <span>Dark/Light Theme:</span>
-                <label class="switch">
-                    <input type="checkbox" id="theme-switch">
-                    <span class="slider round"></span>
-                </label>
-            </div>
-            <hr><br>
-            <button id="logout-btn" class="danger-btn" style="margin-top:10px;">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-        </div>
+  <main style="padding:20px;max-width:600px;margin:0 auto;">
+    <div class="form-wrapper" id="account-view">
+      <h2><i class="fas fa-user-circle"></i> Account Details</h2>
+      <div id="account-info" class="account-info"><p>Loading...</p></div>
+      <button id="edit-btn" class="submit-btn"><i class="fas fa-edit"></i> Edit Profile</button>
+      <button id="change-password-btn" class="submit-btn" style="background:var(--secondary);"><i class="fas fa-key"></i> Change Password</button>
+      <button id="delete-account-btn" class="danger-btn"><i class="fas fa-trash"></i> Delete Account</button>
     </div>
 
-    <main style="padding:20px;max-width:600px;margin:0 auto;">
-        <div class="form-wrapper" id="account-view">
-            <h2><i class="fas fa-user-circle"></i> Account Details</h2>
-            <div id="account-info" class="account-info">
-                <p>Loading...</p>
-            </div>
-            <button id="edit-btn" class="submit-btn"><i class="fas fa-edit"></i> Edit Profile</button>
-            <button id="change-password-btn" class="submit-btn" style="background:var(--secondary);"><i class="fas fa-key"></i> Change Password</button>
-            <button id="delete-account-btn" class="danger-btn"><i class="fas fa-trash"></i> Delete Account</button>
+    <div class="form-wrapper hidden" id="edit-view">
+      <h2><i class="fas fa-edit"></i> Edit Profile</h2>
+      <form id="edit-form" class="contact-form">
+        <div class="form-group"><label>First Name:</label><input type="text" id="edit-firstName" required></div>
+        <div class="form-group"><label>Last Name:</label><input type="text" id="edit-lastName" required></div>
+        <div class="form-group"><label>Email:</label><input type="email" id="edit-email" required></div>
+        <div class="form-group"><label>Birthday:</label><input type="date" id="edit-birthday" required></div>
+        <div class="form-group"><label>WhatsApp:</label><input type="tel" id="edit-whatsapp" required></div>
+        <div class="form-group">
+          <label>Gender:</label>
+          <select id="edit-gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
-
-        <!-- Edit Profile Form (hidden by default) -->
-        <div class="form-wrapper hidden" id="edit-view">
-            <h2><i class="fas fa-edit"></i> Edit Profile</h2>
-            <form id="edit-form" class="contact-form">
-                <div class="form-group">
-                    <label for="edit-fullName">Full Name:</label>
-                    <input type="text" id="edit-fullName" required>
-                </div>
-                <div class="form-group">
-                    <label for="edit-lastname">Last Name:</label>
-                    <input type="text" id="edit-lastname" required>
-                </div>
-                <div class="form-group">
-                    <label for="edit-birthday">Birthday:</label>
-                    <input type="date" id="edit-birthday" required>
-                </div>
-                <div class="form-group">
-                    <label for="edit-whatsapp">WhatsApp Number:</label>
-                    <input type="tel" id="edit-whatsapp" required>
-                </div>
-                <div class="form-group">
-                    <label for="edit-gender">Gender:</label>
-                    <select id="edit-gender" required>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="edit-country">Country:</label>
-                    <select id="edit-country" required></select>
-                </div>
-                <button type="submit" class="submit-btn"><i class="fas fa-save"></i> Save Changes</button>
-                <button type="button" id="cancel-edit-btn" class="submit-btn" style="background:var(--secondary);">Cancel</button>
-            </form>
+        <div class="form-group">
+          <label>Country:</label>
+          <select id="edit-country" required></select>
         </div>
+        <button type="submit" class="submit-btn"><i class="fas fa-save"></i> Save Changes</button>
+        <button type="button" id="cancel-edit-btn" class="submit-btn" style="background:var(--secondary);">Cancel</button>
+      </form>
+    </div>
 
-        <!-- Change Password Form (hidden) -->
-        <div class="form-wrapper hidden" id="password-view">
-            <h2><i class="fas fa-key"></i> Change Password</h2>
-            <form id="password-form" class="contact-form">
-                <div class="form-group">
-                    <label for="old-password">Current Password:</label>
-                    <input type="password" id="old-password" required>
-                </div>
-                <div class="form-group">
-                    <label for="new-password">New Password:</label>
-                    <input type="password" id="new-password" required>
-                </div>
-                <div id="password-error" style="color:var(--danger);text-align:center;display:none;"></div>
-                <div id="password-success" style="color:#28a745;text-align:center;display:none;"></div>
-                <button type="submit" class="submit-btn"><i class="fas fa-check"></i> Change Password</button>
-                <button type="button" id="cancel-password-btn" class="submit-btn" style="background:var(--secondary);">Cancel</button>
-            </form>
-        </div>
-    </main>
+    <div class="form-wrapper hidden" id="password-view">
+      <h2><i class="fas fa-key"></i> Change Password</h2>
+      <form id="password-form" class="contact-form">
+        <div class="form-group"><label>Current Password:</label><input type="password" id="old-password" required></div>
+        <div class="form-group"><label>New Password:</label><input type="password" id="new-password" required></div>
+        <div id="password-error" style="color:var(--danger);text-align:center;display:none;"></div>
+        <div id="password-success" style="color:#28a745;text-align:center;display:none;"></div>
+        <button type="submit" class="submit-btn"><i class="fas fa-check"></i> Change Password</button>
+        <button type="button" id="cancel-password-btn" class="submit-btn" style="background:var(--secondary);">Cancel</button>
+      </form>
+    </div>
+  </main>
 
-    <nav class="bottom-nav">
-        <a href="index.html" class="nav-btn"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="android.html" class="nav-btn"><i class="fab fa-android"></i><span>Android</span></a>
-        <a href="windows.html" class="nav-btn"><i class="fab fa-windows"></i><span>Windows</span></a>
-        <a href="other/news.html" class="nav-btn"><i class="fas fa-newspaper"></i><span>News</span></a>
-    </nav>
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-btn"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="android.html" class="nav-btn"><i class="fab fa-android"></i><span>Android</span></a>
+    <a href="windows.html" class="nav-btn"><i class="fab fa-windows"></i><span>Windows</span></a>
+    <a href="other/news.html" class="nav-btn"><i class="fas fa-newspaper"></i><span>News</span></a>
+  </nav>
 
-    <script src="main.js"></script>
-    <script>
+  <script src="main.js"></script>
+  <script>
     if (!XNOR.requireLogin()) { /* redirected */ }
 
     const user = XNOR.getSessionUser();
     const countries = ["Afghanistan","Albania","Algeria","Argentina","Australia","Austria","Bangladesh","Belgium","Brazil","Canada","China","Colombia","Denmark","Egypt","Finland","France","Germany","Greece","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Japan","Kenya","Malaysia","Mexico","Nepal","Netherlands","New Zealand","Nigeria","Norway","Pakistan","Philippines","Poland","Portugal","Russia","Saudi Arabia","Singapore","South Africa","South Korea","Spain","Sri Lanka","Sweden","Switzerland","Thailand","Turkey","UAE","UK","USA","Vietnam","Zimbabwe"];
 
+    function formatDate(str) {
+      if (!str) return 'N/A';
+      const d = new Date(str);
+      return d.toLocaleDateString('en-CA'); // YYYY-MM-DD, no timezone shift
+    }
+
     function showView(viewId) {
-        ['account-view','edit-view','password-view'].forEach(id => {
-            document.getElementById(id).classList.toggle('hidden', id !== viewId);
-        });
+      ['account-view','edit-view','password-view'].forEach(id => document.getElementById(id).classList.toggle('hidden', id !== viewId));
     }
 
     function populateAccountInfo() {
-        document.getElementById('account-info').innerHTML = `
-            <p><strong>Username:</strong> ${user.username || 'N/A'}</p>
-            <p><strong>Full Name:</strong> ${user.fullName || 'N/A'}</p>
-            <p><strong>Last Name:</strong> ${user.lastname || 'N/A'}</p>
-            <p><strong>Birthday:</strong> ${user.birthday || 'N/A'}</p>
-            <p><strong>WhatsApp:</strong> ${user.whatsappNumber || 'N/A'}</p>
-            <p><strong>Gender:</strong> ${user.gender || 'N/A'}</p>
-            <p><strong>Country:</strong> ${user.country || 'N/A'}</p>
-        `;
+      document.getElementById('account-info').innerHTML = `
+        <p><strong>Username:</strong> ${user.username||'N/A'}</p>
+        <p><strong>Email:</strong> ${user.email||'N/A'}</p>
+        <p><strong>First Name:</strong> ${user.firstName||'N/A'}</p>
+        <p><strong>Last Name:</strong> ${user.lastName||'N/A'}</p>
+        <p><strong>Birthday:</strong> ${formatDate(user.birthday)}</p>
+        <p><strong>WhatsApp:</strong> ${user.whatsappNumber||'N/A'}</p>
+        <p><strong>Gender:</strong> ${user.gender||'N/A'}</p>
+        <p><strong>Country:</strong> ${user.country||'N/A'}</p>
+        <p><strong>Last Login:</strong> ${user.loginTimestamp||'N/A'}</p>
+      `;
     }
 
     function populateEditForm() {
-        document.getElementById('edit-fullName').value = user.fullName || '';
-        document.getElementById('edit-lastname').value = user.lastname || '';
-        document.getElementById('edit-birthday').value = user.birthday || '';
-        document.getElementById('edit-whatsapp').value = user.whatsappNumber || '';
-        document.getElementById('edit-gender').value = user.gender || 'Male';
-        const countrySelect = document.getElementById('edit-country');
-        countrySelect.innerHTML = '';
-        countries.forEach(c => {
-            const opt = document.createElement('option');
-            opt.value = c;
-            opt.textContent = c;
-            if (c === user.country) opt.selected = true;
-            countrySelect.appendChild(opt);
-        });
+      document.getElementById('edit-firstName').value = user.firstName || '';
+      document.getElementById('edit-lastName').value = user.lastName || '';
+      document.getElementById('edit-email').value = user.email || '';
+      document.getElementById('edit-birthday').value = user.birthday || '';
+      document.getElementById('edit-whatsapp').value = user.whatsappNumber || '';
+      document.getElementById('edit-gender').value = user.gender || 'Male';
+      const sel = document.getElementById('edit-country');
+      sel.innerHTML = '';
+      countries.forEach(c => {
+        const o = document.createElement('option'); o.value=c; o.textContent=c;
+        if (c===user.country) o.selected=true;
+        sel.appendChild(o);
+      });
     }
 
-    // Init
     populateAccountInfo();
     populateEditForm();
 
-    // Edit button
-    document.getElementById('edit-btn').addEventListener('click', () => {
-        populateEditForm();
-        showView('edit-view');
-    });
-
-    // Cancel edit
+    document.getElementById('edit-btn').addEventListener('click', () => { populateEditForm(); showView('edit-view'); });
     document.getElementById('cancel-edit-btn').addEventListener('click', () => showView('account-view'));
 
-    // Edit form submit
     document.getElementById('edit-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const data = {
-            action: 'updateAccount',
-            sessionId: user.sessionId,
-            fullName: document.getElementById('edit-fullName').value.trim(),
-            lastname: document.getElementById('edit-lastname').value.trim(),
-            birthday: document.getElementById('edit-birthday').value,
-            whatsappNumber: document.getElementById('edit-whatsapp').value.trim(),
-            gender: document.getElementById('edit-gender').value,
-            country: document.getElementById('edit-country').value
-        };
-        const result = await XNOR.apiPost(data);
-        if (result.success) {
-            Object.assign(user, data);
-            XNOR.setSessionUser(user);
-            populateAccountInfo();
-            showView('account-view');
-            alert('Account updated successfully!');
-        } else {
-            alert(result.message || 'Update failed.');
-        }
+      e.preventDefault();
+      const data = {
+        action: 'updateAccount',
+        sessionId: user.sessionId,
+        firstName: document.getElementById('edit-firstName').value.trim(),
+        lastName: document.getElementById('edit-lastName').value.trim(),
+        email: document.getElementById('edit-email').value.trim(),
+        birthday: document.getElementById('edit-birthday').value,
+        whatsappNumber: document.getElementById('edit-whatsapp').value.trim(),
+        gender: document.getElementById('edit-gender').value,
+        country: document.getElementById('edit-country').value
+      };
+      const result = await XNOR.apiPost(data);
+      if (result.success) {
+        Object.assign(user, data);
+        XNOR.setSessionUser(user);
+        populateAccountInfo();
+        showView('account-view');
+        alert('Account updated!');
+      } else {
+        alert(result.message);
+      }
     });
 
-    // Change password button
     document.getElementById('change-password-btn').addEventListener('click', () => showView('password-view'));
     document.getElementById('cancel-password-btn').addEventListener('click', () => showView('account-view'));
 
-    // Password form submit
     document.getElementById('password-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const result = await XNOR.apiPost({
-            action: 'changePassword',
-            sessionId: user.sessionId,
-            oldPassword: document.getElementById('old-password').value.trim(),
-            newPassword: document.getElementById('new-password').value.trim()
-        });
-        const errDiv = document.getElementById('password-error');
-        const sucDiv = document.getElementById('password-success');
-        errDiv.style.display = 'none';
-        sucDiv.style.display = 'none';
-        if (result.success) {
-            sucDiv.textContent = 'Password changed successfully!';
-            sucDiv.style.display = 'block';
-            this.reset();
-            setTimeout(() => showView('account-view'), 1500);
-        } else {
-            errDiv.textContent = result.message;
-            errDiv.style.display = 'block';
-        }
+      e.preventDefault();
+      const err = document.getElementById('password-error');
+      const suc = document.getElementById('password-success');
+      err.style.display='none'; suc.style.display='none';
+      const result = await XNOR.apiPost({
+        action: 'changePassword',
+        sessionId: user.sessionId,
+        oldPassword: document.getElementById('old-password').value.trim(),
+        newPassword: document.getElementById('new-password').value.trim()
+      });
+      if (result.success) {
+        suc.textContent = 'Password changed!';
+        suc.style.display='block';
+        this.reset();
+        setTimeout(() => showView('account-view'), 1500);
+      } else {
+        err.textContent = result.message;
+        err.style.display='block';
+      }
     });
 
-    // Delete account
     document.getElementById('delete-account-btn').addEventListener('click', async function() {
-        if (!confirm('Are you sure you want to delete your account? This cannot be undone.')) return;
-        if (!confirm('FINAL WARNING: All your data will be permanently deleted.')) return;
-        const result = await XNOR.apiPost({ action: 'deleteAccount', sessionId: user.sessionId });
-        if (result.success) {
-            XNOR.clearSession();
-            alert('Account deleted.');
-            window.location.href = 'index.html';
-        } else {
-            alert(result.message || 'Delete failed.');
-        }
+      if (!confirm('Delete your account? This cannot be undone.')) return;
+      const result = await XNOR.apiPost({ action:'deleteAccount', sessionId: user.sessionId });
+      if (result.success) { XNOR.clearSession(); window.location.href='index.html'; }
+      else alert(result.message);
     });
 
-    // Logout
-    document.getElementById('logout-btn').addEventListener('click', () => {
-        XNOR.clearSession();
-        window.location.href = 'index.html';
-    });
-    </script>
+    document.getElementById('logout-btn').addEventListener('click', () => { XNOR.clearSession(); window.location.href='index.html'; });
+  </script>
 </body>
 </html>

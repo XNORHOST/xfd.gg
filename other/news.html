@@ -1,157 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X.N.O.R News & Updates</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="../styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>X.N.O.R News & Updates</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-
-    <header class="top-bar">
-        <span class="app-title">XNOR Cloud</span>
-        <div class="search-container">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" id="search-input" placeholder="Search news...">
-        </div>
-        <button id="menu-btn" aria-label="Open Menu">
-            <i class="fas fa-ellipsis-v"></i>
-        </button>
-    </header>
-
-    <!-- MENU OVERLAY (same as other pages) -->
-    <div id="menu-overlay" class="menu-overlay">
-        <div class="menu-content">
-            <button id="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
-            <h2>Settings</h2>
-            <div class="theme-switch-container">
-                <span>Dark/Light Theme:</span>
-                <label class="switch">
-                    <input type="checkbox" id="theme-switch">
-                    <span class="slider round"></span>
-                </label>
-            </div>
-            <hr><br>
-            <h3>Download for:</h3>
-            <div class="platform-buttons">
-                <a href="../android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
-                <a href="../apple.html" class="platform-btn"><i class="fab fa-apple"></i> Apple</a>
-                <a href="../windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
-                <a href="../mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
-            </div>
-            <hr><br>
-            <h3>About</h3>
-            <div class="platform-buttons">
-                <a href="../about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
-                <a href="fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
-            </div>
-        </div>
+  <header class="top-bar">
+    <span class="app-title">XNOR Cloud</span>
+    <div class="search-container">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" id="search-input" placeholder="Search news...">
     </div>
+    <button id="menu-btn"><i class="fas fa-ellipsis-v"></i></button>
+  </header>
 
-    <main class="news-container">
-        <!-- Loading message -->
-        <div id="loading" style="text-align:center; padding:40px; color:var(--secondary);">
-            <i class="fas fa-spinner fa-spin" style="font-size:24px;"></i> Loading latest news...
-        </div>
+  <div id="menu-overlay" class="menu-overlay">
+    <div class="menu-content">
+      <button id="close-menu"><i class="fas fa-times"></i></button>
+      <h2>Settings</h2>
+      <div class="theme-switch-container">
+        <span>Dark/Light Theme:</span>
+        <label class="switch"><input type="checkbox" id="theme-switch"><span class="slider round"></span></label>
+      </div>
+      <hr><br>
+      <h3>Download for:</h3>
+      <div class="platform-buttons">
+        <a href="../android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
+        <a href="../apple.html" class="platform-btn"><i class="fab fa-apple"></i> Apple</a>
+        <a href="../windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
+        <a href="../mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
+      </div>
+      <hr><br>
+      <h3>About</h3>
+      <div class="platform-buttons">
+        <a href="../about.html" class="platform-btn"><i class="fas fa-info-circle"></i> About Us</a>
+        <a href="fix.html" class="platform-btn"><i class="fas fa-tools"></i> Fix Issues</a>
+      </div>
+    </div>
+  </div>
 
-        <!-- News will be injected here -->
-        <div id="news-grid"></div>
+  <main class="news-container">
+    <div id="loading" style="text-align:center;padding:40px;color:var(--secondary);"><i class="fas fa-spinner fa-spin"></i> Loading latest news...</div>
+    <div id="news-grid"></div>
+    <div id="no-results" style="display:none;text-align:center;padding:50px;color:var(--secondary);"><i class="fas fa-search" style="font-size:32px;opacity:0.5;"></i><p>No news found.</p></div>
+  </main>
 
-        <!-- No results message (for search) -->
-        <div id="no-results" style="display:none; text-align:center; padding:50px; color:var(--secondary);">
-            <i class="fas fa-search" style="font-size:32px; margin-bottom:16px; opacity:0.5;"></i>
-            <p>No news found matching your search.</p>
-        </div>
-    </main>
+  <nav class="bottom-nav">
+    <a href="../index.html" class="nav-btn"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="../android.html" class="nav-btn"><i class="fab fa-android"></i><span>Android</span></a>
+    <a href="../windows.html" class="nav-btn"><i class="fab fa-windows"></i><span>Windows</span></a>
+    <a href="news.html" class="nav-btn active"><i class="fas fa-newspaper"></i><span>News</span></a>
+  </nav>
 
-    <nav class="bottom-nav">
-        <a href="../index.html" class="nav-btn"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="../android.html" class="nav-btn"><i class="fab fa-android"></i><span>Android</span></a>
-        <a href="../windows.html" class="nav-btn"><i class="fab fa-windows"></i><span>Windows</span></a>
-        <a href="news.html" class="nav-btn active"><i class="fas fa-newspaper"></i><span>News</span></a>
-    </nav>
-
-    <script src="../main.js"></script>
-    <script>
-    // ==================== LOAD NEWS FROM GOOGLE SHEET ====================
+  <script src="../main.js"></script>
+  <script>
     async function loadNews() {
-        const grid = document.getElementById('news-grid');
-        const loading = document.getElementById('loading');
-        const noResults = document.getElementById('no-results');
-
-        try {
-            const result = await XNOR.apiGet('getNews');
-
-            // Show error from API
-            if (!result.success) {
-                XNOR.showApiError('loading', result.message);
-                return;
-            }
-
-            const newsItems = result.news || [];
-            if (newsItems.length === 0) {
-                loading.innerHTML = '<p>No news articles found. Add news to the Google Sheet.</p>';
-                return;
-            }
-
-            loading.style.display = 'none';
-
-            // Sort by date descending (newest first)
-            newsItems.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            newsItems.forEach(item => {
-                const searchTerms = `${item.title || ''} ${item.contentExcerpt || ''} ${item.category || ''}`.toLowerCase();
-                const article = document.createElement('article');
-                article.className = 'news-card-photo';
-                article.dataset.search = searchTerms;
-
-                article.innerHTML = `
-                    <div style="position:relative;">
-                        <img src="${item.imageUrl || 'https://via.placeholder.com/400x200/333/aaa?text=No+Image'}" 
-                             alt="${item.title}" 
-                             class="news-thumb-img" 
-                             loading="lazy" 
-                             onerror="this.src='https://via.placeholder.com/400x200/222/aaa?text=Image+Not+Found'">
-                        <div class="news-thumb-overlay">${item.date || ''}</div>
-                    </div>
-                    <div class="news-card-content">
-                        <h3>${item.title || 'Untitled'}</h3>
-                        <p>${(item.contentExcerpt || '').substring(0, 160)}...</p>
-                    </div>`;
-
-                article.style.cursor = 'pointer';
-                article.onclick = () => {
-                    if (item.link) window.open(item.link, '_blank');
-                };
-
-                grid.appendChild(article);
-            });
-
-        } catch (e) {
-            console.error('Failed to load news:', e);
-            XNOR.showApiError('loading', 'Could not connect to the server. Check your internet and Apps Script deployment.');
+      const grid = document.getElementById('news-grid');
+      const loading = document.getElementById('loading');
+      try {
+        const result = await XNOR.apiGet('getNews');
+        if (!result.success) {
+          XNOR.showApiError('loading', result.message);
+          return;
         }
+        const newsItems = result.news || [];
+        if (newsItems.length === 0) {
+          loading.innerHTML = '<p>No news articles found.</p>';
+          return;
+        }
+        loading.style.display = 'none';
+        newsItems.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+        newsItems.forEach(item => {
+          const dateDisplay = item.date ? new Date(item.date).toLocaleDateString('en-CA') : '';
+          const searchTerms = `${item.title||''} ${item.contentExcerpt||''} ${item.category||''}`.toLowerCase();
+          const article = document.createElement('article');
+          article.className = 'news-card-photo';
+          article.dataset.search = searchTerms;
+          article.innerHTML = `
+            <div style="position:relative;">
+              <img src="${item.imageUrl||'https://via.placeholder.com/400x200/333/aaa?text=No+Image'}" alt="${item.title}" class="news-thumb-img" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200/222/aaa?text=Image+Not+Found'">
+              <div class="news-thumb-overlay">${dateDisplay}</div>
+            </div>
+            <div class="news-card-content">
+              <h3>${item.title||'Untitled'}</h3>
+              <p>${(item.contentExcerpt||'').substring(0,160)}...</p>
+            </div>`;
+          article.style.cursor = 'pointer';
+          article.onclick = () => { if (item.link) window.open(item.link, '_blank'); };
+          grid.appendChild(article);
+        });
+      } catch (e) {
+        console.error(e);
+        XNOR.showApiError('loading', 'Could not connect to server.');
+      }
     }
 
-    // ==================== LIVE SEARCH ====================
     const searchInput = document.getElementById('search-input');
     searchInput?.addEventListener('input', function() {
-        const term = this.value.toLowerCase().trim();
-        const cards = document.querySelectorAll('.news-card-photo');
-        let visible = 0;
-
-        cards.forEach(card => {
-            const matches = card.dataset.search.includes(term);
-            card.style.display = matches ? '' : 'none';
-            if (matches) visible++;
-        });
-
-        document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+      const term = this.value.toLowerCase().trim();
+      document.querySelectorAll('.news-card-photo').forEach(card => {
+        card.style.display = card.dataset.search.includes(term) ? '' : 'none';
+      });
+      const visible = document.querySelectorAll('.news-card-photo[style*="display:"]').length === 0 ? true : false; // simplified
+      document.getElementById('no-results').style.display = visible ? 'block' : 'none';
     });
 
-    // Start loading on page ready
     document.addEventListener('DOMContentLoaded', loadNews);
-    </script>
+  </script>
 </body>
 </html>

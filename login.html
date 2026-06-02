@@ -1,106 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XNOR Cloud - Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XNOR Cloud - Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <header class="top-bar">
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+    <span class="app-title">Login</span>
+    <button id="menu-btn"><i class="fas fa-ellipsis-v"></i></button>
+  </header>
 
-    <header class="top-bar">
-        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
-        <span class="app-title">Login</span>
-        <button id="menu-btn" aria-label="Open Menu">
-            <i class="fas fa-ellipsis-v"></i>
-        </button>
-    </header>
-
-    <div id="menu-overlay" class="menu-overlay">
-        <div class="menu-content">
-            <button id="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
-            <h2>Settings</h2>
-            <div class="theme-switch-container">
-                <span>Dark/Light Theme:</span>
-                <label class="switch">
-                    <input type="checkbox" id="theme-switch">
-                    <span class="slider round"></span>
-                </label>
-            </div>
-            <hr><br>
-            <h3>Download for:</h3>
-            <div class="platform-buttons">
-                <a href="android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
-                <a href="apple.html" class="platform-btn"><i class="fab fa-apple"></i> Apple</a>
-                <a href="windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
-                <a href="mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
-            </div>
-        </div>
+  <div id="menu-overlay" class="menu-overlay">
+    <div class="menu-content">
+      <button id="close-menu"><i class="fas fa-times"></i></button>
+      <h2>Settings</h2>
+      <div class="theme-switch-container">
+        <span>Dark/Light Theme:</span>
+        <label class="switch">
+          <input type="checkbox" id="theme-switch">
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <hr><br>
+      <h3>Download for:</h3>
+      <div class="platform-buttons">
+        <a href="android.html" class="platform-btn"><i class="fab fa-android"></i> Android</a>
+        <a href="apple.html" class="platform-btn"><i class="fab fa-apple"></i> Apple</a>
+        <a href="windows.html" class="platform-btn"><i class="fab fa-windows"></i> Windows</a>
+        <a href="mac.html" class="platform-btn"><i class="fab fa-apple"></i> Mac</a>
+      </div>
     </div>
+  </div>
 
-    <main style="display:flex;align-items:center;justify-content:center;padding:20px;">
-        <div class="form-wrapper">
-            <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
-            <p class="form-subtitle">Sign in to your XNOR Cloud account</p>
-
-            <form id="login-form" class="contact-form">
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" placeholder="Enter username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" placeholder="Enter password" required>
-                </div>
-                <div id="login-error" style="color:var(--danger);text-align:center;margin-bottom:10px;display:none;"></div>
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-            </form>
-
-            <p class="form-link">
-                Don't have an account? <a href="registration.html">Register here</a>
-            </p>
-            <p class="form-link">
-                <a href="index.html">← Back to Home</a>
-            </p>
+  <main style="display:flex;align-items:center;justify-content:center;padding:20px;">
+    <div class="form-wrapper">
+      <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+      <p class="form-subtitle">Sign in to your XNOR Cloud account</p>
+      <form id="login-form" class="contact-form">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" placeholder="Enter username" required>
         </div>
-    </main>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" placeholder="Enter password" required>
+        </div>
+        <div id="login-error" style="color:var(--danger);text-align:center;margin-bottom:10px;display:none;"></div>
+        <button type="submit" class="submit-btn"><i class="fas fa-sign-in-alt"></i> Login</button>
+      </form>
+      <p class="form-link">Don't have an account? <a href="registration.html">Register here</a></p>
+      <p class="form-link"><a href="index.html">← Back to Home</a></p>
+    </div>
+  </main>
 
-    <script src="main.js"></script>
-    <script>
+  <script src="main.js"></script>
+  <script>
     document.getElementById('login-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const username = document.getElementById('username').value.trim();
-        const password = document.getElementById('password').value.trim();
-        const errorDiv = document.getElementById('login-error');
-
-        if (!username || !password) {
-            errorDiv.textContent = 'Please fill in all fields.';
-            errorDiv.style.display = 'block';
-            return;
-        }
-
-        const result = await XNOR.apiPost({ action: 'login', username, password });
-
-        if (result.success) {
-            XNOR.setSessionUser({
-                sessionId: result.sessionId,
-                username: result.username,
-                fullName: result.fullName,
-                lastname: result.lastname,
-                birthday: result.birthday,
-                whatsappNumber: result.whatsappNumber,
-                gender: result.gender,
-                country: result.country
-            });
-            window.location.href = 'account.html';
-        } else {
-            errorDiv.textContent = result.message || 'Invalid username or password.';
-            errorDiv.style.display = 'block';
-        }
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorDiv = document.getElementById('login-error');
+      if (!username || !password) {
+        errorDiv.textContent = 'Please fill in all fields.';
+        errorDiv.style.display = 'block';
+        return;
+      }
+      const result = await XNOR.apiPost({ action: 'login', username, password });
+      if (result.success) {
+        XNOR.setSessionUser({
+          sessionId: result.sessionId,
+          username: result.username,
+          email: result.email,
+          firstName: result.firstName,
+          lastName: result.lastName,
+          birthday: result.birthday,
+          whatsappNumber: result.whatsappNumber,
+          gender: result.gender,
+          country: result.country,
+          loginTimestamp: result.loginTimestamp
+        });
+        window.location.href = 'account.html';
+      } else {
+        errorDiv.textContent = result.message || 'Invalid username or password.';
+        errorDiv.style.display = 'block';
+      }
     });
-    </script>
+  </script>
 </body>
 </html>
